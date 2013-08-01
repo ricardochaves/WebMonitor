@@ -1,0 +1,5 @@
+E:\WebMonitor\WebMonitor\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\WebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.Properties.Resources.resources
+E:\WebMonitor\WebMonitor\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\WebMonitor\WebMonitor\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\WebMonitor\WebMonitor\bin\Debug\WebMonitor.exe.config
