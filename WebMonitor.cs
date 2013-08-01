@@ -65,8 +65,6 @@ namespace WebMonitor
             Styx.CommonBot.BotEvents.OnBotStarted += onStart;
             Styx.CommonBot.BotEvents.OnBotStopped += onStop;
 
-
-
             Util.WriteLog("WebMonitor initialized.");
             
             
@@ -130,11 +128,7 @@ namespace WebMonitor
             //AppDomain.CurrentDomain.ProcessExit -= CurrentDomainProcessExit;
             //AppDomain.CurrentDomain.UnhandledException -= CurrentDomainUnhandledException;
 
-
-
-            //Styx.CommonBot.BotEvents.OnBotStopped -= onStop;
-            //Styx.CommonBot.BotEvents.OnBotStarted -= onStart;
-
+            
             //times.Dispose();
             //MasterControl.isInit = false;
 
@@ -153,6 +147,9 @@ namespace WebMonitor
             startTime = DateTime.Now;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
+
+            Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+
             Util.WriteLog("WebMonitor started.");
         }
         private void onStop(EventArgs args)
@@ -199,6 +196,10 @@ namespace WebMonitor
             //    status.Add("message", "Level up!");
 
             //if (MasterControlSettings.Instance.scLevel) screenie();
+        }
+        private void onGuildBankOpened(object sender, LuaEventArgs args)
+        {
+
         }
         #endregion
 
