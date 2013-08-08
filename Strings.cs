@@ -11,5 +11,6 @@ namespace WebMonitor
         public const string AUTOR = "Ricardo Baltazar Chaves";
         public const string CAPTIONBUTTONCONFIG = "Settings";
 
+        public const string URLINCLUIRGUILD = "";
     }
 }
