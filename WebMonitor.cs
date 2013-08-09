@@ -56,6 +56,8 @@ namespace WebMonitor
         public override void Initialize()
         {
 
+
+
             if (WebMonitor.isInit == true)
             {
                 return;

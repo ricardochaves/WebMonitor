@@ -15,5 +15,21 @@ namespace WebMonitor
         {
             InitializeComponent();
         }
+
+        private void FormSettings_Load(object sender, EventArgs e)
+        {
+            WMGlobalSettings.Instance.Load();
+            txtKey.Text = WMGlobalSettings.Instance.Key;
+
+        }
+
+        private void btnSaveClose_Click(object sender, EventArgs e)
+        {
+            WMGlobalSettings.Instance.Key = txtKey.Text;
+            WMGlobalSettings.Instance.Save();
+            this.Close();
+        }
+
+
     }
 }

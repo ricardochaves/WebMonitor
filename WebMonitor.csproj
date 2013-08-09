@@ -76,6 +76,10 @@
     <Compile Include="Strings.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WebMonitor.cs" />
+    <Compile Include="WMGlobalSettings.cs" />
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
