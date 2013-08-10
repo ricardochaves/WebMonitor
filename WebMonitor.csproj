@@ -41,6 +41,7 @@
     <Reference Include="Honorbuddy">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\Honorbuddy.exe</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="RemoteASMNative">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\RemoteASMNative.dll</HintPath>
     </Reference>
@@ -73,6 +74,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Send.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WebMonitor.cs" />

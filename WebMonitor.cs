@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Styx.MemoryManagement;
-
+using System.Text;
 
 namespace WebMonitor
 {
@@ -201,7 +201,11 @@ namespace WebMonitor
         }
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
+            string data = "name={0}&key={1}";
+            data = String.Format(data, Util.GetGuildProfileName(), "");
+            byte[] dataStream = Encoding.UTF8.GetBytes(data);
 
+            Send.MakeAsyncRequest(Strings.URLINCLUIRGUILD, "O que seria isso?", dataStream);
         }
         #endregion
 

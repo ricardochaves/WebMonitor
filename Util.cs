@@ -1,14 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using Styx;
+using System.Text;
+using System.Text.RegularExpressions;
+using Styx.Helpers;
 using Styx.Common;
 using Styx.CommonBot;
-using Styx.Helpers;
+using System.Linq;
 using Styx.WoWInternals;
+using Styx.WoWInternals.WoWObjects;
+using System.Globalization;
+using ObjectManager = Styx.WoWInternals.ObjectManager;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.IO;
+using Styx;
+
 
 namespace WebMonitor
 {
@@ -19,7 +24,7 @@ namespace WebMonitor
             Logging.Write(string.Format("{0}: {1}", Strings.NOMESISTEMA, MSG));
         }
 
-        private static string GetGuildProfileName(string character = null, string server = null)
+        public static string GetGuildProfileName(string character = null, string server = null)
         {
             var profile = GetCharacterProfileName(character, server);
             if (string.IsNullOrEmpty(profile))
@@ -31,7 +36,7 @@ namespace WebMonitor
             return null;
         }
 
-        private static string GetCharacterProfileName(string character = null, string server = null)
+        public static string GetCharacterProfileName(string character = null, string server = null)
         {
             var hasDataStore = Lua.GetReturnVal<bool>("if DataStoreDB and DataStore_ContainersDB then return 1 else return 0 end", 0);
             if (hasDataStore)
@@ -55,4 +60,54 @@ namespace WebMonitor
 
 
     }
+    static class Exts
+    {
+        public static uint ToUint(this string str)
+        {
+            uint val;
+            uint.TryParse(str, out val);
+            return val;
+        }
+
+        static Encoding _encodeUTF8 = Encoding.UTF8;
+
+        /// <summary>
+        /// Converts a string to a float using En-US based culture
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static float ToSingle(this string str)
+        {
+            float val;
+            float.TryParse(str, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign
+            , CultureInfo.InvariantCulture, out val);
+            return val;
+        }
+
+        /// <summary>
+        /// Converts a string to a formated UTF-8 string using \ddd format where ddd is a 3 digit number. Useful when importing names into lua that are UTF-16 or higher.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToFormatedUTF8(this string text)
+        {
+            StringBuilder buffer = new StringBuilder(_encodeUTF8.GetByteCount(text));
+            byte[] utf8Encoded = _encodeUTF8.GetBytes(text);
+            foreach (byte b in utf8Encoded)
+            {
+                buffer.Append(string.Format("\\{0:D3}", b));
+            }
+            return buffer.ToString();
+        }
+        /// <summary>
+        /// This is a fix for WoWPoint.ToString using current cultures decimal separator.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToInvariantString(this WoWPoint text)
+        {
+            return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2}", text.X, text.Y, text.Z);
+        }
+    }
+
 }
