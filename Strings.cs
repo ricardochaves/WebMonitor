@@ -12,5 +12,6 @@ namespace WebMonitor
         public const string CAPTIONBUTTONCONFIG = "Settings";
 
         public const string URLINCLUIRGUILD = @"Guild/salvar";
+        public const string HOST = "http://localhost:9000/";
     }
 }
