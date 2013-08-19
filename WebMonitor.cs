@@ -2,6 +2,7 @@
 using Styx.WoWInternals;
 using Styx.CommonBot;
 using Styx.Common;
+using Styx;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace WebMonitor
 
         private static Boolean isInit = false;
         private DateTime startTime; //Data que o Bot deu Start
+        private string session;
 
 
         #region Construtor
@@ -62,6 +64,8 @@ namespace WebMonitor
             {
                 return;
             }
+
+
 
             //VINCULANDO ENVENTOS DO BOT
             Styx.CommonBot.BotEvents.OnBotStarted += onStart;
@@ -146,11 +150,16 @@ namespace WebMonitor
         #region EnventsON
         private void onStart(EventArgs args)
         {
+
+            session = Send.MakeRequest(@"SessionAPI/startNewSession", "key=bbec9a59ee91f75d16ce6a52");
+            Util.WriteLog("Sessão iniciada: " + session);
+
             startTime = DateTime.Now;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
 
             Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+            enviarDadosIniciais();
 
             Util.WriteLog("WebMonitor started.");
         }
@@ -201,14 +210,48 @@ namespace WebMonitor
         }
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
-            string data = "name={0}&key={1}";
+            string data = "name={0}&key={1}@gold={2}";
             data = String.Format(data, Util.GetGuildProfileName(), "");
-            byte[] dataStream = Encoding.UTF8.GetBytes(data);
+            Send.MakeAsyncRequest(Strings.URLINCLUIRGUILD, data);
 
-            Send.MakeAsyncRequest(Strings.URLINCLUIRGUILD, "O que seria isso?", dataStream);
         }
         #endregion
 
+        public void enviarDadosIniciais()
+        {
+            //Nome personagem
+            //StyxWoW.Me.Name;
+            //StyxWoW.Me.BagItems 
+            //StyxWoW.Me.BagsFull
+            //StyxWoW.Me.Class
+            //StyxWoW.Me.Copper
+            //StyxWoW.Me.CurrentMap //OBJ
+            //StyxWoW.Me.Faction //OBJ, Olhar outros Faction
+            //StyxWoW.Me.FreeBagSlots
+            //StyxWoW.Me.FreeNormalBagSlots   
+            //StyxWoW.Me.Gold
+            //StyxWoW.Me.Guid //OBJ
+            //StyxWoW.Me.GuildLevel
+            //StyxWoW.Me.GuildRank
+            //StyxWoW.Me.IsAFKFlagged
+            //StyxWoW.Me.Location
+            //StyxWoW.Me.MapId
+            //StyxWoW.Me.MapName
+            //StyxWoW.Me.Mounted
+            //StyxWoW.Me.QuestLog
+            //StyxWoW.Me.Race
+            //StyxWoW.Me.RealmName
+            //StyxWoW.Me.RealZoneText
+            //StyxWoW.Me.Specialization
+            //StyxWoW.Me.SubZoneText
+            
+
+
+
+
+
+            //StyxWoW.Me.Silver
+        }
 
     }
 }
