@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,7 +47,7 @@ namespace WebMonitor
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:9000/" + url);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url);
                 request.Method = "POST";
                 request.Proxy = null;
                 request.ContentType = "application/x-www-form-urlencoded";
