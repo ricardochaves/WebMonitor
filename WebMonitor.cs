@@ -22,7 +22,8 @@ namespace WebMonitor
         private static Boolean isInit = false;
         private DateTime startTime; //Data que o Bot deu Start
         private string session;
-
+        private SendSession sSession = new SendSession(new Send());
+        private SendGuild sGuild = new SendGuild(new Send());
 
         #region Construtor
         public WebMonitor() { }
@@ -151,7 +152,7 @@ namespace WebMonitor
         private void onStart(EventArgs args)
         {
 
-            session = Send.MakeRequest(@"SessionAPI/startNewSession", "key=bbec9a59ee91f75d16ce6a52");
+            session = sSession.getNewSession();
             Util.WriteLog("Sessão iniciada: " + session);
 
             startTime = DateTime.Now;
@@ -210,9 +211,8 @@ namespace WebMonitor
         }
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
-            string data = "name={0}&key={1}@gold={2}";
-            data = String.Format(data, Util.GetGuildProfileName(), "");
-            Send.MakeAsyncRequest(Strings.URLINCLUIRGUILD, data);
+
+            sGuild.SendGuildEstoque();
 
         }
         #endregion

@@ -8,10 +8,10 @@ using System.IO;
 
 namespace WebMonitor
 {
-    class Send
+    public class Send : ISend
     {
         // Define other methods and classes here
-        public static Task<string> MakeAsyncRequest(string url, string data)
+        public Task<string> MakeAsyncRequest(string url, string data) 
         {
             //http://stackoverflow.com/questions/3279888/how-to-add-parameters-into-a-webrequest
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("localhost:9000/" + url);
@@ -32,7 +32,7 @@ namespace WebMonitor
             return task.ContinueWith(t => ReadStreamFromResponse(t.Result));
         }
 
-        private static string ReadStreamFromResponse(WebResponse response)
+        public string ReadStreamFromResponse(WebResponse response)
         {
             using (Stream responseStream = response.GetResponseStream())
             using (StreamReader sr = new StreamReader(responseStream))
@@ -43,7 +43,7 @@ namespace WebMonitor
             }
         }
 
-        public static string MakeRequest(string url, string data)
+        public string MakeRequest(string url, string data)
         {
             try
             {

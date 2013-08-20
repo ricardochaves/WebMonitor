@@ -72,9 +72,12 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="ISend.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Send.cs" />
+    <Compile Include="SendGuild.cs" />
+    <Compile Include="SendSession.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WebMonitor.cs" />
