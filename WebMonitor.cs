@@ -103,7 +103,7 @@ namespace WebMonitor
             //Logging.Write(string.Format("[MasterControl]: Styx.CommonBot.BotManager.Current: {0}.", profile));
 
             ////IniciaSessao();
-            //WebMonitor.isInit = true;
+            WebMonitor.isInit = true;
             
 
             
@@ -212,7 +212,7 @@ namespace WebMonitor
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
 
-            sGuild.SendGuildEstoque();
+            sGuild.SendGuildEstoque(Util.GetGuildProfileName());
 
         }
         #endregion

@@ -16,7 +16,7 @@ namespace WebMonitor
 
         public string getNewSession()
         {
-            return s.MakeRequest(@"SessionAPI/startNewSession", "key=" + WMGlobalSettings.Instance.Key);
+            return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
         }
     }
 }

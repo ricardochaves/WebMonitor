@@ -14,10 +14,10 @@ namespace WebMonitor
             s = se;
         }
 
-        public void SendGuildEstoque()
+        public void SendGuildEstoque(string GuildProfileName, string goldGuild, string AccsGuild)
         {
-            string data = "name={0}&key={1}@gold={2}";
-            data = String.Format(data, Util.GetGuildProfileName(), "");
+            string data = "name={0}&gold={1}&accounts={2}";
+            data = String.Format(data, GuildProfileName, goldGuild,AccsGuild);
             s.MakeAsyncRequest(Strings.URLINCLUIRGUILD, data);
         }
 
