@@ -32,7 +32,7 @@ namespace WebMonitor
             return task.ContinueWith(t => ReadStreamFromResponse(t.Result));
         }
 
-        public string ReadStreamFromResponse(WebResponse response)
+        private string ReadStreamFromResponse(WebResponse response)
         {
             using (Stream responseStream = response.GetResponseStream())
             using (StreamReader sr = new StreamReader(responseStream))
