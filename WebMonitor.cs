@@ -158,8 +158,10 @@ namespace WebMonitor
             startTime = DateTime.Now;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
-
+            
             Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+            Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
+            
             enviarDadosIniciais();
 
             Util.WriteLog("WebMonitor started.");
@@ -214,6 +216,18 @@ namespace WebMonitor
 
             sGuild.SendGuildEstoque(Util.GetGuildProfileName());
 
+        }
+        private void onLogin(object sender, LuaEventArgs args)
+        {
+            
+            //Enviar dados da Guild do Personagem.
+            
+            //GetGuildInfo - Returns a unit's guild affiliation
+            //guildBankMoney = GetGuildBankMoney()
+        }
+        private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
+        {
+            //guildBankMoney = GetGuildBankMoney()
         }
         #endregion
 
