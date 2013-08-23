@@ -11,7 +11,8 @@ namespace WebMonitor
         public const string AUTOR = "Ricardo Baltazar Chaves";
         public const string CAPTIONBUTTONCONFIG = "Settings";
 
-        public const string URLINCLUIRGUILD = @"/api/saveguild";
+        public const string URLINCLUIRGUILDMONEY = @"/api/saveguild";
+        public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
         public const string URLSTARTNEWSESSION = @"api/startnew";
         public const string HOST = "http://localhost:9000/";
     }

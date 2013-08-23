@@ -214,19 +214,24 @@ namespace WebMonitor
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
 
-            sGuild.SendGuildEstoque(Util.GetGuildProfileName());
-
+            //Util.WriteLog("Guild Name:" + Util.GetGuildProfileName());
+            //Util.WriteLog("Guild Money:"  + Util.GetGuildMoney().ToString());
+            sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            
         }
+
+        private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
+        {
+            //guildBankMoney = GetGuildBankMoney()
+            sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), "");
+        }
+
         private void onLogin(object sender, LuaEventArgs args)
         {
             
             //Enviar dados da Guild do Personagem.
             
             //GetGuildInfo - Returns a unit's guild affiliation
-            //guildBankMoney = GetGuildBankMoney()
-        }
-        private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
-        {
             //guildBankMoney = GetGuildBankMoney()
         }
         #endregion

@@ -58,6 +58,19 @@ namespace WebMonitor
             return null;
         }
 
+        public static string GetGuildMoney()
+        {
+            string script = @"local guildBankMoney = GetGuildBankMoney() return guildBankMoney";
+            long retVal = Lua.GetReturnVal<long>(script, 0);
+            return retVal.ToString();
+        }
+
+        public static string GetTotalGuildsAccs()
+        {
+            string script = @"numGuildMembers, numOnline, numOnlineAndMobile = GetNumGuildMembers() return numGuildMembers";
+            long retVal = Lua.GetReturnVal<long>(script, 0);
+            return retVal.ToString();
+        }
 
     }
     static class Exts
