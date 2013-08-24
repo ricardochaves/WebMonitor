@@ -24,6 +24,8 @@ namespace WebMonitor
         private string session;
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send());
+        private SendPlayer sPlayer = new SendPlayer(new Send());
+        private int IDPlayerLogado;
 
         #region Construtor
         public WebMonitor() { }
@@ -161,7 +163,8 @@ namespace WebMonitor
             
             Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
             Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
-            
+            Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
+
             enviarDadosIniciais();
 
             Util.WriteLog("WebMonitor started.");
@@ -219,20 +222,22 @@ namespace WebMonitor
             sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
             
         }
-
+        private void onPlayerLogin(object sender, LuaEventArgs args)
+        {
+            sPlayer.SendPlayerInfo(StyxWoW.Me.Name, StyxWoW.Me.Class.ToString(), StyxWoW.Me.Race.ToString(), StyxWoW.Me.Level, StyxWoW.Me.RealmName);
+        }
         private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
         {
             //guildBankMoney = GetGuildBankMoney()
-            sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), "");
+            sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            
         }
 
         private void onLogin(object sender, LuaEventArgs args)
         {
             
             //Enviar dados da Guild do Personagem.
-            
-            //GetGuildInfo - Returns a unit's guild affiliation
-            //guildBankMoney = GetGuildBankMoney()
+            sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
         }
         #endregion
 
