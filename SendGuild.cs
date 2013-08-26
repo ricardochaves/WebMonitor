@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Newtonsoft.Json; //tirar daqui
+
 namespace WebMonitor
 {
     class SendGuild
@@ -26,6 +28,12 @@ namespace WebMonitor
             string data = "name={0}&gold={1}@acss={2}";
             data = String.Format(data, GuildProfileName, goldGuild, AccsGuild);
             s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
+        }
+        
+        public T ConvertJSON<T>(string Json){
+            
+            return JsonConvert.DeserializeObject<T>(Json);
+            
         }
 
     }
