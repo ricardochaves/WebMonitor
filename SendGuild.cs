@@ -11,9 +11,12 @@ namespace WebMonitor
     {
 
         private ISend s;
-        public SendGuild(ISend se)
+        private IConvertJson cj;
+
+        public SendGuild(ISend se, IConvertJson c)
         {
             s = se;
+            cj = c;
         }
 
         public void SendGuildInfoMoney(string GuildProfileName, string goldGuild)
@@ -30,11 +33,7 @@ namespace WebMonitor
             s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
         }
         
-        public T ConvertJSON<T>(string Json){
-            
-            return JsonConvert.DeserializeObject<T>(Json);
-            
-        }
+
 
     }
 }

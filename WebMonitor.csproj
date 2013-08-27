@@ -41,6 +41,9 @@
     <Reference Include="Honorbuddy">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\Honorbuddy.exe</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RemoteASMNative">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\RemoteASMNative.dll</HintPath>
@@ -66,12 +69,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConverterJson.cs" />
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="IConvertJson.cs" />
     <Compile Include="ISend.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

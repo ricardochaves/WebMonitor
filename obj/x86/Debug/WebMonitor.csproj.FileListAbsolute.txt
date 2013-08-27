@@ -16,3 +16,4 @@ E:\WebMonitor\WebMonitor\obj\x86\Debug\GenerateResource.read.1.tlog
 E:\WebMonitor\WebMonitor\obj\x86\Debug\GenerateResource.write.1.tlog
 E:\WebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.exe
 E:\WebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.pdb
+E:\WebMonitor\WebMonitor\bin\Debug\Newtonsoft.Json.dll

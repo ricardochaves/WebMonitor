@@ -23,7 +23,7 @@ namespace WebMonitor
         private DateTime startTime; //Data que o Bot deu Start
         private string session;
         private SendSession sSession = new SendSession(new Send());
-        private SendGuild sGuild = new SendGuild(new Send());
+        private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private int IDPlayerLogado;
 
