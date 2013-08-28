@@ -76,8 +76,8 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="IConvertJson.cs" />
-    <Compile Include="ISend.cs" />
+    <Compile Include="abstractmodel\IConvertJson.cs" />
+    <Compile Include="abstractmodel\ISend.cs" />
     <Compile Include="modelo\Character.cs" />
     <Compile Include="modelo\Guild.cs" />
     <Compile Include="modelo\Realm.cs" />
