@@ -78,6 +78,9 @@
     </Compile>
     <Compile Include="IConvertJson.cs" />
     <Compile Include="ISend.cs" />
+    <Compile Include="modelo\Character.cs" />
+    <Compile Include="modelo\Guild.cs" />
+    <Compile Include="modelo\Realm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Send.cs" />

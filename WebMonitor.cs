@@ -26,6 +26,7 @@ namespace WebMonitor
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private int IDPlayerLogado;
+        private Guid guild;
 
         #region Construtor
         public WebMonitor() { }
@@ -254,7 +255,7 @@ namespace WebMonitor
             //StyxWoW.Me.FreeBagSlots
             //StyxWoW.Me.FreeNormalBagSlots   
             //StyxWoW.Me.Gold
-            //StyxWoW.Me.Guid //OBJ
+            //StyxWoW.Me.Guid; //OBJ
             //StyxWoW.Me.GuildLevel
             //StyxWoW.Me.GuildRank
             //StyxWoW.Me.IsAFKFlagged
