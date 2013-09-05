@@ -14,6 +14,7 @@ namespace WebMonitor
         public const string URLINCLUIRGUILDMONEY = @"/api/saveguild";
         public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
         public const string URLSTARTNEWSESSION = @"api/startnew";
+        public const string URLSTARTCLOSESESSION = @"/api/closesession";
         public const string URLSENDPLAYERINFO = @"";
         public const string HOST = "http://localhost:9000/";
     }

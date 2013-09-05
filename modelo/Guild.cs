@@ -13,5 +13,18 @@ namespace WebMonitor.modelo
 	    public long accounts;
 	    public List<Character> characteres;
 	    public Realm realm;
+
+        public Guild()
+        {
+        }
+
+        public Guild(string nome, long gold, long accounts)
+        {
+            this.name = nome;
+            this.gold = gold;
+            this.accounts = accounts;
+        }
+
+
     }
 }

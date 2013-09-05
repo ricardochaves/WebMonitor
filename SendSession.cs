@@ -18,5 +18,9 @@ namespace WebMonitor
         {
             return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
         }
+        public void closeSession(string idSession)
+        {
+            s.MakeRequest(Strings.URLSTARTCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&idSession=" + idSession);
+        }
     }
 }
