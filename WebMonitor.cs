@@ -165,6 +165,7 @@ namespace WebMonitor
             Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
             Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
+            Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
 
             enviarDadosIniciais();
 
@@ -174,6 +175,7 @@ namespace WebMonitor
         {
             Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
+            sSession.closeSession(session);
             Util.WriteLog("WebMonitor stoped");
         }
         private void onDead()
@@ -225,7 +227,11 @@ namespace WebMonitor
         }
         private void onPlayerLogin(object sender, LuaEventArgs args)
         {
-            sPlayer.SendPlayerInfo(StyxWoW.Me.Name, StyxWoW.Me.Class.ToString(), StyxWoW.Me.Race.ToString(), StyxWoW.Me.Level, StyxWoW.Me.RealmName);
+            IDPlayerLogado = sPlayer.SendPlayerInfo(StyxWoW.Me.Name, StyxWoW.Me.Class.ToString(), StyxWoW.Me.Race.ToString(), StyxWoW.Me.Level, StyxWoW.Me.RealmName);
+        }
+        private void onPlayerLogout(object sender, LuaEventArgs args)
+        {
+            sPlayer.SendPlayerLogout(IDPlayerLogado);
         }
         private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
         {

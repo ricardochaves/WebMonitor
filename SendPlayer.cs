@@ -19,5 +19,10 @@ namespace WebMonitor
             return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
         }
 
+        public void SendPlayerLogout(int idPlayer)
+        {
+            s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
+
+        }
     }
 }
