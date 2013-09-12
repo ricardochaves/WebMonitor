@@ -170,7 +170,7 @@ namespace WebMonitor
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
             Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
 
-            app = new WebMonitorApp(CharacterFactory.GetInstance(), GuildFactory.GetInstance(StyxWoW.Me));
+            app = new WebMonitorApp(CharacterFactory.GetInstance(StyxWoW.Me), GuildFactory.GetInstance(StyxWoW.Me));
             
             enviarDadosIniciais();
 
