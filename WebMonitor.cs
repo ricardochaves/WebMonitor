@@ -1,4 +1,4 @@
-﻿using Styx.Plugins;
+using Styx.Plugins;
 using Styx.WoWInternals;
 using Styx.CommonBot;
 using Styx.Common;
@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Styx.MemoryManagement;
 using System.Text;
+using WebMonitor.factories;
 
 namespace WebMonitor
 {
@@ -26,7 +27,9 @@ namespace WebMonitor
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private int IDPlayerLogado;
-        private Guid guild;
+
+        WebMonitorApp app;
+       
 
         #region Construtor
         public WebMonitor() { }
@@ -167,6 +170,8 @@ namespace WebMonitor
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
             Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
 
+            app = new WebMonitorApp(CharacterFactory.GetInstance(), GuildFactory.GetInstance(StyxWoW.Me));
+            
             enviarDadosIniciais();
 
             Util.WriteLog("WebMonitor started.");
@@ -227,6 +232,7 @@ namespace WebMonitor
         }
         private void onPlayerLogin(object sender, LuaEventArgs args)
         {
+            
             IDPlayerLogado = sPlayer.SendPlayerInfo(StyxWoW.Me.Name, StyxWoW.Me.Class.ToString(), StyxWoW.Me.Race.ToString(), StyxWoW.Me.Level, StyxWoW.Me.RealmName);
         }
         private void onPlayerLogout(object sender, LuaEventArgs args)
@@ -242,7 +248,8 @@ namespace WebMonitor
 
         private void onLogin(object sender, LuaEventArgs args)
         {
-            
+            app = new WebMonitorApp(CharacterFactory.GetInstance(), GuildFactory.GetInstance(StyxWoW.Me));
+
             //Enviar dados da Guild do Personagem.
             sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
         }
