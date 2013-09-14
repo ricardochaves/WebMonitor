@@ -170,7 +170,7 @@ namespace WebMonitor
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
             Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
 
-            app = new WebMonitorApp(CharacterFactory.GetInstance(StyxWoW.Me), GuildFactory.GetInstance(StyxWoW.Me));
+            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me),CharacterFactory.GetInstance(StyxWoW.Me));
             
             enviarDadosIniciais();
 
@@ -248,7 +248,7 @@ namespace WebMonitor
 
         private void onLogin(object sender, LuaEventArgs args)
         {
-            app = new WebMonitorApp(CharacterFactory.GetInstance(), GuildFactory.GetInstance(StyxWoW.Me));
+            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
 
             //Enviar dados da Guild do Personagem.
             sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());

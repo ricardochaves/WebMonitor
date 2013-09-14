@@ -7,7 +7,7 @@ using Styx.WoWInternals.WoWObjects;
 
 namespace WebMonitor.factories
 {
-    class CharacterFactory
+    public static class CharacterFactory
     {
         public static Character GetInstance(LocalPlayer player)
         {
