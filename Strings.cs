@@ -17,6 +17,7 @@ namespace WebMonitor
         public const string URLSTARTCLOSESESSION = @"/api/closesession";
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
+        public const string URLSENDPLAYERITENS = @"";
         public const string HOST = "http://localhost:9000/";
     }
 }
