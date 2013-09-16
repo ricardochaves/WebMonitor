@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +19,8 @@ namespace WebMonitor.modelo
         public int achievementPoints;
         public String thumbnail;
         public String calcClass;
+
+        public List<Item> listItensBag;
+
     }
 }
