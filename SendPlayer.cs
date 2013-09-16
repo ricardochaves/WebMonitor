@@ -20,7 +20,7 @@ namespace WebMonitor
             return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
         }
 
-        public void SendPlayerLogout(string idPlayer)
+        public void SendPlayerLogout(long idPlayer)
         {
             s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
 
