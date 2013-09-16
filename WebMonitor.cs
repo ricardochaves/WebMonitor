@@ -27,7 +27,6 @@ namespace WebMonitor
         private string session;
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
-        private SendPlayer sPlayer = new SendPlayer(new Send());
         private int IDPlayerLogado;
 
         WebMonitorApp app;
@@ -241,7 +240,7 @@ namespace WebMonitor
         }
         private void onPlayerLogout(object sender, LuaEventArgs args)
         {
-            sPlayer.SendPlayerLogout(IDPlayerLogado);
+            app.sendPlayerLogout();
         }
         private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
         {
@@ -264,6 +263,8 @@ namespace WebMonitor
             }
             app.character.listItensBag = li;
             sPlayer.SentItensPlayer(app.character);
+
+
         }
         private void onLogin(object sender, LuaEventArgs args)
         {
