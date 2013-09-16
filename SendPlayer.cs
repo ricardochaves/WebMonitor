@@ -28,7 +28,7 @@ namespace WebMonitor
 
         public void SentItensPlayer(Character c)
         {
-            //Fazer envio
+            s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "");
         }
 
     }
