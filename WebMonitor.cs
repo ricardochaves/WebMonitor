@@ -259,6 +259,7 @@ namespace WebMonitor
                 i.bagslot = item.BagSlot;
                 i.id = item.ItemInfo.Id;
                 i.name = item.ItemInfo.Name;
+                i.stackcount = item.StackCount;
                 li.Add(i);
             }
             app.character.listItensBag = li;
