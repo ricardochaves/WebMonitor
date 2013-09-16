@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WebMonitor.modelo;
 
 namespace WebMonitor
 {
@@ -24,5 +25,11 @@ namespace WebMonitor
             s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
 
         }
+
+        public void SentItensPlayer(Character c)
+        {
+            //Fazer envio
+        }
+
     }
 }
