@@ -12,8 +12,10 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Styx.MemoryManagement;
+using Styx.WoWInternals.WoWObjects;
 using System.Text;
 using WebMonitor.factories;
+using WebMonitor.modelo;
 
 namespace WebMonitor
 {
@@ -169,6 +171,8 @@ namespace WebMonitor
             Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
             Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
+            Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
+            
 
             app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me),CharacterFactory.GetInstance(StyxWoW.Me));
             
@@ -245,7 +249,20 @@ namespace WebMonitor
             sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
             
         }
-
+        private void onCloseInboxItem(object sender, LuaEventArgs args)
+        {
+            List<Item> li  = new List<Item>();
+            foreach (WoWItem item in StyxWoW.Me.BagItems)
+            {
+                Item i = new Item();
+                i.bagindex = item.BagIndex;
+                i.bagslot = item.BagSlot;
+                i.id = item.ItemInfo.Id;
+                i.name = item.ItemInfo.Name;
+                li.Add(i);
+            }
+            app.character.listItensBag = li;
+        }
         private void onLogin(object sender, LuaEventArgs args)
         {
             app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
