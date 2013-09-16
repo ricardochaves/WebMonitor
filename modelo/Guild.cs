@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebMonitor.modelo
 {
-    class Guild
+    public class Guild
     {
         public long id;
 	    public String name;
