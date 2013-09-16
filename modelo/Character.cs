@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WebMonitor.modelo
 {
-    class Character
+    public class Character
     {
-	    public long id;
+	public long id;
         public long lastModified;
         public String name;
         public String realm;
