@@ -262,6 +262,7 @@ namespace WebMonitor
                 li.Add(i);
             }
             app.character.listItensBag = li;
+            sPlayer.SentItensPlayer(app.character);
         }
         private void onLogin(object sender, LuaEventArgs args)
         {
