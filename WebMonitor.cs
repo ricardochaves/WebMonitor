@@ -235,8 +235,7 @@ namespace WebMonitor
         }
         private void onPlayerLogin(object sender, LuaEventArgs args)
         {
-            
-            IDPlayerLogado = sPlayer.SendPlayerInfo(StyxWoW.Me.Name, StyxWoW.Me.Class.ToString(), StyxWoW.Me.Race.ToString(), StyxWoW.Me.Level, StyxWoW.Me.RealmName);
+            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
         }
         private void onPlayerLogout(object sender, LuaEventArgs args)
         {
@@ -262,8 +261,7 @@ namespace WebMonitor
                 li.Add(i);
             }
             app.character.listItensBag = li;
-            sPlayer.SentItensPlayer(app.character);
-
+            
 
         }
         private void onLogin(object sender, LuaEventArgs args)
