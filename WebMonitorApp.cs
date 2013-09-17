@@ -22,7 +22,7 @@ namespace WebMonitor
         public void updateCharItens(List<Item> l)
         {
             character.listItensBag = l;
-            sPlayer.SentItensPlayer(character);
+            sPlayer.SendItensPlayer(character);
         }
 
         public void sendPlayerLogout()
