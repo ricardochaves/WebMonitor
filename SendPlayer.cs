@@ -26,7 +26,7 @@ namespace WebMonitor
 
         }
 
-        public void SentItensPlayer(Character c)
+        public void SendItensPlayer(Character c)
         {
             s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "");
         }
