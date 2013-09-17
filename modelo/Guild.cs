@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +13,7 @@ namespace WebMonitor.modelo
 	    public long accounts;
 	    public List<Character> characteres;
 	    public Realm realm;
+        public List<GuildBankTab> guildTabs;
 
         public Guild()
         {
