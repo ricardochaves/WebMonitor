@@ -16,6 +16,7 @@ using Styx.WoWInternals.WoWObjects;
 using System.Text;
 using WebMonitor.factories;
 using WebMonitor.modelo;
+using WebMonitor.services;
 
 namespace WebMonitor
 {
