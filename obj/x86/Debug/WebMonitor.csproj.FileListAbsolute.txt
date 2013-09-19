@@ -17,3 +17,4 @@ E:\WebMonitor\WebMonitor\bin\Debug\Honorbuddy.xml
 E:\WebMonitor\WebMonitor\bin\Debug\System.Data.SQLite.xml
 E:\WebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.exe
 E:\WebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.pdb
+E:\WebMonitor\WebMonitor\bin\Debug\Honorbuddy.Launcher.exe

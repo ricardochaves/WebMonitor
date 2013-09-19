@@ -161,6 +161,7 @@ namespace WebMonitor
         {
 
             session = sSession.getNewSession();
+
             Util.WriteLog("Sessão iniciada: " + session);
 
             startTime = DateTime.Now;

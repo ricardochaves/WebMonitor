@@ -41,6 +41,9 @@
     <Reference Include="Honorbuddy">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\Honorbuddy.exe</HintPath>
     </Reference>
+    <Reference Include="Honorbuddy.Launcher">
+      <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\Honorbuddy.Launcher.exe</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>

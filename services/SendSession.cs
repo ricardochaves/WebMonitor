@@ -20,7 +20,7 @@ namespace WebMonitor.services
         }
         public void closeSession(string idSession)
         {
-            s.MakeRequest(Strings.URLSTARTCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&idSession=" + idSession);
+            s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&idSession=" + idSession);
         }
     }
 }
