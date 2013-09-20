@@ -13398,6 +13398,11 @@
             The index of this landmark. This can be used with GetMapLandmarkInfo by adding 1.
             </summary>
         </member>
+        <member name="P:Styx.WoWInternals.WoWLandMark.Data">
+            <summary>
+            Gets the data for this LandMarkEntry.
+            </summary>
+        </member>
         <member name="P:Styx.WoWInternals.WoWLandMark.Type">
             <summary>
             Gets the type of this landmark.
