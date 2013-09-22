@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
+//!CompilerOption:AddRef:System.Web.Extensions.dll
+using System.Web.Script.Serialization;
 
 namespace WebMonitor
 {
@@ -10,8 +11,9 @@ namespace WebMonitor
     {
         public T ConvertJSON<T>(string Json)
         {
-
-            return JsonConvert.DeserializeObject<T>(Json);
+            JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+            T routes_list = (T)json_serializer.DeserializeObject(Json);
+            return routes_list;
 
         }
     }

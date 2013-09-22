@@ -20,7 +20,7 @@ using WebMonitor.services;
 
 namespace WebMonitor
 {
-    class WebMonitor : HBPlugin
+    public class WebMonitor : HBPlugin
     {
 
         private static Boolean isInit = false;
@@ -28,7 +28,6 @@ namespace WebMonitor
         private string session;
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
-        private int IDPlayerLogado;
 
         WebMonitorApp app;
        
@@ -68,51 +67,60 @@ namespace WebMonitor
         {
 
 
-
-            if (WebMonitor.isInit == true)
+            try
             {
-                return;
+                if (WebMonitor.isInit == true)
+                {
+                    return;
+                }
+
+
+
+                //VINCULANDO ENVENTOS DO BOT
+                Styx.CommonBot.BotEvents.OnBotStarted += onStart;
+                Styx.CommonBot.BotEvents.OnBotStopped += onStop;
+
+                Util.WriteLog("WebMonitor initialized.");
+
+
+
+                //Styx.CommonBot.BotEvents.Profile.OnNewOuterProfileLoaded
+                //Styx.CommonBot.BotEvents
+
+                //LEVANTANDO QUAIS EVENTOS ELE VAI PEGAR NO JOGO.
+                //AQUI VAMOS PEGAR TUDO O QUE QUEREMOS.
+                //Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", GbankUpdate);
+                //Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", GbankUpdate);
+                ////Lua.Events.AttachEvent("LOOT_OPENED", LOOTOPENED);
+                ////Lua.Events.AttachEvent("LOOT_SLOT_CLEARED", LOOTSLOTCLEARED);
+                //Lua.Events.AttachEvent("ZONE_CHANGED", ZONECHANGED);
+                //Lua.Events.AttachEvent("ZONE_CHANGED_INDOORS", ZONECHANGEDINDOORS);
+                //Lua.Events.AttachEvent("ZONE_CHANGED_NEW_AREA", ZONECHANGEDNEWAREA);
+
+                //Lua.Events.AttachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
+                //AppDomain.CurrentDomain.ProcessExit += CurrentDomainProcessExit;
+                //AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
+
+
+                ////CONTROLES DE TEMPO, TENTAR ENTENDER DEPOIS
+                //lastUpdate = DateTime.Now;
+                //startTime = DateTime.Now;
+
+                //Logging.Write(string.Format("[MasterControl]: Version {0} Loaded.", Version.ToString()));
+                //var profile = Styx.CommonBot.BotManager.Current;
+                //Logging.Write(string.Format("[MasterControl]: Styx.CommonBot.BotManager.Current: {0}.", profile));
+
+                ////IniciaSessao();
+                WebMonitor.isInit = true;
+            
+            }
+            catch (Exception ex)
+            {
+
+               throw new Exception (ex.Message,ex);
+                
             }
 
-
-
-            //VINCULANDO ENVENTOS DO BOT
-            Styx.CommonBot.BotEvents.OnBotStarted += onStart;
-            Styx.CommonBot.BotEvents.OnBotStopped += onStop;
-
-            Util.WriteLog("WebMonitor initialized.");
-            
-            
-            
-            //Styx.CommonBot.BotEvents.Profile.OnNewOuterProfileLoaded
-            //Styx.CommonBot.BotEvents
-
-            //LEVANTANDO QUAIS EVENTOS ELE VAI PEGAR NO JOGO.
-            //AQUI VAMOS PEGAR TUDO O QUE QUEREMOS.
-            //Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", GbankUpdate);
-            //Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", GbankUpdate);
-            ////Lua.Events.AttachEvent("LOOT_OPENED", LOOTOPENED);
-            ////Lua.Events.AttachEvent("LOOT_SLOT_CLEARED", LOOTSLOTCLEARED);
-            //Lua.Events.AttachEvent("ZONE_CHANGED", ZONECHANGED);
-            //Lua.Events.AttachEvent("ZONE_CHANGED_INDOORS", ZONECHANGEDINDOORS);
-            //Lua.Events.AttachEvent("ZONE_CHANGED_NEW_AREA", ZONECHANGEDNEWAREA);
-
-            //Lua.Events.AttachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
-            //AppDomain.CurrentDomain.ProcessExit += CurrentDomainProcessExit;
-            //AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
-
-
-            ////CONTROLES DE TEMPO, TENTAR ENTENDER DEPOIS
-            //lastUpdate = DateTime.Now;
-            //startTime = DateTime.Now;
-
-            //Logging.Write(string.Format("[MasterControl]: Version {0} Loaded.", Version.ToString()));
-            //var profile = Styx.CommonBot.BotManager.Current;
-            //Logging.Write(string.Format("[MasterControl]: Styx.CommonBot.BotManager.Current: {0}.", profile));
-
-            ////IniciaSessao();
-            WebMonitor.isInit = true;
-            
 
             
             
