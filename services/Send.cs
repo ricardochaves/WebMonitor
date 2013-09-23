@@ -14,7 +14,7 @@ namespace WebMonitor.services
         public Task<string> MakeAsyncRequest(string url, string data) 
         {
             //http://stackoverflow.com/questions/3279888/how-to-add-parameters-into-a-webrequest
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://teste-play.appspot.com" + url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url);
             request.Method = "POST";
             request.Proxy = null;
             request.ContentType = "application/x-www-form-urlencoded";
@@ -47,6 +47,8 @@ namespace WebMonitor.services
         {
             try
             {
+
+                Util.WriteLog(Strings.HOST + url);
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url);
                 request.Method = "POST";
                 request.Proxy = null;

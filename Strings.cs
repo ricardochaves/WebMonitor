@@ -13,11 +13,11 @@ namespace WebMonitor
 
         public const string URLINCLUIRGUILDMONEY = @"/api/saveguild";
         public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
-        public const string URLSTARTNEWSESSION = @"api/startsession";
+        public const string URLSTARTNEWSESSION = @"/api/startsession";
         public const string URLCLOSESESSION = @"/api/closesession";
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
         public const string URLSENDPLAYERITENS = @"";
-        public const string HOST = "http://localhost:9000/";
+        public const string HOST = "http://teste-play.appspot.com";
     }
 }

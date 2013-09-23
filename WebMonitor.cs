@@ -29,6 +29,8 @@ namespace WebMonitor
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
 
+        private bool DEBUG = true;
+
         WebMonitorApp app;
        
 
@@ -167,6 +169,8 @@ namespace WebMonitor
         #region EnventsON
         private void onStart(EventArgs args)
         {
+
+            if (DEBUG) Util.WriteLog("[DEBUG]Inicio do onStart");
 
             session = sSession.getNewSession();
 

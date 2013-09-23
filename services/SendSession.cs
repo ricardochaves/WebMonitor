@@ -16,7 +16,19 @@ namespace WebMonitor.services
 
         public string getNewSession()
         {
-            return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
+            try
+            {
+                Util.WriteLog(Strings.URLSTARTNEWSESSION);
+                Util.WriteLog("key=" + WMGlobalSettings.Instance.Key);
+
+                return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
         }
         public void closeSession(string idSession)
         {
