@@ -12,6 +12,7 @@ namespace WebMonitor
 
         public readonly Guild guild;
         public readonly Character character;
+        public readonly Session session;
         private SendPlayer sPlayer = new SendPlayer(new Send());
         
         public WebMonitorApp(Guild g, Character c)
@@ -29,6 +30,11 @@ namespace WebMonitor
         public void sendPlayerLogout()
         {
             sPlayer.SendPlayerLogout(character.id);
+        }
+
+        public void startSession(Session s)
+        {
+            
         }
 
     }

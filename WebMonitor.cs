@@ -123,10 +123,6 @@ namespace WebMonitor
                 
             }
 
-
-            
-            
-
         }
         public override void Dispose()
         {
@@ -173,7 +169,8 @@ namespace WebMonitor
             if (DEBUG) Util.WriteLog("[DEBUG]Inicio do onStart");
 
             session = sSession.getNewSession();
-
+            app.startSession(new Session());
+            
             Util.WriteLog("Sessão iniciada: " + session);
 
             startTime = DateTime.Now;

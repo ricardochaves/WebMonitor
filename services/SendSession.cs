@@ -18,9 +18,6 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog(Strings.URLSTARTNEWSESSION);
-                Util.WriteLog("key=" + WMGlobalSettings.Instance.Key);
-
                 return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
             }
             catch (Exception ex)
@@ -32,7 +29,6 @@ namespace WebMonitor.services
         }
         public void closeSession(string idSession)
         {
-            Util.WriteLog("Fechando=" + idSession);
             s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
         }
     }
