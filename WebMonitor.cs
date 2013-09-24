@@ -25,8 +25,6 @@ namespace WebMonitor
 
         private static Boolean isInit = false;
         private DateTime startTime; //Data que o Bot deu Start
-        private string session;
-        private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
 
         private bool DEBUG = true;
@@ -168,10 +166,9 @@ namespace WebMonitor
 
             if (DEBUG) Util.WriteLog("[DEBUG]Inicio do onStart");
 
-            session = sSession.getNewSession();
-            app.startSession(new Session());
+            app.startSession();
             
-            Util.WriteLog("Sessão iniciada: " + session);
+            //Util.WriteLog("Sessão iniciada: " + session);
 
             startTime = DateTime.Now;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
@@ -194,7 +191,8 @@ namespace WebMonitor
         {
             Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
-            sSession.closeSession(session);
+            app.closeSession();
+           
             Util.WriteLog("WebMonitor stoped");
         }
         private void onDead()
