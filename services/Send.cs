@@ -10,6 +10,7 @@ namespace WebMonitor.services
 {
     public class Send : ISend
     {
+
         // Define other methods and classes here
         public Task<string> MakeAsyncRequest(string url, string data) 
         {

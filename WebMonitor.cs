@@ -287,6 +287,11 @@ namespace WebMonitor
         }
         #endregion
 
+
+        public void RefreshSession()
+        {
+
+        }
         public void enviarDadosIniciais()
         {
             //Nome personagem

@@ -11,5 +11,6 @@ namespace WebMonitor
     {
         Task<string> MakeAsyncRequest(string url, string data);
         string MakeRequest(string url, string data);
+
     }
 }
