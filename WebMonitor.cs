@@ -186,6 +186,7 @@ namespace WebMonitor
         private void onPlayerLogin(object sender, LuaEventArgs args)
         {
             StartApp();
+            app.startSession(Styx.CommonBot.BotManager.Current.Name);
             //Enviar dados da Guild do Personagem.
             sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
 
@@ -222,7 +223,7 @@ namespace WebMonitor
 
         private void StartApp()
         {
-            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), Styx.CommonBot.BotManager.Current.Name);
+            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
         }
 
         public void RefreshSession()
