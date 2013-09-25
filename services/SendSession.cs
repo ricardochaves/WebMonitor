@@ -16,6 +16,8 @@ namespace WebMonitor.services
 
         public string getNewSession()
         {
+
+            //ESSE METODO VAI SAIR
             try
             {
                 return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
@@ -26,6 +28,18 @@ namespace WebMonitor.services
                 throw ex;
             }
             
+        }
+        public string getNewSession(string Json)
+        {
+            try
+            {
+                return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key + "&data=" + Json);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public void closeSession(string idSession)
         {

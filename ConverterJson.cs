@@ -16,5 +16,13 @@ namespace WebMonitor
             return routes_list;
 
         }
+
+        public string ConvertTOJson(Object o)
+        {
+            JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+            return json_serializer.Serialize(o);
+
+        }
+
     }
 }

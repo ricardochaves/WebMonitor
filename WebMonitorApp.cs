@@ -13,6 +13,7 @@ namespace WebMonitor
         public readonly Guild guild;
         public readonly Character character;
         public readonly Session session = new Session();
+        private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
 
@@ -46,6 +47,9 @@ namespace WebMonitor
             session.dateLogin = DateTime.Now;
             session.botBase = botBase;
             session.botDebug = "";
+
+            sSession.getNewSession(conv.ConvertTOJson(session));
+
         }
 
         public void closeSession()
