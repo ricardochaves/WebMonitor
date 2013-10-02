@@ -26,8 +26,6 @@ namespace WebMonitor
         private DateTime startTime; //Data que o Bot deu Start
         private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
 
-        private bool DEBUG = true;
-
         WebMonitorApp app;
        
 
@@ -107,20 +105,22 @@ namespace WebMonitor
         private void onStart(EventArgs args)
         {
 
-            if (DEBUG) Util.WriteLog("[DEBUG]Inicio do onStart");
+            Logging.WriteDiagnostic("[DEBUG]Inicio do onStart");
 
             //Util.WriteLog("Sessão iniciada: " + session);
 
             startTime = DateTime.Now;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
+
             
+
             Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
             Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
             Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
             Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
             Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
-
+            
             StartApp();
             
             enviarDadosIniciais();
@@ -223,9 +223,9 @@ namespace WebMonitor
         private void StartApp()
         {
             app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
-            if (DEBUG) Util.WriteLog("[DEBUG]Vai chamar agora");
+            Logging.WriteDiagnostic("[DEBUG]Vai chamar agora");
             app.startSession(Styx.CommonBot.BotManager.Current.Name);
-            if (DEBUG) Util.WriteLog("[DEBUG]Chamou");
+            Logging.WriteDiagnostic("[DEBUG]Chamou");
         }
 
         public void RefreshSession()
