@@ -11,7 +11,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Styx.MemoryManagement;
 using Styx.WoWInternals.WoWObjects;
 using System.Text;
 using WebMonitor.factories;
@@ -224,6 +223,9 @@ namespace WebMonitor
         private void StartApp()
         {
             app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
+            if (DEBUG) Util.WriteLog("[DEBUG]Vai chamar agora");
+            app.startSession(Styx.CommonBot.BotManager.Current.Name);
+            if (DEBUG) Util.WriteLog("[DEBUG]Chamou");
         }
 
         public void RefreshSession()

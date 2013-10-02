@@ -19,9 +19,13 @@ namespace WebMonitor
 
         public string ConvertTOJson(Object o)
         {
+            String s;
             JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-            return json_serializer.Serialize(o);
-
+            
+            s = json_serializer.Serialize(o);
+            s = s.Replace(@"\/Date(", "");
+            s = s.Replace(@")\/", "");
+            return s;
         }
 
     }

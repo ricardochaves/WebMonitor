@@ -439,6 +439,13 @@
             
              <value> The active set. </value>
         </member>
+        <member name="M:Styx.CommonBot.Profiles.Quest.Order.ConditionShortcuts.GetShortcut(System.String)">
+            <summary>
+            Tries to get a shortcut for an expression, without compilation. Returns null if no shortcut was found.
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
         <member name="T:Styx.CommonBot.Routines.IBehaviors">
             <summary>Behaviors interface, internal usage only.</summary>
         </member>
@@ -4108,7 +4115,7 @@
         </member>
         <member name="P:Styx.Resources.StyxResources.Loading_Tile_s">
             <summary>
-              Looks up a localized string similar to Loading Tile/s.
+              Looks up a localized string similar to Loading Tiles.
             </summary>
         </member>
         <member name="P:Styx.Resources.StyxResources.Logging_of_exception_failed">
@@ -7354,7 +7361,7 @@
             Created by Nesox 2012-02-04
             </remarks>
         </member>
-        <member name="M:Styx.WoWInternals.WoWObjects.WoWDoor.CanOpenNowAsm(Styx.MemoryManagement.Executor,System.IntPtr,System.UInt32)">
+        <member name="M:Styx.WoWInternals.WoWObjects.WoWDoor.CanOpenNowAsm(GreyMagic.Executor,System.IntPtr,System.UInt32)">
             <summary>
             Determines whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can open now asm] the specified executor.
             </summary>
@@ -8627,18 +8634,6 @@
         </member>
         <member name="F:Styx.GraphicsApi.GLL">
             <summary> .  </summary>
-        </member>
-        <member name="M:Styx.StyxWoW.Initialize(Styx.MemoryManagement.ExternalProcessReader)">
-            <summary>
-            Initializes BlackMagic Wow and some pointers
-            </summary>
-            <param name="memory">instance of BlackMagic that will be used in the entire bot to read and write memory</param>
-        </member>
-        <member name="M:Styx.StyxWoW.HookEndscene">
-            <summary>
-            Install endscene hook
-            </summary>
-            <returns>true/false</returns>
         </member>
         <member name="M:Styx.StyxWoW.SleepForLagDuration">
             <summary>
@@ -11023,7 +11018,7 @@
             The guid of the object to set focus to.
             </param>
             <returns>
-            The result
+            Always true.
             </returns>
             <exception cref="T:System.ArgumentNullException">
             </exception>

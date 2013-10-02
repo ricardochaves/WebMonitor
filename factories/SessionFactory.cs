@@ -15,7 +15,7 @@ namespace WebMonitor.factories
             s.botBase = "";
             s.botDebug = "";
             s.character = null;
-            s.dateLogin = DateTime.Now;
+            s.tempo = DateTime.Now;
             
             return s;
         }    

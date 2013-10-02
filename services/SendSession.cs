@@ -14,25 +14,11 @@ namespace WebMonitor.services
             s = se;
         }
 
-        public string getNewSession()
-        {
-
-            //ESSE METODO VAI SAIR
-            try
-            {
-                return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key);
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
-            
-        }
         public string getNewSession(string Json)
         {
             try
             {
+                Util.WriteLog(Json);
                 return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key + "&data=" + Json);
             }
             catch (Exception ex)

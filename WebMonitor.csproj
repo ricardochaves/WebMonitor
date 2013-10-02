@@ -57,6 +57,9 @@
     <Reference Include="fasmdll_managed">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\fasmdll_managed.dll</HintPath>
     </Reference>
+    <Reference Include="GreyMagic">
+      <HintPath>D:\Users\RicardoRio\Documents\GreyMagic.dll</HintPath>
+    </Reference>
     <Reference Include="Honorbuddy">
       <HintPath>D:\Users\RicardoRio\Documents\Honorbuddy\Honorbuddy.exe</HintPath>
     </Reference>

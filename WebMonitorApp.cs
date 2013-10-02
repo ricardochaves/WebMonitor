@@ -42,13 +42,13 @@ namespace WebMonitor
 
         public void startSession(string botBase)
         {
-            session.id = sSession.getNewSession();
+            Util.WriteLog("[DEBUG]sSession.getNewSession");
+            session.id = sSession.getNewSession(conv.ConvertTOJson(session));
+            Util.WriteLog(session.id.ToString());
             session.character = character;
-            session.dateLogin = DateTime.Now;
+            session.tempo = DateTime.Now;
             session.botBase = botBase;
             session.botDebug = "";
-
-            sSession.getNewSession(conv.ConvertTOJson(session));
 
         }
 
