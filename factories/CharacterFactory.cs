@@ -11,7 +11,13 @@ namespace WebMonitor.factories
     {
         public static Character GetInstance(LocalPlayer player)
         {
-            return new Character();
+            Character c = new Character();
+            c.name = player.Name;
+            c.level = player.Level;
+            c.realm = player.RealmName;
+           
+            return c;
+
         }
     }
 }

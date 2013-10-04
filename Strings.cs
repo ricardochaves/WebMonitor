@@ -15,7 +15,7 @@ namespace WebMonitor
         public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
         public const string URLSTARTNEWSESSION = @"/api/startsession";
         public const string URLCLOSESESSION = @"/api/closesession";
-        public const string URLCHECKSESSION = @"";
+        public const string URLCHECKSESSION = @"/api/checksession";
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
         public const string URLSENDPLAYERITENS = @"";

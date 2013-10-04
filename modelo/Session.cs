@@ -9,7 +9,6 @@ namespace WebMonitor.modelo
     {
         public string id;
         public Character character;
-        public DateTime tempo;
         public String botBase;
         public String botDebug;
 

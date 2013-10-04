@@ -32,7 +32,15 @@ namespace WebMonitor.services
         }
         public void checkSession(string idSession)
         {
-            s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
     }

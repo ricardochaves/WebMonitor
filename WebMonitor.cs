@@ -55,9 +55,16 @@ namespace WebMonitor
         }
         public override void Pulse()
         {
-            //PARA TESTAR SE O PULSE ESTÁ RODANDO
-            //Logging.Write(string.Format("[MasterControl]: pulse"));
-            //updater();
+            try
+            {
+                app.pulse();            
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+            
         }
         
         public override void Initialize()
@@ -83,7 +90,7 @@ namespace WebMonitor
             catch (Exception ex)
             {
 
-               throw new Exception (ex.Message,ex);
+               Logging.WriteException( ex);
                 
             }
 
@@ -105,35 +112,56 @@ namespace WebMonitor
         private void onStart(EventArgs args)
         {
 
-            Logging.WriteDiagnostic("[DEBUG]Inicio do onStart");
+            try
+            {
+                Logging.WriteDiagnostic("[DEBUG]Inicio do onStart");
 
-            //Util.WriteLog("Sessão iniciada: " + session);
+                //Util.WriteLog("Sessão iniciada: " + session);
 
-            startTime = DateTime.Now;
-            Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
-            Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
+                startTime = DateTime.Now;
+                Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
+                Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
 
             
 
-            Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
-            Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
-            Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
-            Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
-            Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
+                Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+                Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
+                Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
+                Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
+                Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
             
-            StartApp();
+                StartApp();
             
-            enviarDadosIniciais();
+                enviarDadosIniciais();
 
-            Util.WriteLog("WebMonitor started.");
+                Util.WriteLog("WebMonitor started.");
+
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+            
+
+
         }
         private void onStop(EventArgs args)
         {
-            Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
-            Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
-            app.closeSession();
+            try
+            {
+                Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
+                Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
+                app.closeSession();
            
-            Util.WriteLog("WebMonitor stoped");
+                Util.WriteLog("WebMonitor stoped");
+            }
+            catch (Exception ex)
+            {
+                
+                Logging.WriteException( ex);
+            }
+
         }
         private void onDead()
         {
@@ -184,36 +212,55 @@ namespace WebMonitor
         }
         private void onPlayerLogin(object sender, LuaEventArgs args)
         {
-            StartApp();
-            app.startSession(Styx.CommonBot.BotManager.Current.Name);
-            //Enviar dados da Guild do Personagem.
-            sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
+            try
+            {
+                StartApp();
+                app.startSession(Styx.CommonBot.BotManager.Current.Name);
+                //Enviar dados da Guild do Personagem.
+                sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
+
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
 
         }
         private void onPlayerLogout(object sender, LuaEventArgs args)
         {
-            app.sendPlayerLogout();
+            try
+            {
+                app.sendPlayerLogout();
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+            
         }
         private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
         {
+
             //guildBankMoney = GetGuildBankMoney()
-            sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            //sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
             
         }
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
-            List<Item> li  = new List<Item>();
-            foreach (WoWItem item in StyxWoW.Me.BagItems)
-            {
-                Item i = new Item();
-                i.bagindex = item.BagIndex;
-                i.bagslot = item.BagSlot;
-                i.id = item.ItemInfo.Id;
-                i.name = item.ItemInfo.Name;
-                i.stackcount = item.StackCount;
-                li.Add(i);
-            }
-            app.character.listItensBag = li;
+            //List<Item> li  = new List<Item>();
+            //foreach (WoWItem item in StyxWoW.Me.BagItems)
+            //{
+            //    Item i = new Item();
+            //    i.bagindex = item.BagIndex;
+            //    i.bagslot = item.BagSlot;
+            //    i.id = item.ItemInfo.Id;
+            //    i.name = item.ItemInfo.Name;
+            //    i.stackcount = item.StackCount;
+            //    li.Add(i);
+            //}
+            //app.character.listItensBag = li;
             
 
         }
@@ -222,10 +269,18 @@ namespace WebMonitor
 
         private void StartApp()
         {
-            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
-            Logging.WriteDiagnostic("[DEBUG]Vai chamar agora");
-            app.startSession(Styx.CommonBot.BotManager.Current.Name);
-            Logging.WriteDiagnostic("[DEBUG]Chamou");
+            try
+            {
+                app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
+                Logging.WriteDiagnostic("[DEBUG]Vai chamar agora");
+                app.startSession(Styx.CommonBot.BotManager.Current.Name);
+                Logging.WriteDiagnostic("[DEBUG]Chamou");
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteException(ex);
+            }
+
         }
 
         public void RefreshSession()
@@ -234,6 +289,8 @@ namespace WebMonitor
         }
         public void enviarDadosIniciais()
         {
+
+            
             //Nome personagem
             //StyxWoW.Me.Name;
             //StyxWoW.Me.BagItems 

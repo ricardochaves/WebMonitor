@@ -7,7 +7,7 @@ namespace WebMonitor.modelo
 {
     public class Character
     {
-	public long id;
+	    public long id;
         public long lastModified;
         public String name;
         public String realm;
