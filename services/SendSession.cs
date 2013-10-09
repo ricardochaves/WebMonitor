@@ -18,7 +18,7 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog(Json);
+                //Util.WriteLog(Json);
                 return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key + "&data=" + Json);
             }
             catch (Exception ex)
@@ -28,12 +28,14 @@ namespace WebMonitor.services
         }
         public void closeSession(string idSession)
         {
+            
             s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
         }
         public void checkSession(string idSession)
         {
             try
             {
+                Util.WriteLog("Atualizando a Session com id: " + idSession);
                 s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
             }
             catch (Exception ex)

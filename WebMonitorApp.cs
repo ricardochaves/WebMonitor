@@ -14,11 +14,11 @@ namespace WebMonitor
 
         public readonly Guild guild;
         public readonly Character character;
-        public readonly Session session = new Session();
+        public Session session = new Session();
         private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
-        private DateTime lastchecksession = new DateTime();
+        private DateTime lastchecksession = DateTime.Now;
 
         public WebMonitorApp(Guild g, Character c)
         {
@@ -59,13 +59,26 @@ namespace WebMonitor
         public void startSession(string botBase)
         {
             Util.WriteLog("[DEBUG]sSession.getNewSession");
-            
+
+            string retorno;
+
             session.character = character;
             session.botBase = botBase;
             session.botDebug = "";
-            session.id = sSession.getNewSession(conv.ConvertTOJson(session));
-            
-            Util.WriteLog(session.id);
+            retorno = sSession.getNewSession(conv.ConvertTOJson(session));
+            Util.WriteLog("Retorno: " + retorno);
+            try
+            {
+                session = (Session)conv.ConvertJSON<Session>(retorno);
+
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+           
+            Util.WriteLog("Session.id: " + session.id);
 
         }
 
@@ -87,7 +100,8 @@ namespace WebMonitor
             
             try
             {
-                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) > 0)
+                Logging.Write(lastchecksession.ToString() + " --- " + DateTime.Now.ToString());
+                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0)
                 {
                     Logging.WriteDiagnostic("checkSession: " + DateTime.Now.ToString());
                     sSession.checkSession(session.id);
