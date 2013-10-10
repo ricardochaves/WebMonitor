@@ -100,11 +100,10 @@ namespace WebMonitor
             
             try
             {
-                Logging.Write(lastchecksession.ToString() + " --- " + DateTime.Now.ToString());
                 if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0)
                 {
-                    Logging.WriteDiagnostic("checkSession: " + DateTime.Now.ToString());
                     sSession.checkSession(session.id);
+                    lastchecksession = DateTime.Now;
                 }
             }
             catch (Exception ex)

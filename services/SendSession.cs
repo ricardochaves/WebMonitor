@@ -18,7 +18,6 @@ namespace WebMonitor.services
         {
             try
             {
-                //Util.WriteLog(Json);
                 return s.MakeRequest(Strings.URLSTARTNEWSESSION, "key=" + WMGlobalSettings.Instance.Key + "&data=" + Json);
             }
             catch (Exception ex)

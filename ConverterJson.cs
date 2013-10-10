@@ -12,7 +12,7 @@ namespace WebMonitor
         public T ConvertJSON<T>(string Json)
         {
             JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-            T routes_list = (T)json_serializer.DeserializeObject(Json);
+            T routes_list = json_serializer.Deserialize<T>(Json);
             return routes_list;
 
         }
