@@ -69,8 +69,6 @@ namespace WebMonitor
         
         public override void Initialize()
         {
-
-
             try
             {
                 if (WebMonitor.isInit == true)
@@ -204,10 +202,17 @@ namespace WebMonitor
         }
         private void onGuildBankOpened(object sender, LuaEventArgs args)
         {
+            try
+            {
+                //Util.WriteLog("Guild Name:" + Util.GetGuildProfileName());
+                //Util.WriteLog("Guild Money:"  + Util.GetGuildMoney().ToString());
+                sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteException(ex);
+            }
 
-            //Util.WriteLog("Guild Name:" + Util.GetGuildProfileName());
-            //Util.WriteLog("Guild Money:"  + Util.GetGuildMoney().ToString());
-            sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
             
         }
         private void onPlayerLogin(object sender, LuaEventArgs args)
@@ -249,18 +254,7 @@ namespace WebMonitor
         }
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
-            //List<Item> li  = new List<Item>();
-            //foreach (WoWItem item in StyxWoW.Me.BagItems)
-            //{
-            //    Item i = new Item();
-            //    i.bagindex = item.BagIndex;
-            //    i.bagslot = item.BagSlot;
-            //    i.id = item.ItemInfo.Id;
-            //    i.name = item.ItemInfo.Name;
-            //    i.stackcount = item.StackCount;
-            //    li.Add(i);
-            //}
-            //app.character.listItensBag = li;
+            
             
 
         }

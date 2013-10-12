@@ -40,17 +40,47 @@ namespace WebMonitor
             
         }
 
-
+        #region "Player"
         public void updateCharItens(List<Item> l)
         {
-            character.listItensBag = l;
-            sPlayer.SendItensPlayer(character);
+            try
+            {
+                character.listItensBag = l;
+                sPlayer.SendItensPlayer(character);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+
         }
 
         public void sendPlayerLogout()
         {
-            sPlayer.SendPlayerLogout(character.id);
+            try
+            {
+                sPlayer.SendPlayerLogout(character.id);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
         }
+
+        public void atualizaEstoque(List<Item> li)
+        {
+            character.listItensBag = li;
+            sPlayer.SendItensPlayer(character);
+
+        }
+
+        #endregion
+
+
+
 
 
 
@@ -58,23 +88,24 @@ namespace WebMonitor
 
         public void startSession(string botBase)
         {
-            Util.WriteLog("[DEBUG]sSession.getNewSession");
 
-            string retorno;
-
-            session.character = character;
-            session.botBase = botBase;
-            session.botDebug = "";
-            retorno = sSession.getNewSession(conv.ConvertTOJson(session));
-            Util.WriteLog("Retorno: " + retorno);
             try
             {
+                Util.WriteLog("[DEBUG]sSession.getNewSession");
+
+                string retorno;
+
+                session.character = character;
+                session.botBase = botBase;
+                session.botDebug = "";
+                retorno = sSession.getNewSession(conv.ConvertTOJson(session));
+                Util.WriteLog("Retorno: " + retorno);
+
                 session = (Session)conv.ConvertJSON<Session>(retorno);
 
             }
             catch (Exception ex)
             {
-
                 Logging.WriteException(ex);
             }
            
@@ -84,15 +115,33 @@ namespace WebMonitor
 
         public void closeSession()
         {
-            sSession.closeSession(session.id);
-            sSession = null;
+            try
+            {
+                sSession.closeSession(session.id);
+                sSession = null;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+
 
         }
 
         public void changeSession(string botBase, string botDebug)
         {
-            session.botBase = botBase;
-            session.botDebug = botDebug;
+            try
+            {
+                session.botBase = botBase;
+                session.botDebug = botDebug;
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+
         }
 
         private void checkSession()

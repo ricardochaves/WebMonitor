@@ -7,7 +7,7 @@ using System.Text;
 
 namespace WebMonitor.services
 {
-    class SendGuild
+    public class SendGuild
     {
 
         private ISend s;

@@ -99,6 +99,7 @@
     <Compile Include="ConverterJson.cs" />
     <Compile Include="factories\CharacterFactory.cs" />
     <Compile Include="factories\GuildFactory.cs" />
+    <Compile Include="factories\ItemFactory.cs" />
     <Compile Include="factories\SessionFactory.cs" />
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>

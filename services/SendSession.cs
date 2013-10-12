@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebMonitor.services
 {
-    class SendSession
+    public class SendSession
     {
 
         private ISend s;
@@ -27,8 +27,16 @@ namespace WebMonitor.services
         }
         public void closeSession(string idSession)
         {
+            try
+            {
+                s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             
-            s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
         }
         public void checkSession(string idSession)
         {

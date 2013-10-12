@@ -6,7 +6,7 @@ using WebMonitor.modelo;
 
 namespace WebMonitor.services
 {
-    class SendPlayer
+    public class SendPlayer
     {
         private ISend s;
         public SendPlayer(ISend se)
@@ -16,19 +16,42 @@ namespace WebMonitor.services
 
         public int SendPlayerInfo(string name, string classe, string race, int lvl, string realm)
         {
-
-            return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
+            try
+            {
+                return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+            
         }
 
         public void SendPlayerLogout(long idPlayer)
         {
-            s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
         }
 
         public void SendItensPlayer(Character c)
         {
-            s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "");
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
     }
