@@ -56,8 +56,8 @@ namespace WebMonitor.services
             }
             catch (Exception ex )
             {
-                
-                throw ex;
+                return "";
+                //throw ex;
             }
 
         }
