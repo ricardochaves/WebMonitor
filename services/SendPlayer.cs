@@ -41,11 +41,11 @@ namespace WebMonitor.services
 
         }
 
-        public void SendItensPlayer(Character c)
+        public void SendItensPlayer(string jChar)
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "");
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
             }
             catch (Exception ex)
             {

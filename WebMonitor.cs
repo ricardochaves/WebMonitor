@@ -129,7 +129,11 @@ namespace WebMonitor
                 Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
             
                 StartApp();
-            
+
+                app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me));
+
+
+
                 enviarDadosIniciais();
 
                 Util.WriteLog("WebMonitor started.");

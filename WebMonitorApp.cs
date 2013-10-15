@@ -46,7 +46,7 @@ namespace WebMonitor
             try
             {
                 character.listItensBag = l;
-                sPlayer.SendItensPlayer(character);
+                sPlayer.SendItensPlayer(conv.ConvertTOJson(character));
             }
             catch (Exception ex)
             {
@@ -70,18 +70,7 @@ namespace WebMonitor
             
         }
 
-        public void atualizaEstoque(List<Item> li)
-        {
-            character.listItensBag = li;
-            sPlayer.SendItensPlayer(character);
-
-        }
-
         #endregion
-
-
-
-
 
 
         #region "Session"
@@ -99,9 +88,10 @@ namespace WebMonitor
                 session.botBase = botBase;
                 session.botDebug = "";
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
-                Util.WriteLog("Retorno: " + retorno);
-
+                
                 session = (Session)conv.ConvertJSON<Session>(retorno);
+                
+                Util.WriteLog("Session.id: " + session.id);
 
             }
             catch (Exception ex)
@@ -109,7 +99,7 @@ namespace WebMonitor
                 Logging.WriteException(ex);
             }
            
-            Util.WriteLog("Session.id: " + session.id);
+            
 
         }
 
