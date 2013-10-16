@@ -34,10 +34,15 @@ namespace WebMonitor.services
 
                 return task.ContinueWith(t => ReadStreamFromResponse(t.Result));
             }
-            catch (Exception ex)
+            catch (AggregateException aex)
             {
                 
-                throw ex;
+                aex.Handle((ex) =>
+                {
+                    ex.LogException();
+                    return true;
+                });
+
             }
 
         }
