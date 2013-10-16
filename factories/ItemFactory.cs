@@ -9,13 +9,13 @@ namespace WebMonitor.factories
 {
     public static class ItemFactory
     {
-        public static List<Item> GetInstance(LocalPlayer player)
+        public static List<ItemUnit> GetInstance(LocalPlayer player)
         {
-            List<Item> li = new List<Item>();
+            List<ItemUnit> li = new List<ItemUnit>();
 
             foreach (WoWItem item in player.BagItems)
             {
-                Item i = new Item();
+                ItemUnit i = new ItemUnit();
                 i.bagindex = item.BagIndex;
                 i.bagslot = item.BagSlot;
                 i.id = item.ItemInfo.Id;

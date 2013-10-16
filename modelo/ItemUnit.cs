@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebMonitor.modelo
 {
-    public class Item
+    public class ItemUnit
     {
         public Decimal id;
         public String name;

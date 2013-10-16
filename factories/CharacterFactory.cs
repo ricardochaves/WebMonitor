@@ -20,14 +20,14 @@ namespace WebMonitor.factories
 
         }
 
-        public static List<Item> GetItensChar(LocalPlayer player)
+        public static List<ItemUnit> GetItensChar(LocalPlayer player)
         {
             List<WoWItem> l = player.BagItems;
-            List<Item> li = new List<Item>();
+            List<ItemUnit> li = new List<ItemUnit>();
 
             foreach (WoWItem item in l)
             {
-                Item i = new Item();
+                ItemUnit i = new ItemUnit();
 
                 i.id = (int)item.ItemInfo.Id;
                 i.stackcount = item.StackCount;

@@ -20,7 +20,7 @@ namespace WebMonitor.modelo
         public String thumbnail;
         public String calcClass;
 
-        public List<Item> listItensBag;
+        public List<ItemUnit> listItensBag;
 
     }
 }

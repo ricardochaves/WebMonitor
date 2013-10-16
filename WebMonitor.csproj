@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -111,7 +111,7 @@
     <Compile Include="abstractmodel\ISend.cs" />
     <Compile Include="modelo\Character.cs" />
     <Compile Include="modelo\Guild.cs" />
-    <Compile Include="modelo\Item.cs" />
+    <Compile Include="modelo\ItemUnit.cs" />
     <Compile Include="modelo\Realm.cs" />
     <Compile Include="modelo\Session.cs" />
     <Compile Include="Program.cs" />

@@ -13,7 +13,7 @@ namespace WebMonitor.modelo
 	    public long accounts;
 	    public List<Character> characteres;
 	    public Realm realm;
-        public List<Item> guildTabs;
+        public List<ItemUnit> guildTabs;
 
         public Guild()
         {

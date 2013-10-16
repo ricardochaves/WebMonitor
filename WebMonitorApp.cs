@@ -13,7 +13,7 @@ namespace WebMonitor
     {
 
         public readonly Guild guild;
-        public readonly Character character;
+        public Character character;
         public Session session = new Session();
         private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
@@ -41,7 +41,7 @@ namespace WebMonitor
         }
 
         #region "Player"
-        public void updateCharItens(List<Item> l)
+        public void updateCharItens(List<ItemUnit> l)
         {
             try
             {
@@ -90,7 +90,8 @@ namespace WebMonitor
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
                 
                 session = (Session)conv.ConvertJSON<Session>(retorno);
-                
+                character = session.character;
+
                 Util.WriteLog("Session.id: " + session.id);
 
             }
