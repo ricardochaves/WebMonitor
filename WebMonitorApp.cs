@@ -6,6 +6,7 @@ using WebMonitor.modelo;
 using WebMonitor.services;
 
 using Styx.Common;
+using System.IO;
 
 namespace WebMonitor
 {

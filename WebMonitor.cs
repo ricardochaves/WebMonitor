@@ -62,7 +62,7 @@ namespace WebMonitor
             catch (Exception ex)
             {
 
-                Logging.WriteException(ex);
+                //Logging.WriteException(ex);
             }
             
         }
@@ -142,7 +142,7 @@ namespace WebMonitor
             catch (Exception ex)
             {
 
-                Logging.WriteException(ex);
+                //Logging.WriteException(ex);
             }
             
 

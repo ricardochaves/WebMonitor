@@ -29,10 +29,10 @@ namespace WebMonitor.factories
             {
                 ItemUnit i = new ItemUnit();
 
-                i.id = (int)item.ItemInfo.Id;
-                i.stackcount = item.StackCount;
-                i.bagslot = item.BagSlot;
-                i.bagindex = item.BagIndex;
+                i.idBlizzard = (int)item.ItemInfo.Id;
+                i.stackCount = item.StackCount;
+                i.bagSlot = item.BagSlot;
+                i.bagIndex = item.BagIndex;
 
                 li.Add(i);
 

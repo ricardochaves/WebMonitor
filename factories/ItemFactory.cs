@@ -16,11 +16,11 @@ namespace WebMonitor.factories
             foreach (WoWItem item in player.BagItems)
             {
                 ItemUnit i = new ItemUnit();
-                i.bagindex = item.BagIndex;
-                i.bagslot = item.BagSlot;
-                i.id = item.ItemInfo.Id;
+                i.bagIndex = item.BagIndex;
+                i.bagSlot = item.BagSlot;
+                i.idBlizzard = item.ItemInfo.Id;
                 i.name = item.ItemInfo.Name;
-                i.stackcount = item.StackCount;
+                i.stackCount = item.StackCount;
                 li.Add(i);
             }
             return li;

@@ -7,10 +7,10 @@ namespace WebMonitor.modelo
 {
     public class ItemUnit
     {
-        public Decimal id;
+        public Decimal idBlizzard;
         public String name;
-        public int bagindex;
-        public int bagslot;
-        public uint stackcount;
+        public int bagIndex;
+        public int bagSlot;
+        public uint stackCount;
     }
 }
