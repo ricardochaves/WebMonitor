@@ -21,16 +21,54 @@ namespace WebMonitor.services
 
         public void SendGuildInfoMoney(string GuildProfileName, string goldGuild)
         {
-            string data = "name={0}&gold={1}";
-            data = String.Format(data, GuildProfileName, goldGuild);
-            s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
+            try
+            {
+
+                string data = "name={0}&gold={1}";
+                data = String.Format(data, GuildProfileName, goldGuild);
+                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+                    
+                    //ex.LogException();
+                    return true;
+                });
+            }
         }
 
         public void SendGuildInforTotal(string GuildProfileName, string goldGuild, string AccsGuild)
         {
-            string data = "name={0}&gold={1}@acss={2}";
-            data = String.Format(data, GuildProfileName, goldGuild, AccsGuild);
-            s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
+
+            try
+            {
+
+
+                string data = "name={0}&gold={1}@acss={2}";
+                data = String.Format(data, GuildProfileName, goldGuild, AccsGuild);
+                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
         }
         
 

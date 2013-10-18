@@ -45,9 +45,19 @@ namespace WebMonitor.services
                 Util.WriteLog("Atualizando a Session com id: " + idSession);
                 s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
             }
-            catch (Exception ex)
+            catch (AggregateException aex)
             {
-                throw ex;
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    Util.WriteLog(ex.Message);
+                    return true;
+                });
             }
             
         }

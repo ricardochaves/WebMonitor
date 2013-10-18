@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using Styx;
-
+using WebMonitor.modelo;
 
 namespace WebMonitor
 {
@@ -71,6 +71,39 @@ namespace WebMonitor
             long retVal = Lua.GetReturnVal<long>(script, 0);
             return retVal.ToString();
         }
+
+        public static List<ItemUnit> GetItensGuild(string guildName)
+        {
+
+            return new List<ItemUnit>();
+            string itens = String.Format( @"local itemCount = 0  
+                                            local mt = {}
+                                            for k,v in pairs(DataStore_ContainersDB.global.Guilds) do  
+                                            if string.find(k,{0}) and v.Tabs then  
+                                                for k2,v2 in ipairs(v.Tabs) do  
+                                                    if v2 and v2.ids then  
+                                                        mt[k2] = {}
+                                                        for k3,v3 in pairs(v2.ids) do  
+                                                        if v3 == 74839 then  
+                                                            itemCount = itemCount + (v2.counts[k3] or 1)  
+                                                            mt[k2][k3] = (v2.counts[k3] or 1)
+                   
+                   
+                                                        end  
+                                                        end  
+                                                    end  
+                                                end  
+                                            end  
+                                            end", guildName);
+
+
+            List<string> luaRet = Lua.GetReturnValues(itens);
+            
+            
+
+
+        }
+
 
     }
     static class Exts

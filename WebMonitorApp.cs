@@ -7,6 +7,7 @@ using WebMonitor.services;
 
 using Styx.Common;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace WebMonitor
 {
@@ -25,6 +26,15 @@ namespace WebMonitor
         {
             guild = g;
             character = c;
+
+            TaskScheduler.UnobservedTaskException += (object sender, UnobservedTaskExceptionEventArgs excArgs) =>
+            {
+                
+                Logging.WriteException(excArgs.Exception);
+                excArgs.SetObserved();
+
+            };
+
         }
 
         public void pulse()
@@ -33,9 +43,16 @@ namespace WebMonitor
             {
                 checkSession();
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
             
@@ -49,9 +66,23 @@ namespace WebMonitor
                 character.listItensBag = l;
                 sPlayer.SendItensPlayer(conv.ConvertTOJson(character));
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
 
@@ -63,9 +94,23 @@ namespace WebMonitor
             {
                 sPlayer.SendPlayerLogout(character.id);
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
             
@@ -96,9 +141,24 @@ namespace WebMonitor
                 Util.WriteLog("Session.id: " + session.id);
 
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                Logging.WriteException(ex);
+
+                throw ex;
             }
            
             
@@ -112,9 +172,23 @@ namespace WebMonitor
                 sSession.closeSession(session.id);
                 sSession = null;
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
 
@@ -128,9 +202,23 @@ namespace WebMonitor
                 session.botBase = botBase;
                 session.botDebug = botDebug;
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
 
@@ -147,9 +235,23 @@ namespace WebMonitor
                     lastchecksession = DateTime.Now;
                 }
             }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    //foreach (Exception e in aex.InnerExceptions)
+                    //{
+                    //    Util.WriteLog(e.ToString());
+                    //}
+
+                    //ex.LogException();
+                    return true;
+                });
+            }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
         }
