@@ -5,6 +5,8 @@ using System.Text;
 using WebMonitor.modelo;
 using WebMonitor.services;
 
+using WebMonitor.factories;
+
 using Styx.Common;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,12 +16,14 @@ namespace WebMonitor
     class WebMonitorApp
     {
 
-        public readonly Guild guild;
+        public Guild guild;
         public Character character;
         public Session session = new Session();
         private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
+        private SendGuild sGuild = new SendGuild(new Send());
+
         private DateTime lastchecksession = DateTime.Now;
 
         public WebMonitorApp(Guild g, Character c)
@@ -58,6 +62,52 @@ namespace WebMonitor
             
         }
 
+        #region "Guild"
+        public void updateGuildGold(string guildName, string guildGold)
+        {
+            try
+            {
+                sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            
+        }
+        public void updateGuildItens(string guildName)
+        {
+            try
+            {
+                Logging.Write("Inicio");
+                guild.guildTabs = ItemFactory.GetInstanceGuild(guildName);
+                Logging.Write("pegouitens");
+                sGuild.SendGuildItens(conv.ConvertTOJson(guild));
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
+        }
+        #endregion
+
         #region "Player"
         public void updateCharItens(List<ItemUnit> l)
         {
@@ -71,12 +121,6 @@ namespace WebMonitor
                 aex.Handle((ex) =>
                 {
 
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -87,7 +131,6 @@ namespace WebMonitor
             }
 
         }
-
         public void sendPlayerLogout()
         {
             try
@@ -99,12 +142,6 @@ namespace WebMonitor
                 aex.Handle((ex) =>
                 {
 
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -117,7 +154,6 @@ namespace WebMonitor
         }
 
         #endregion
-
 
         #region "Session"
 
@@ -146,12 +182,6 @@ namespace WebMonitor
                 aex.Handle((ex) =>
                 {
 
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -164,7 +194,6 @@ namespace WebMonitor
             
 
         }
-
         public void closeSession()
         {
             try
@@ -177,12 +206,6 @@ namespace WebMonitor
                 aex.Handle((ex) =>
                 {
 
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -194,7 +217,6 @@ namespace WebMonitor
 
 
         }
-
         public void changeSession(string botBase, string botDebug)
         {
             try
@@ -207,12 +229,6 @@ namespace WebMonitor
                 aex.Handle((ex) =>
                 {
 
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -223,7 +239,6 @@ namespace WebMonitor
             }
 
         }
-
         private void checkSession()
         {
             
@@ -239,13 +254,6 @@ namespace WebMonitor
             {
                 aex.Handle((ex) =>
                 {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
                     return true;
                 });
             }
@@ -257,10 +265,6 @@ namespace WebMonitor
         }
 
         #endregion
-
-
-
-
 
     }
 }

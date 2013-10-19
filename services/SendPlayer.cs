@@ -33,19 +33,9 @@ namespace WebMonitor.services
             {
                 s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
             }
-            catch (AggregateException aex)
+            catch (Exception ex)
             {
-                aex.Handle((ex) =>
-                {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
-                    return true;
-                });
+                throw ex;
             }
             
 
@@ -57,19 +47,9 @@ namespace WebMonitor.services
             {
                 s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
             }
-            catch (AggregateException aex)
+            catch (Exception ex)
             {
-                aex.Handle((ex) =>
-                {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
-                    return true;
-                });
+                throw ex;
             }
             
         }

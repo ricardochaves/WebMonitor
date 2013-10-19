@@ -11,12 +11,10 @@ namespace WebMonitor.services
     {
 
         private ISend s;
-        private IConvertJson cj;
 
-        public SendGuild(ISend se, IConvertJson c)
+        public SendGuild(ISend se)
         {
             s = se;
-            cj = c;
         }
 
         public void SendGuildInfoMoney(string GuildProfileName, string goldGuild)
@@ -24,23 +22,13 @@ namespace WebMonitor.services
             try
             {
 
-                string data = "name={0}&gold={1}";
-                data = String.Format(data, GuildProfileName, goldGuild);
+                string data = "key={0}&name={1}&gold={2}";
+                data = String.Format(data,WMGlobalSettings.Instance.Key, GuildProfileName, goldGuild);
                 s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
             }
-            catch (AggregateException aex)
+            catch (Exception ex)
             {
-                aex.Handle((ex) =>
-                {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-                    
-                    //ex.LogException();
-                    return true;
-                });
+                throw ex;
             }
         }
 
@@ -49,29 +37,30 @@ namespace WebMonitor.services
 
             try
             {
-
-
-                string data = "name={0}&gold={1}@acss={2}";
-                data = String.Format(data, GuildProfileName, goldGuild, AccsGuild);
+                string data = "key={0}&name={0}&gold={1}@acss={2}";
+                data = String.Format(data,WMGlobalSettings.Instance.Key, GuildProfileName, goldGuild, AccsGuild);
                 s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
             }
-            catch (AggregateException aex)
+            catch (Exception ex)
             {
-                aex.Handle((ex) =>
-                {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    //ex.LogException();
-                    return true;
-                });
+                throw ex;
             }
         }
-        
 
-
+        public void SendGuildItens(string jGuild)
+        {
+            try
+            {
+                //Util.WriteLog(jGuild);
+                string data = "key={0}&data={1}";
+                data = String.Format(data, WMGlobalSettings.Instance.Key, jGuild);
+                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDITENS, data);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
     }
 }

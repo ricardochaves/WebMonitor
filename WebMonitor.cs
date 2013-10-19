@@ -24,8 +24,7 @@ namespace WebMonitor
 
         private static Boolean isInit = false;
         private DateTime startTime; //Data que o Bot deu Start
-        private SendGuild sGuild = new SendGuild(new Send(), new ConverterJson());
-
+        
         WebMonitorApp app;
        
 
@@ -107,6 +106,8 @@ namespace WebMonitor
         #endregion
 
         #region EnventsON
+
+        #region BotEvents
         private void onStart(EventArgs args)
         {
 
@@ -124,6 +125,7 @@ namespace WebMonitor
 
                 Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
                 Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
+                Lua.Events.AttachEvent("GUILDBANKFRAME_CLOSED", onGuildBankClosed);
                 Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
                 Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
                 Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
@@ -165,6 +167,76 @@ namespace WebMonitor
             }
 
         }
+        #endregion
+
+        #region GuildBankEvents
+        private void onGuildBankOpened(object sender, LuaEventArgs args)
+        {
+            try
+            {
+                app.updateGuildGold(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteException(ex);
+            }
+
+            
+        }
+        private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
+        {
+            try
+            {
+                app.updateGuildGold(Util.GetGuildProfileName(), Util.GetGuildMoney());
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteException(ex);
+            }
+        }
+        private void onGuildBankClosed(object sender, LuaEventArgs args)
+        {
+            try
+            {
+                app.updateGuildItens(Util.GetGuildProfileName());
+            }
+            catch (Exception ex)
+            {
+                
+                Logging.WriteException(ex);
+            }
+        }
+        #endregion
+
+        #region PlayerEvents
+        private void onPlayerLogin(object sender, LuaEventArgs args)
+        {
+            try
+            {
+                StartApp();
+                app.startSession(Styx.CommonBot.BotManager.Current.Name);
+
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+
+        }
+        private void onPlayerLogout(object sender, LuaEventArgs args)
+        {
+            try
+            {
+                app.sendPlayerLogout();
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+            
+        }
         private void onDead()
         {
 
@@ -204,64 +276,16 @@ namespace WebMonitor
 
             //if (MasterControlSettings.Instance.scLevel) screenie();
         }
-        private void onGuildBankOpened(object sender, LuaEventArgs args)
-        {
-            try
-            {
-                //Util.WriteLog("Guild Name:" + Util.GetGuildProfileName());
-                //Util.WriteLog("Guild Money:"  + Util.GetGuildMoney().ToString());
-                sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
-            }
-            catch (Exception ex)
-            {
-                Logging.WriteException(ex);
-            }
+        #endregion
 
-            
-        }
-        private void onPlayerLogin(object sender, LuaEventArgs args)
-        {
-            try
-            {
-                StartApp();
-                app.startSession(Styx.CommonBot.BotManager.Current.Name);
-                //Enviar dados da Guild do Personagem.
-                sGuild.SendGuildInforTotal(Util.GetGuildProfileName(), Util.GetGuildMoney(), Util.GetTotalGuildsAccs());
-
-            }
-            catch (Exception ex)
-            {
-
-                Logging.WriteException(ex);
-            }
-
-        }
-        private void onPlayerLogout(object sender, LuaEventArgs args)
-        {
-            try
-            {
-                app.sendPlayerLogout();
-            }
-            catch (Exception ex)
-            {
-
-                Logging.WriteException(ex);
-            }
-            
-        }
-        private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
-        {
-
-            //guildBankMoney = GetGuildBankMoney()
-            //sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
-            
-        }
+        #region MailBoxEvents
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
             
             
 
         }
+        #endregion
 
         #endregion
 
@@ -281,10 +305,6 @@ namespace WebMonitor
 
         }
 
-        public void RefreshSession()
-        {
-
-        }
         public void enviarDadosIniciais()
         {
 

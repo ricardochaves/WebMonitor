@@ -33,7 +33,6 @@ namespace WebMonitor.services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             
@@ -45,19 +44,9 @@ namespace WebMonitor.services
                 Util.WriteLog("Atualizando a Session com id: " + idSession);
                 s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
             }
-            catch (AggregateException aex)
+            catch (Exception ex)
             {
-                aex.Handle((ex) =>
-                {
-
-                    //foreach (Exception e in aex.InnerExceptions)
-                    //{
-                    //    Util.WriteLog(e.ToString());
-                    //}
-
-                    Util.WriteLog(ex.Message);
-                    return true;
-                });
+                throw ex;
             }
             
         }

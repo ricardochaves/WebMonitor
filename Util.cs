@@ -75,33 +75,54 @@ namespace WebMonitor
         public static List<ItemUnit> GetItensGuild(string guildName)
         {
 
-            return new List<ItemUnit>();
-            string itens = String.Format( @"local itemCount = 0  
-                                            local mt = {}
-                                            for k,v in pairs(DataStore_ContainersDB.global.Guilds) do  
-                                            if string.find(k,{0}) and v.Tabs then  
-                                                for k2,v2 in ipairs(v.Tabs) do  
-                                                    if v2 and v2.ids then  
-                                                        mt[k2] = {}
-                                                        for k3,v3 in pairs(v2.ids) do  
-                                                        if v3 == 74839 then  
-                                                            itemCount = itemCount + (v2.counts[k3] or 1)  
-                                                            mt[k2][k3] = (v2.counts[k3] or 1)
-                   
-                   
-                                                        end  
-                                                        end  
-                                                    end  
+            try
+            {
+                ItemUnit itU;
+                List<ItemUnit> litU = new List<ItemUnit>();
+
+                string itens = @"
+                                local itemCount = 0  
+                                local mt = {{}}
+                                for k,v in pairs(DataStore_ContainersDB.global.Guilds) do  
+                                    if string.find(k,'{0}') and v.Tabs then  
+                                        for k2,v2 in ipairs(v.Tabs) do  
+                                            if v2 and v2.ids then  
+                                                for k3,v3 in pairs(v2.ids) do  
+                                                    table.insert(mt,k2 .. '|' .. k3 .. '|' .. v3 .. '|' .. (v2.counts[k3] or 1))
                                                 end  
                                             end  
-                                            end", guildName);
+                                        end  
+                                    end  
+                                end  
+                                return unpack(mt)
+                                ";
 
+                itens = String.Format(itens, guildName);
+                List<string> luaRet = Lua.GetReturnValues(itens);
 
-            List<string> luaRet = Lua.GetReturnValues(itens);
-            
-            
+                Char c = new Char()  ;
+                c = Convert.ToChar("|");
 
+                foreach (var item in luaRet)
+                {
+                    string[] it = item.Split(c);
 
+                    itU = new ItemUnit();
+                    itU.bagSlot = Convert.ToInt32(it[0]);
+                    itU.bagIndex = Convert.ToInt32(it[1]);
+                    itU.idBlizzard = Convert.ToInt32(it[2]);
+                    itU.stackCount = Convert.ToUInt32(it[3]);
+
+                    litU.Add(itU);
+
+                }
+                return litU;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
 

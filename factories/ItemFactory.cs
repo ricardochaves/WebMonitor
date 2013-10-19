@@ -9,22 +9,44 @@ namespace WebMonitor.factories
 {
     public static class ItemFactory
     {
-        public static List<ItemUnit> GetInstance(LocalPlayer player)
+        public static List<ItemUnit> GetInstancePlayer(LocalPlayer player)
         {
-            List<ItemUnit> li = new List<ItemUnit>();
-
-            foreach (WoWItem item in player.BagItems)
+            try
             {
-                ItemUnit i = new ItemUnit();
-                i.bagIndex = item.BagIndex;
-                i.bagSlot = item.BagSlot;
-                i.idBlizzard = item.ItemInfo.Id;
-                i.name = item.ItemInfo.Name;
-                i.stackCount = item.StackCount;
-                li.Add(i);
+                List<ItemUnit> li = new List<ItemUnit>();
+
+                foreach (WoWItem item in player.BagItems)
+                {
+                    ItemUnit i = new ItemUnit();
+                    i.bagIndex = item.BagIndex;
+                    i.bagSlot = item.BagSlot;
+                    i.idBlizzard = item.ItemInfo.Id;
+                    i.name = item.ItemInfo.Name;
+                    i.stackCount = item.StackCount;
+                    li.Add(i);
+                }
+                return li;
             }
-            return li;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
+        public static List<ItemUnit> GetInstanceGuild(string guildName)
+        {
+            try
+            {
+                return Util.GetItensGuild(guildName);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
+        }
+
 
     }
 }

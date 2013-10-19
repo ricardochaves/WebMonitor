@@ -13,6 +13,7 @@ namespace WebMonitor
 
         public const string URLINCLUIRGUILDMONEY = @"/api/saveguild";
         public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
+        public const string URLINCLUIRGUILDITENS = @"";
         public const string URLSTARTNEWSESSION = @"/api/startsession";
         public const string URLCLOSESESSION = @"/api/closesession";
         public const string URLCHECKSESSION = @"/api/checksession";

@@ -11,7 +11,12 @@ namespace WebMonitor.factories
     {
         public static Guild GetInstance(LocalPlayer player)
         {
-            return new Guild();
+            Guild g = new Guild();
+            g.name = Util.GetGuildProfileName();
+            g.realm = player.RealmName;
+            g.gold = Convert.ToInt64(Util.GetGuildMoney());
+            g.guildTabs = new List<ItemUnit>();
+            return g;
         }     
     }
 }
