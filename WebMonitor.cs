@@ -128,7 +128,7 @@ namespace WebMonitor
                 Lua.Events.AttachEvent("GUILDBANKFRAME_CLOSED", onGuildBankClosed);
                 Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
                 Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
-                Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onPlayerLogout);
+                Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
             
                 StartApp();
 
@@ -143,8 +143,7 @@ namespace WebMonitor
             }
             catch (Exception ex)
             {
-
-                //Logging.WriteException(ex);
+                Logging.WriteException(ex);
             }
             
 
@@ -281,9 +280,14 @@ namespace WebMonitor
         #region MailBoxEvents
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
-            
-            
-
+            try
+            {
+                app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteException(ex);
+            }
         }
         #endregion
 

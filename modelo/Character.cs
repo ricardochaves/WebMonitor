@@ -19,6 +19,7 @@ namespace WebMonitor.modelo
         public int achievementPoints;
         public String thumbnail;
         public String calcClass;
+        public long money;
 
         public List<ItemUnit> listItensBag;
 

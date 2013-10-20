@@ -54,5 +54,18 @@ namespace WebMonitor.services
             
         }
 
+        public void SendPlayerMoney(string jChar)
+        {
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERMONEY, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+        }
+
     }
 }

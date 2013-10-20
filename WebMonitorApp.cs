@@ -7,7 +7,7 @@ using WebMonitor.services;
 
 using WebMonitor.factories;
 
-using Styx.Common;
+using Styx.Common; //por causa do logging
 using System.IO;
 using System.Threading.Tasks;
 
@@ -152,7 +152,27 @@ namespace WebMonitor
             }
             
         }
+        public void updatePlayerMoney(long gold)
+        {
+            try
+            {
+                character.money = gold;
+                sPlayer.SendPlayerMoney(conv.ConvertTOJson(character));
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+
+        }
         #endregion
 
         #region "Session"
