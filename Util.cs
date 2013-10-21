@@ -125,7 +125,40 @@ namespace WebMonitor
             }
         }
 
+        public void ItensVendidos()
+        {
+            string a = @"local MS_DB = MS_DB
+                        local keys = {}
 
+
+                        for factionrealm, data in pairs(MS_DB.factionrealm) do 
+   
+                           if data.sales  then
+                              keys[factionrealm] = data.sales
+      
+                              print(factionrealm, data)
+                           end
+   
+                        end
+
+                        sales = keys['Alliance - Nemesis']
+
+                        for key, data in pairs(sales) do 
+                           print('key', '||', key, data)
+                        end
+
+
+                        for i=1, table.getn(sales) do
+   
+                           --~success, item, money, buyer, when = core:Deserialize(sales[200])
+   
+                           --~if success then
+                           --~   print(buyer)   
+                           --~end
+   
+                        end";
+
+        }
     }
     static class Exts
     {
