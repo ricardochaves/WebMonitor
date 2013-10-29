@@ -60,8 +60,7 @@ namespace WebMonitor
             }
             catch (Exception ex)
             {
-
-                //Logging.WriteException(ex);
+                Util.LogExceptions(ex);
             }
             
         }
@@ -120,8 +119,7 @@ namespace WebMonitor
                 startTime = DateTime.Now;
                 Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
                 Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
-
-            
+                
 
                 Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
                 Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
@@ -129,7 +127,7 @@ namespace WebMonitor
                 Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
                 Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
                 Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
-            
+
                 StartApp();
 
                 app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me));
@@ -238,7 +236,16 @@ namespace WebMonitor
         }
         private void onDead()
         {
+            try
+            {
+                app.sendPlayerDead();
+            }
+            catch (Exception ex)
+            {
 
+                Logging.WriteException(ex);
+            }
+            
             //WSBot.estMorte m = new WSBot.estMorte();
 
             //using (Styx.StyxWoW.Memory.AcquireFrame())
@@ -260,6 +267,18 @@ namespace WebMonitor
         }
         private void onLevel(BotEvents.Player.LevelUpEventArgs args)
         {
+
+            try
+            {
+                app.sendPlayerLevelUP();
+            }
+            catch (Exception ex)
+            {
+
+                Logging.WriteException(ex);
+            }
+
+
 
             //WSBot.estLevelUp lvl = new WSBot.estLevelUp();
 

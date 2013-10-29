@@ -173,6 +173,46 @@ namespace WebMonitor
             }
 
         }
+        public void sendPlayerDead()
+        {
+            try
+            {
+                sPlayer.SendPlayerDead();
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public void sendPlayerLevelUP()
+        {
+            try
+            {
+                sPlayer.SendPlayerLevelUP();
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         #endregion
 
         #region "Session"

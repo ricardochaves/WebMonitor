@@ -21,6 +21,8 @@ namespace WebMonitor
         public const string URLSENDPLAYERLOGOUT = @"";
         public const string URLSENDPLAYERITENS = @"/api/character/updateitens";
         public const string URLSENDPLAYERMONEY = @"";
+        public const string URLSENDPLAYERDEAD = @"";
+        public const string URLSENDPLAYERLEVELUP = @"";
         public const string HOST = "http://teste-play.appspot.com";
     }
 }

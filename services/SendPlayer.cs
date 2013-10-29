@@ -67,5 +67,31 @@ namespace WebMonitor.services
             }
         }
 
+        public void SendPlayerDead()
+        {
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERDEAD, "key=" + WMGlobalSettings.Instance.Key);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void SendPlayerLevelUP()
+        {
+            try
+            {
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERLEVELUP, "key=" + WMGlobalSettings.Instance.Key);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }

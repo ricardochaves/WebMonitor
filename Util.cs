@@ -159,6 +159,19 @@ namespace WebMonitor
                         end";
 
         }
+
+        public static void LogExceptions(Exception ex)
+        {
+            try
+            {
+                Logging.WriteException(ex);
+            }
+            catch (Exception)
+            {
+                
+            }
+            
+        }
     }
     static class Exts
     {
