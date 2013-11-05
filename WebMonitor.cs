@@ -119,7 +119,8 @@ namespace WebMonitor
                 startTime = DateTime.Now;
                 Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
                 Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
-                
+                Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
+                Styx.CommonBot.BotEvents.Player.OnMobKilled += onLevel;
 
                 Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
                 Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);

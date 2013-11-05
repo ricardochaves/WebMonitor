@@ -11,7 +11,7 @@ namespace WebMonitor
         public const string AUTOR = "Ricardo Baltazar Chaves";
         public const string CAPTIONBUTTONCONFIG = "Settings";
 
-        public const string URLINCLUIRGUILDMONEY = @"/api/saveguild";
+        public const string URLINCLUIRGUILDMONEY = @"/api/updategold";
         public const string URLINCLUIRGUILDTOTAL = @"/api/saveguild";
         public const string URLINCLUIRGUILDITENS = @"";
         public const string URLSTARTNEWSESSION = @"/api/startsession";
@@ -20,7 +20,7 @@ namespace WebMonitor
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
         public const string URLSENDPLAYERITENS = @"/api/character/updateitens";
-        public const string URLSENDPLAYERMONEY = @"";
+        public const string URLSENDPLAYERMONEY = @"/api/character/updategold";
         public const string URLSENDPLAYERDEAD = @"";
         public const string URLSENDPLAYERLEVELUP = @"";
         public const string HOST = "http://teste-play.appspot.com";

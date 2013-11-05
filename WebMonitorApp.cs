@@ -67,7 +67,8 @@ namespace WebMonitor
         {
             try
             {
-                sGuild.SendGuildInfoMoney(Util.GetGuildProfileName(), Util.GetGuildMoney());
+                guild.gold =Convert.ToInt32(Util.GetGuildMoney());
+                sGuild.SendGuildInfoMoney(conv.ConvertTOJson(guild));
             }
             catch (AggregateException aex)
             {

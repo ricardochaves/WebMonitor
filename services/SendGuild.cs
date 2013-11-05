@@ -17,13 +17,13 @@ namespace WebMonitor.services
             s = se;
         }
 
-        public void SendGuildInfoMoney(string GuildProfileName, string goldGuild)
+        public void SendGuildInfoMoney(string jGuild)
         {
             try
             {
 
-                string data = "key={0}&name={1}&gold={2}";
-                data = String.Format(data,WMGlobalSettings.Instance.Key, GuildProfileName, goldGuild);
+                string data = "key={0}&data={1}";
+                data = String.Format(data,WMGlobalSettings.Instance.Key, jGuild);
                 s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
             }
             catch (Exception ex)
