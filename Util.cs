@@ -125,7 +125,7 @@ namespace WebMonitor
             }
         }
 
-        public void ItensVendidos()
+        public static void ItensVendidos()
         {
             string a = @"local MS_DB = MS_DB
                         local keys = {}

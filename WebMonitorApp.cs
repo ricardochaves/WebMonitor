@@ -26,10 +26,11 @@ namespace WebMonitor
 
         private DateTime lastchecksession = DateTime.Now;
 
-        public WebMonitorApp(Guild g, Character c)
+        public WebMonitorApp(Guild g, Character c, Session s)
         {
             guild = g;
             character = c;
+            session = s;
 
             TaskScheduler.UnobservedTaskException += (object sender, UnobservedTaskExceptionEventArgs excArgs) =>
             {
@@ -45,7 +46,7 @@ namespace WebMonitor
         {
             try
             {
-                checkSession();
+                //checkSession();
             }
             catch (AggregateException aex)
             {
@@ -223,6 +224,8 @@ namespace WebMonitor
 
             try
             {
+
+
                 Util.WriteLog("[DEBUG]sSession.getNewSession");
 
                 string retorno;
@@ -231,7 +234,9 @@ namespace WebMonitor
                 session.botBase = botBase;
                 session.botDebug = "";
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
-                
+
+                Util.WriteLog("RETORNO: " +retorno);
+
                 session = (Session)conv.ConvertJSON<Session>(retorno);
                 character = session.character;
 

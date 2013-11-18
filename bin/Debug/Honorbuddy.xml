@@ -4,6 +4,12 @@
         <name>Styx</name>
     </assembly>
     <members>
+        <member name="M:Styx.CommonBot.BotBase.AddMonitorMembers">
+            <summary>
+            Adds members to the monitor. Override this instead of implementing a new StatusText.
+            <example>            dynamic obj = StatusObject;  obj.ExperienceLeft = StyxWoW.Me.NextLevelExperience - StyxWoW.Me.Experience;</example>
+            </summary>
+        </member>
         <member name="P:Styx.CommonBot.BotBase.IsPrimaryType">
             <summary>Gets a value indicating whether this object is primary bot type. These will be used by default in mixed-mode.</summary>
             <value>true if this object is primary type, false if not.</value>
@@ -12,6 +18,11 @@
             <summary>Gets a value indicating whether the requirements met for this bot to be run. Secondary type bots MUST implement this
             		 member, for the bot to be used when needed.</summary>
             <value>true if requirements met, false if not.</value>
+        </member>
+        <member name="P:Styx.CommonBot.BotBase.StatusText">
+            <summary>
+            Gets or sets the status text of the bot.
+            </summary>
         </member>
         <member name="P:Styx.CommonBot.BotBase.RequiresProfileScope">
             <summary>
@@ -1427,6 +1438,149 @@
             <param name="start"></param>
             <param name="end"></param>
         </member>
+        <member name="M:Styx.WoWInternals.World.AreaTable`1.HasEntry(System.Int32,System.Int32)">
+            <summary>
+            Gets a value that indicates whether this <see cref="!:AreaTable"/> has an entry at the specified X and Y coordinates.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.AreaTable`1.TryGetEntry(System.Int32,System.Int32,`0@)">
+            <summary>
+            Tries to get an entry from this area table.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.AreaTable`1.GetEntry(System.Int32,System.Int32)">
+            <summary>
+            Gets an entry from this area table.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when this <see cref="!:AreaTable"/> does not contain an area at X and Y.</exception>
+        </member>
+        <member name="M:Styx.WoWInternals.World.AreaTable`1.GetEntries">
+            <summary>
+            Gets all entries in this area table.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.MinX">
+            <summary>
+            Gets the min X coordinate.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.MinY">
+            <summary>
+            Gets the min Y coordinate.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.MaxX">
+            <summary>
+            Gets the max X coordinate.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.MaxY">
+            <summary>
+            Gets the max Y coordinate.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.Width">
+            <summary>
+            Gets the width of this area table. This should be equal to <see cref="P:Styx.WoWInternals.World.AreaTable`1.MaxX"/> - <see cref="P:Styx.WoWInternals.World.AreaTable`1.MaxY"/> + 1.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.AreaTable`1.Height">
+            <summary>
+            Gets the height of this area table. This should be equal to <see cref="P:Styx.WoWInternals.World.AreaTable`1.MaxX"/> - <see cref="P:Styx.WoWInternals.World.AreaTable`1.MaxY"/> + 1.
+            </summary>
+        </member>
+        <member name="M:Styx.WoWInternals.World.JbnMap.GetAreaTable">
+            <summary>
+            Gets the area table of this map.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.JbnMap.HasAreaAt(System.Int32,System.Int32)">
+            <summary>
+            Gets a value that indicates whether this map has an area at the specified X and Y.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.MapID">
+            <summary>
+            Gets the map ID of this map.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.Map">
+            <summary>
+            Gets the DBC map entry for this map.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.IsActive">
+            <summary>
+            Gets a value that indicates whether this map is currently active.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.BaseAddress">
+            <summary>
+            Gets the base address of this map.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.MapPath">
+            <summary>
+            Gets the path to this maps directory in Blizzard's internal files.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.JbnMap.MapName">
+            <summary>
+            Gets the name of this map.
+            </summary>
+        </member>
+        <member name="M:Styx.WoWInternals.World.WorldMap.GetMapIdAt(Styx.WoWPoint)">
+            <summary>
+            Gets the map ID at a specified ingame position. Returns -1 if the point is not on any currently loaded map.
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.WorldMap.GetMapAt(Styx.WoWPoint)">
+            <summary>
+            Gets the map at a specified ingame position.
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.WorldMap.GetMaps">
+            <summary>
+            Gets all maps in this world map.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.WoWInternals.World.WorldMap.GetMap(System.Int32)">
+            <summary>
+            Gets a map at a specified index.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Styx.WoWInternals.World.WorldMap.MainMapID">
+            <summary>
+            Gets the main map ID of this world map.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.World.WorldMap.MainMap">
+            <summary>
+            Gets the main map of this world map.
+            </summary>
+        </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWObject">
             <summary>
             </summary>
@@ -1439,6 +1593,13 @@
             <remarks>
             Created by Nesox 2012-02-04
             </remarks>
+        </member>
+        <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.EnsureValid(System.String)">
+            <summary>
+            Ensures that this object is valid. Throws an InvalidOperationException if the object is invalid.
+            </summary>
+            <param name="funcName">The function this is being called from. Used when constructing the exception message.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.GetWorldMatrix">
             <summary>
@@ -1696,6 +1857,7 @@
             <summary>
             Performs a simulated right click on this object, very useful for looting npcs etc...
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.Interact(System.Boolean)">
@@ -1703,6 +1865,7 @@
             Performs a simulated right click on this object, very useful for looting npcs etc...
             </summary>
             <param name="ignoreTimer">if set to <c>true</c> [ignore timer].</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.GetPosition">
@@ -1717,17 +1880,9 @@
             <summary>
             Returns the name of a <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/>
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <returns>
             The name of this <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/>.
-            </returns>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.GetIsIndoors">
-            <summary>
-            Determines whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/> is indoors.
-            </summary>
-            <returns>
-              <c>true</c> if this <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/> is indoors; otherwise, <c>false</c>.
             </returns>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
@@ -1738,7 +1893,7 @@
             <returns>
               <c>true</c> if this <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/> is outdoors; otherwise, <c>false</c>.
             </returns>
-            <exception cref="T:System.InvalidOperationException">Cannot begin injected subroutine on an object with BaseAddress == 0</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="E:Styx.WoWInternals.WoWObjects.WoWObject.OnInvalidate">
@@ -2036,6 +2191,7 @@
             <value>
             	<c>true</c> if this instance is outdoors; otherwise, <c>false</c>.
             </value>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>
             Created by Nesox 2012-02-04
             </remarks>
@@ -2047,6 +2203,7 @@
             <value>
             	<c>true</c> if this instance is indoors; otherwise, <c>false</c>.
             </value>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>
             Created by Nesox 2012-02-04
             </remarks>
@@ -2845,6 +3002,20 @@
             </summary>
             <param name="reason">reason why we are dismounting. </param>
         </member>
+        <member name="M:Styx.CommonBot.Mount.SummonMount(System.String)">
+             <summary> Uses lua to summon the mount. This does no checks. </summary>
+            
+             <remarks> raphus, 16/10/2013. </remarks>
+            
+             <param name="mountName"> Name of the mount. </param>
+        </member>
+        <member name="M:Styx.CommonBot.Mount.SummonMount(System.Int32)">
+             <summary> Uses lua to summon the mount. This does no checks. </summary>
+            
+             <remarks> raphus, 16/10/2013. </remarks>
+            
+             <param name="mountSpellId"> CreatureSpellId of the mount. </param>
+        </member>
         <member name="M:Styx.CommonBot.Mount.AddCantMountSpot(Styx.WoWPoint)">
             <summary>
             We store the area where we can't mount
@@ -3065,9 +3236,25 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Styx.Pathing.MeshNavigator.UpdateMaps">
+            <summary>
+            Checks if maps have changed, and if they have, loads new maps. This takes phases into account.
+            </summary>
+        </member>
+        <member name="M:Styx.Pathing.MeshNavigator.FindPath(Styx.WoWPoint,Styx.WoWPoint)">
+             <summary> Searches for the path between two points. 
+             		  Releases any framelocks if the path generation takes more then 10ms.</summary>
+            
+             <remarks> raphus, 10/10/2013. </remarks>
+            
+             <param name="start">		The start location. </param>
+             <param name="end">		    The destination. </param>
+            
+             <returns> The found path. </returns>
+        </member>
         <member name="M:Styx.Pathing.MeshNavigator.MovePath(Styx.Pathing.MeshMovePath)">
             <summary>
-            Moves along a path.
+                Moves along a path.
             </summary>
             <param name="path"></param>
             <returns></returns>
@@ -3079,6 +3266,13 @@
         <member name="P:Styx.Pathing.MeshNavigator.CurrentMovePath">
             <summary>
             </summary>
+        </member>
+        <member name="M:Styx.Pathing.OnDemandDownloading.ServerEncryptedMeshProvider.SetMap(System.Collections.Generic.ICollection{System.String})">
+            <summary>
+            Sets the current maps.
+            </summary>
+            <param name="maps">The maps in order of priority.</param>
+            <exception cref="T:System.ArgumentException">Thrown if a tilemap could not be downloaded for one or more of the maps in the <paramref name="maps"/> collection.</exception>
         </member>
         <member name="F:Styx.CommonBot.Profiles.ForceMailManager._dynamicForceMailItems">
             <summary>
@@ -6349,39 +6543,51 @@
             </returns>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
-        <member name="M:Styx.CommonBot.Blacklist.Add(System.UInt64,System.TimeSpan)">
+        <member name="M:Styx.CommonBot.Blacklist.Add(System.UInt64,System.TimeSpan,System.String)">
             <summary>
             Adds the specified GUID.
             </summary>
             <param name="guid">The GUID.</param>
             <param name="end">The end.</param>
-            <remarks>Created by Nesox 2012-02-04</remarks>
+            <param name="reason">The reason.</param>
+            <remarks>
+            Created by Nesox 2012-02-04
+            </remarks>
         </member>
-        <member name="M:Styx.CommonBot.Blacklist.Add(Styx.WoWInternals.WoWObjects.WoWObject,System.TimeSpan)">
+        <member name="M:Styx.CommonBot.Blacklist.Add(Styx.WoWInternals.WoWObjects.WoWObject,System.TimeSpan,System.String)">
             <summary>
             Adds the specified object.
             </summary>
             <param name="o">The o.</param>
             <param name="end">The end.</param>
-            <remarks>Created by Nesox 2012-02-04</remarks>
+            <param name="reason">The reason.</param>
+            <remarks>
+            Created by Nesox 2012-02-04
+            </remarks>
         </member>
-        <member name="M:Styx.CommonBot.Blacklist.Add(Styx.WoWInternals.WoWObjects.WoWObject,Styx.CommonBot.BlacklistFlags,System.TimeSpan)">
-             <summary> Adds the specified object to the blacklist with the specified flags. </summary>
-            
-             <remarks> raphus, 12/06/2013. </remarks>
-            
-             <param name="obj">      The object. </param>
-             <param name="flags">    The flags. </param>
-             <param name="duration"> The duration. </param>
+        <member name="M:Styx.CommonBot.Blacklist.Add(Styx.WoWInternals.WoWObjects.WoWObject,Styx.CommonBot.BlacklistFlags,System.TimeSpan,System.String)">
+            <summary>
+            Adds the specified object to the blacklist with the specified flags.
+            </summary>
+            <param name="obj">The object.</param>
+            <param name="flags">The flags.</param>
+            <param name="duration">The duration.</param>
+            <param name="reason">The reason.</param>
+            <remarks>
+            raphus, 12/06/2013.
+            </remarks>
         </member>
-        <member name="M:Styx.CommonBot.Blacklist.Add(System.UInt64,Styx.CommonBot.BlacklistFlags,System.TimeSpan)">
-             <summary> Adds the object specified guid to the blacklist with the specified flags. </summary>
-            
-             <remarks> raphus, 12/06/2013. </remarks>
-            
-             <param name="guid">     The GUID. </param>
-             <param name="flags">    The flags. </param>
-             <param name="duration"> The duration. </param>
+        <member name="M:Styx.CommonBot.Blacklist.Add(System.UInt64,Styx.CommonBot.BlacklistFlags,System.TimeSpan,System.String)">
+            <summary>
+            Adds the object specified guid to the blacklist with the specified flags.
+            </summary>
+            <param name="guid">The GUID.</param>
+            <param name="flags">The flags.</param>
+            <param name="duration">The duration.</param>
+            <param name="reason">The reason.</param>
+            <remarks>
+            raphus, 12/06/2013.
+            </remarks>
         </member>
         <member name="T:Styx.CommonBot.Blacklist.EntryRemovalDelegate">
              <summary> Entry removal delegate. </summary>
@@ -7242,6 +7448,7 @@
             <summary>
             Returns a boolean indicating whether this game object can be used. This checks for stuff like keys, too low level for herbalism/mining etc.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <returns>
               <c>true</c> if this instance can use; otherwise, <c>false</c>.
             </returns>
@@ -7253,6 +7460,7 @@
             <summary>
             Returns a boolean indicating whether this game object can be used right now. This checks for stuff like distance.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <returns>
               <c>true</c> if this instance [can use now]; otherwise, <c>false</c>.
             </returns>
@@ -7264,6 +7472,7 @@
             <summary>
             Returns a boolean indicating whether this game object can be used right now. If the return value is false, an out parameter gives the reason.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <param name="reason">The reason.</param>
             <returns>
               <c>true</c> if this instance [can use now] the specified reason; otherwise, <c>false</c>.
@@ -7274,6 +7483,7 @@
             <summary>
             Uses this <see cref="T:Styx.WoWInternals.WoWObjects.WoWSubObject"/>.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <remarks>
             Created by Nesox 2012-02-04
             </remarks>
@@ -7282,6 +7492,7 @@
             <summary>
             Determines whether the player is in range to use this sub object.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is not valid (ie. <see cref="P:Styx.WoWInternals.WoWObjects.WoWSubObject.BaseAddress"/> is zero).</exception>
             <returns><c>true</c> if this the player is in interact range of this sub object; otherwise, <c>false</c></returns>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWSubObject.GetField``1(Styx.WoWInternals.WoWObjects.WoWSubObject.SubObjectOffsets)">
@@ -7342,6 +7553,7 @@
             <summary>
             Determines whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can be opened now].
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <returns>
               <c>true</c> if this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can be opened now]; otherwise, <c>false</c>.
             </returns>
@@ -7353,6 +7565,7 @@
             <summary>
             Determines whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can open now] the specified reason.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid (ie. if BaseAddress is equal to 0).</exception>
             <param name="reason">The reason.</param>
             <returns>
               <c>true</c> if this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can open now] the specified reason; otherwise, <c>false</c>.
@@ -8086,7 +8299,7 @@
         </member>
         <member name="F:Styx.CommonBot.BotEvents.Player.MapChangedEventArgs.NewMapName">
             <summary>
-            The new map name. This is not a friendly map name, but is used by Tripper to denote which meshes to use.
+            The new map name. This is the internal name used by WoW and the bot for navigation.
             </summary>
         </member>
         <member name="E:Styx.CommonBot.BotEvents.Battleground.OnBattlegroundEntered">
@@ -8174,7 +8387,7 @@
         </member>
         <member name="P:Styx.CommonBot.TreeRoot.TicksPerSecond">
             <summary>
-            Gets or sets the frequency of how often the bot is "Ticked". Default: 15
+            Gets or sets the frequency of how often the bot is "Ticked". Default: 15. Nulling this value will make it fall back to TicksPerSecond user value
             </summary>
             <value>
             The ticks per second.
@@ -8392,56 +8605,6 @@
             <summary>
             Number of quests in the questlog including the headers. eg; 'Dun Morogh', 'Loch Modan', 'Alterac Valley' etc...
             </summary>
-        </member>
-        <member name="P:Styx.WoWInternals.QuestLog.QuestLogWithHeaders">
-            <summary>
-            Returns a list of <see cref="T:Styx.WoWInternals.QuestLog.QuestLogEntry"/> objects from the QuestLog
-            </summary>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.Id">
-            <summary>
-            The ID.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.State">
-            <summary>
-            The state flag.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.ObjectiveRequiredCounts">
-            <summary>
-            The required objective count.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.Time">
-            <summary>
-            The time.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="M:Styx.WoWInternals.QuestLogEntry.ToString">
-            <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
-            </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.StateFlag.Complete">
-            <summary>
-            Completed quest.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="F:Styx.WoWInternals.QuestLogEntry.StateFlag.Failed">
-            <summary>
-            Failed quest.
-            </summary>
-            <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="T:Styx.Helpers.SettingAttribute">
             <summary>
@@ -9286,6 +9449,7 @@
             <summary>
             Returns the total amount of damage this unit can absorb before losing health.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <returns></returns>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWUnit.Behind(Styx.WoWInternals.WoWObjects.WoWUnit)">
@@ -9342,6 +9506,8 @@
             Gets the reaction of this unit towards another unit.
             </summary>
             <param name="otherUnit">The other unit.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this unit is invalid or if <paramref name="otherUnit"/> is invalid.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="otherUnit"/> is null.</exception>
             <returns></returns>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
@@ -9367,6 +9533,7 @@
             Internal function, used to determine if we are within melee range of a unit.
             </summary>
             <param name="otherUnit">The other unit.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <returns>
               <c>true</c> if we are within range, <c>false</c> otherwise.
             </returns>
@@ -9390,6 +9557,7 @@
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.CanInterruptCurrentSpellCast">
             <summary>Returns whether the current spell being cast by this unit, can actually be interrupted. If no spell is being cast, this should return false.</summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <value>true if we can interrupt current spell cast, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.ChanneledCastingSpellId">
@@ -9475,6 +9643,7 @@
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsWithinMeleeRange">
             <summary>Internal function, used to determine if we are within melee range of a unit.</summary>
             <returns><c>true</c> if we are within range, <c>false</c> otherwise.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.TransportGuid">
             <summary> Returns the transport guid of this unit.</summary>
@@ -9624,6 +9793,18 @@
             <summary>
             Returns a boolean indicating if you got a target.
             </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.Classification">
+            <summary>
+            Gets the classification of this <see cref="T:Styx.WoWInternals.WoWObjects.WoWUnit"/>.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsBoss">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWUnit"/> is a boss.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.CurrentPower">
             <summary>Returns the current power of this unit.</summary>
@@ -10185,6 +10366,11 @@
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.PlayerControlled">
             <summary>Gets a value indicating whether the player controlled.</summary>
             <value>true if player controlled, false if not.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsTagged">
+             <summary> Gets a value indicating whether this object is tagged. </summary>
+            
+             <value> true if this object is tagged, false if not. </value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.TaggedByOther">
             <summary>Gets a value indicating whether the tagged by other.</summary>
@@ -10851,15 +11037,10 @@
             <param name="reason">
             The reason.
             </param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this LocalPlayer instance is invalid..</exception>
             <returns>
             The result
             </returns>
-            <exception cref="T:System.ArgumentNullException">
-            </exception>
-            <exception cref="T:System.Exception">
-            </exception>
-            <exception cref="T:System.Exception">
-            </exception>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.LocalPlayer.GetBag(Styx.WoWBagSlot)">
             <summary>
@@ -11419,6 +11600,14 @@
             <returns>
             </returns>
         </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.HonorPoints">
+            <summary>
+            Gets the honor points.
+            </summary>
+            <value>
+            The honor points.
+            </value>
+        </member>
         <member name="T:Styx.WoWInternals.WoWObjects.LocalPlayer.KnownSpell">
             <summary>
             The known spell.
@@ -11794,6 +11983,7 @@
             Get's the stats for this item.
             </summary>
             <param name="item">The item.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <returns></returns>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
@@ -11845,6 +12035,7 @@
             <summary>
             Retruns the stats of this item as a <see cref="P:Styx.WoWInternals.WoWObjects.WoWItem.ItemStats"/> object.
             </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this object is invalid.</exception>
             <remarks>Created by Nesox 2012-02-04</remarks>
             <returns><see cref="P:Styx.WoWInternals.WoWObjects.WoWItem.ItemStats"/> object containing the stats of this item. Random Properties and Suffix excluded. </returns>
         </member>
@@ -14357,40 +14548,30 @@
             <summary>
             Casts a spell by id.
             </summary>
-            <param name="spellid">The spellid.</param>
+            <param name="spellID">The spell ID.</param>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="M:Styx.CommonBot.SpellManager.CastSpellById(System.Int32)">
             <summary>
             Casts a spell by id.
             </summary>
-            <param name="spellid">The spellid.</param>
+            <param name="spellID">The spell ID.</param>
+            <remarks>Created by Nesox 2012-02-04</remarks>
+        </member>
+        <member name="M:Styx.CommonBot.SpellManager.CastSpellById(System.Int32,Styx.WoWInternals.WoWObjects.WoWUnit)">
+            <summary>
+            Casts a spell by ID.
+            </summary>
+            <param name="spellID">The spell id.</param>
+            <param name="target">The target.</param>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="M:Styx.CommonBot.SpellManager.CastSpellById(System.Int32,System.UInt64)">
             <summary>
             Casts a spell by id.
             </summary>
-            <param name="spellId">The spell id.</param>
+            <param name="spellID">The spell ID.</param>
             <param name="targetGuid">The target GUID.</param>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="M:Styx.CommonBot.SpellManager.CastSpellById(System.Int32,Styx.WoWInternals.WoWObjects.WoWUnit)">
-            <summary>
-            Casts a spell by id.
-            </summary>
-            <param name="spellId">The spell id.</param>
-            <param name="target">The target.</param>
-            <remarks>Created by Nesox 2012-02-04</remarks>
-        </member>
-        <member name="M:Styx.CommonBot.SpellManager.Spell_C__CastSpell(System.Int32,System.Int32,System.UInt64,System.Int32)">
-            <summary>
-            Casts a spell by id.
-            </summary>
-            <param name="spellId">The spell id.</param>
-            <param name="unk">The unk.</param>
-            <param name="targetGuid">The target GUID.</param>
-            <param name="optional">The optional.</param>
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="P:Styx.CommonBot.SpellManager.GlobalCooldownLeft">

@@ -14,8 +14,8 @@ namespace WebMonitor.factories
             Session s = new Session();
             s.botBase = "";
             s.botDebug = "";
-            s.character = null;
-            
+            s.mapa = player.MapName;
+            s.id = "0";
             return s;
         }    
     }

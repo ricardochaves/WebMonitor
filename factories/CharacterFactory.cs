@@ -12,10 +12,14 @@ namespace WebMonitor.factories
         public static Character GetInstance(LocalPlayer player)
         {
             Character c = new Character();
+            c.id = 0;
             c.name = player.Name;
             c.level = player.Level;
             c.realm = player.RealmName;
-           
+            c.battlegroup = "Falta pegar";
+            c.classe = player.Class.ToString();
+            c.race = player.Race.ToString();
+            c.idGuild = 0;
             return c;
 
         }

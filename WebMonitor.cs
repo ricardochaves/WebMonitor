@@ -119,8 +119,8 @@ namespace WebMonitor
                 startTime = DateTime.Now;
                 Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
                 Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
-                Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
-                Styx.CommonBot.BotEvents.Player.OnMobKilled += onLevel;
+                //Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
+                //Styx.CommonBot.BotEvents.Player.OnMobKilled += onLevel;
 
                 Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
                 Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
@@ -317,7 +317,7 @@ namespace WebMonitor
         {
             try
             {
-                app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me));
+                app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me));
                 Logging.WriteDiagnostic("[DEBUG]Vai chamar agora");
                 app.startSession(Styx.CommonBot.BotManager.Current.Name);
                 Logging.WriteDiagnostic("[DEBUG]Chamou");

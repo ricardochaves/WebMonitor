@@ -98,5 +98,74 @@ namespace WebMonitor.services
 
 
         }
+
+
+        public string MakeRequestPost(string url, string data)
+        {
+            try
+            {
+
+                Util.WriteLog(Strings.HOST + url);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                request.Method = "POST";
+                request.Proxy = null;
+                request.ContentType = "application/json";
+
+                byte[] dataStream = Encoding.UTF8.GetBytes(data);
+                Stream newStream = request.GetRequestStream();
+                newStream.Write(dataStream, 0, dataStream.Length);
+                newStream.Close();
+
+                WebResponse teste = request.GetResponse();
+
+                using (Stream responseStream = teste.GetResponseStream())
+                using (StreamReader sr = new StreamReader(responseStream))
+                {
+                    //Need to return this response 
+                    string strContent = sr.ReadToEnd();
+                    return strContent;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public string MakeRequestGet(string url, string data)
+        {
+            try
+            {
+
+                Util.WriteLog(Strings.HOST + url);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                request.Method = "POST";
+                request.Proxy = null;
+                request.ContentType = "application/json";
+
+                byte[] dataStream = Encoding.UTF8.GetBytes(data);
+                Stream newStream = request.GetRequestStream();
+                newStream.Write(dataStream, 0, dataStream.Length);
+                newStream.Close();
+
+                WebResponse teste = request.GetResponse();
+
+                using (Stream responseStream = teste.GetResponseStream())
+                using (StreamReader sr = new StreamReader(responseStream))
+                {
+                    //Need to return this response 
+                    string strContent = sr.ReadToEnd();
+                    return strContent;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

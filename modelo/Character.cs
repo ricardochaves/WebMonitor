@@ -12,16 +12,17 @@ namespace WebMonitor.modelo
         public String name;
         public String realm;
         public String battlegroup;
-        public int classe;
-        public int race;
-        public int gender;
+        public String classe;
+        public String race;
+        public String gender;
         public int level;
         public int achievementPoints;
         public String thumbnail;
         public String calcClass;
         public long money;
+        public int idGuild;
 
         public List<ItemUnit> listItensBag;
-
+        public Guild guild;
     }
 }

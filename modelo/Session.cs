@@ -11,6 +11,7 @@ namespace WebMonitor.modelo
         public Character character;
         public String botBase;
         public String botDebug;
+        public String mapa;
 
     }
 }
