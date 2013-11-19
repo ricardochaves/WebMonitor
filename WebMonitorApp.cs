@@ -309,7 +309,7 @@ namespace WebMonitor
             
             try
             {
-                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0)
+                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0 && session.id != "0")
                 {
                     sSession.checkSession(conv.ConvertTOJson(session),session.id);
                     lastchecksession = DateTime.Now;
