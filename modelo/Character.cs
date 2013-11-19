@@ -20,7 +20,6 @@ namespace WebMonitor.modelo
         public String thumbnail;
         public String calcClass;
         public long money;
-        public int idGuild;
 
         public List<ItemUnit> listItensBag;
         public Guild guild;
