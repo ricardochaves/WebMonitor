@@ -18,20 +18,18 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog(Json);
-                return s.MakeRequestPost(Strings.URLSTARTNEWSESSION, Json);
-                
+                return s.MakeRequest(Strings.URLSTARTNEWSESSION, Json, "POST");
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void closeSession(string idSession)
+        public void closeSession(string Json, string SessionID)
         {
             try
             {
-                s.MakeRequest(Strings.URLCLOSESESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
+                s.MakeRequest(Strings.URLCLOSESESSION + SessionID, Json, "PUT");
             }
             catch (Exception ex)
             {
@@ -39,12 +37,12 @@ namespace WebMonitor.services
             }
             
         }
-        public void checkSession(string idSession)
+        public void checkSession(string Json, string SessionID)
         {
             try
             {
-                Util.WriteLog("Atualizando a Session com id: " + idSession);
-                s.MakeAsyncRequest(Strings.URLCHECKSESSION, "key=" + WMGlobalSettings.Instance.Key + "&sessionId=" + idSession);
+                Util.WriteLog("Atualizando a Session com id: " + SessionID);
+                s.MakeAsyncRequest(Strings.URLCHECKSESSION + SessionID, Json, "PUT");
             }
             catch (Exception ex)
             {

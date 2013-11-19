@@ -28,8 +28,8 @@ namespace WebMonitor
         public const string URLINCLUIRGUILDMONEY = @"";
         public const string URLINCLUIRGUILDTOTAL = @"";
         public const string URLINCLUIRGUILDITENS = @"";
-        public const string URLCLOSESESSION = @"";
-        public const string URLCHECKSESSION = @"";
+        public const string URLCLOSESESSION = @"api/Session/";
+        public const string URLCHECKSESSION = @"api/Session/";
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
         public const string URLSENDPLAYERITENS = @"";

@@ -9,8 +9,9 @@ namespace WebMonitor
 {
     public interface ISend
     {
-        Task<string> MakeAsyncRequest(string url, string data);
-        string MakeRequest(string url, string data);
-        string MakeRequestPost(string p, string Json);
+        Task<string> MakeAsyncRequest(string url, string data, string method);
+        string MakeRequest(string url, string data, string method);
+
+
     }
 }

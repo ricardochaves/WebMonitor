@@ -46,7 +46,7 @@ namespace WebMonitor
         {
             try
             {
-                //checkSession();
+                checkSession();
             }
             catch (AggregateException aex)
             {
@@ -235,8 +235,6 @@ namespace WebMonitor
                 session.botDebug = "";
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
 
-                Util.WriteLog("RETORNO: " +retorno);
-
                 session = (Session)conv.ConvertJSON<Session>(retorno);
                 character = session.character;
 
@@ -264,7 +262,8 @@ namespace WebMonitor
         {
             try
             {
-                sSession.closeSession(session.id);
+                session.indEncerra = "S";
+                sSession.closeSession(conv.ConvertTOJson(session),session.id);
                 sSession = null;
             }
             catch (AggregateException aex)
@@ -312,7 +311,7 @@ namespace WebMonitor
             {
                 if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0)
                 {
-                    sSession.checkSession(session.id);
+                    sSession.checkSession(conv.ConvertTOJson(session),session.id);
                     lastchecksession = DateTime.Now;
                 }
             }

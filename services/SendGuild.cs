@@ -24,7 +24,7 @@ namespace WebMonitor.services
 
                 string data = "key={0}&data={1}";
                 data = String.Format(data,WMGlobalSettings.Instance.Key, jGuild);
-                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
+                //s.MakeAsyncRequest(Strings.URLINCLUIRGUILDMONEY, data);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace WebMonitor.services
             {
                 string data = "key={0}&name={0}&gold={1}@acss={2}";
                 data = String.Format(data,WMGlobalSettings.Instance.Key, GuildProfileName, goldGuild, AccsGuild);
-                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
+                //s.MakeAsyncRequest(Strings.URLINCLUIRGUILDTOTAL, data);
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace WebMonitor.services
                 //Util.WriteLog(jGuild);
                 string data = "key={0}&data={1}";
                 data = String.Format(data, WMGlobalSettings.Instance.Key, jGuild);
-                s.MakeAsyncRequest(Strings.URLINCLUIRGUILDITENS, data);
+                //s.MakeAsyncRequest(Strings.URLINCLUIRGUILDITENS, data);
             }
             catch (Exception ex)
             {

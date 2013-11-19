@@ -18,7 +18,8 @@ namespace WebMonitor.services
         {
             try
             {
-                return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
+                //return Convert.ToInt16(s.MakeRequest(Strings.URLSENDPLAYERINFO, ""));
+                return 0;
             }
             catch (Exception ex)
             {
@@ -31,7 +32,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
+                //s.MakeAsyncRequest(Strings.URLSENDPLAYERLOGOUT, "idPlayer=" + idPlayer);
             }
             catch (Exception ex)
             {
@@ -45,7 +46,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
+                //s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
             }
             catch (Exception ex)
             {
@@ -58,7 +59,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERMONEY, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
+                //s.MakeAsyncRequest(Strings.URLSENDPLAYERMONEY, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
             }
             catch (Exception ex)
             {
@@ -71,7 +72,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERDEAD, "key=" + WMGlobalSettings.Instance.Key);
+                //s.MakeAsyncRequest(Strings.URLSENDPLAYERDEAD, "key=" + WMGlobalSettings.Instance.Key);
             }
             catch (Exception ex)
             {
@@ -84,7 +85,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeAsyncRequest(Strings.URLSENDPLAYERLEVELUP, "key=" + WMGlobalSettings.Instance.Key);
+                //s.MakeAsyncRequest(Strings.URLSENDPLAYERLEVELUP, "key=" + WMGlobalSettings.Instance.Key);
             }
             catch (Exception ex)
             {

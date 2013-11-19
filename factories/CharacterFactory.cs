@@ -20,6 +20,7 @@ namespace WebMonitor.factories
             c.classe = player.Class.ToString();
             c.race = player.Race.ToString();
             c.idGuild = 0;
+            c.guild = GuildFactory.GetInstance(player);
             return c;
 
         }

@@ -16,6 +16,7 @@ namespace WebMonitor.factories
             s.botDebug = "";
             s.mapa = player.MapName;
             s.id = "0";
+            s.indEncerra = "N";
             return s;
         }    
     }

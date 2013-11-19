@@ -12,15 +12,16 @@ namespace WebMonitor.services
     {
 
         // Define other methods and classes here
-        public Task<string> MakeAsyncRequest(string url, string data) 
+        public Task<string> MakeAsyncRequest(string url, string data, string method) 
         {
             try
             {
-                //http://stackoverflow.com/questions/3279888/how-to-add-parameters-into-a-webrequest
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url);
-                request.Method = "POST";
+
+                Util.WriteLog(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                request.Method = method;
                 request.Proxy = null;
-                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentType = "application/json";
 
                 byte[] dataStream = Encoding.UTF8.GetBytes(data);
                 Stream newStream = request.GetRequestStream();
@@ -63,16 +64,16 @@ namespace WebMonitor.services
 
         }
 
-        public string MakeRequest(string url, string data)
+        public string MakeRequest(string url, string data, string method)
         {
             try
             {
 
-                Util.WriteLog(Strings.HOST + url);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url);
-                request.Method = "POST";
+                Util.WriteLog(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                request.Method = method;
                 request.Proxy = null;
-                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentType = "application/json";
 
                 byte[] dataStream = Encoding.UTF8.GetBytes(data);
                 Stream newStream = request.GetRequestStream();
@@ -92,78 +93,6 @@ namespace WebMonitor.services
             }
             catch (Exception ex)
             {
-                
-                throw ex;
-            }
-
-
-        }
-
-
-        public string MakeRequestPost(string url, string data)
-        {
-            try
-            {
-
-                Util.WriteLog(Strings.HOST + url);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
-                request.Method = "POST";
-                request.Proxy = null;
-                request.ContentType = "application/json";
-
-                byte[] dataStream = Encoding.UTF8.GetBytes(data);
-                Stream newStream = request.GetRequestStream();
-                newStream.Write(dataStream, 0, dataStream.Length);
-                newStream.Close();
-
-                WebResponse teste = request.GetResponse();
-
-                using (Stream responseStream = teste.GetResponseStream())
-                using (StreamReader sr = new StreamReader(responseStream))
-                {
-                    //Need to return this response 
-                    string strContent = sr.ReadToEnd();
-                    return strContent;
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        public string MakeRequestGet(string url, string data)
-        {
-            try
-            {
-
-                Util.WriteLog(Strings.HOST + url);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
-                request.Method = "POST";
-                request.Proxy = null;
-                request.ContentType = "application/json";
-
-                byte[] dataStream = Encoding.UTF8.GetBytes(data);
-                Stream newStream = request.GetRequestStream();
-                newStream.Write(dataStream, 0, dataStream.Length);
-                newStream.Close();
-
-                WebResponse teste = request.GetResponse();
-
-                using (Stream responseStream = teste.GetResponseStream())
-                using (StreamReader sr = new StreamReader(responseStream))
-                {
-                    //Need to return this response 
-                    string strContent = sr.ReadToEnd();
-                    return strContent;
-                }
-
-            }
-            catch (Exception ex)
-            {
-
                 throw ex;
             }
         }
