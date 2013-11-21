@@ -21,5 +21,7 @@ namespace WebMonitor
         [Setting, DefaultValue("")]
         public string Key { get; set; }
 
+        [Setting, DefaultValue("N")]
+        public string ImpJson { get; set; }
     }
 }

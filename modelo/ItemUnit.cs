@@ -12,5 +12,6 @@ namespace WebMonitor.modelo
         public int bagIndex;
         public int bagSlot;
         public uint stackCount;
+        public int idChar;
     }
 }

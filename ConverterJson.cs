@@ -37,6 +37,9 @@ namespace WebMonitor
                 s = json_serializer.Serialize(o);
                 s = s.Replace(@"\/Date(", "");
                 s = s.Replace(@")\/", "");
+
+                if (WMGlobalSettings.Instance.ImpJson == "S") { Util.WriteLog(s); };
+
                 return s;
             }
             catch (Exception ex)

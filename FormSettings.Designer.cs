@@ -31,6 +31,8 @@
             this.txtKey = new System.Windows.Forms.TextBox();
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.lblKey = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtImpJson = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtKey
@@ -59,11 +61,29 @@
             this.lblKey.TabIndex = 2;
             this.lblKey.Text = "Application Key";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Imprimi Jsons";
+            // 
+            // txtImpJson
+            // 
+            this.txtImpJson.Location = new System.Drawing.Point(98, 43);
+            this.txtImpJson.Name = "txtImpJson";
+            this.txtImpJson.Size = new System.Drawing.Size(43, 20);
+            this.txtImpJson.TabIndex = 4;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(270, 151);
+            this.Controls.Add(this.txtImpJson);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblKey);
             this.Controls.Add(this.btnSaveClose);
             this.Controls.Add(this.txtKey);
@@ -80,5 +100,7 @@
         private System.Windows.Forms.TextBox txtKey;
         private System.Windows.Forms.Button btnSaveClose;
         private System.Windows.Forms.Label lblKey;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtImpJson;
     }
 }

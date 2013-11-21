@@ -20,12 +20,13 @@ namespace WebMonitor
         {
             WMGlobalSettings.Instance.Load();
             txtKey.Text = WMGlobalSettings.Instance.Key;
-
+            txtImpJson.Text = WMGlobalSettings.Instance.ImpJson;
         }
 
         private void btnSaveClose_Click(object sender, EventArgs e)
         {
             WMGlobalSettings.Instance.Key = txtKey.Text;
+            WMGlobalSettings.Instance.ImpJson = txtImpJson.Text;
             WMGlobalSettings.Instance.Save();
             this.Close();
         }

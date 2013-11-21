@@ -51,7 +51,7 @@ namespace WebMonitor.services
         {
             try
             {
-                //Util.WriteLog(jGuild);
+                
                 string data = "key={0}&data={1}";
                 data = String.Format(data, WMGlobalSettings.Instance.Key, jGuild);
                 //s.MakeAsyncRequest(Strings.URLINCLUIRGUILDITENS, data);
