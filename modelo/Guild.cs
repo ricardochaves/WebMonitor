@@ -11,9 +11,9 @@ namespace WebMonitor.modelo
 	    public String name;
 	    public long gold;
 	    public long accounts;
-	    public List<Character> characteres;
+	    //public List<Character> characteres;
 	    public string realm;
-        public List<ItemUnit> guildTabs;
+        //public List<ItemUnit> guildTabs;
 
         public Guild()
         {

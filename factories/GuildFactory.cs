@@ -15,7 +15,7 @@ namespace WebMonitor.factories
             g.name = Util.GetGuildProfileName();
             g.realm = player.RealmName;
             g.gold = Convert.ToInt64(Util.GetGuildMoney());
-            g.guildTabs = new List<ItemUnit>();
+            //g.guildTabs = new List<ItemUnit>();
             return g;
         }     
     }

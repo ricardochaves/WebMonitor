@@ -21,7 +21,8 @@ namespace WebMonitor.modelo
         public String calcClass;
         public long money;
 
-        public List<ItemUnit> listItensBag;
+        //public List<ItemUnit> listItensBag;
+
         public Guild guild;
     }
 }

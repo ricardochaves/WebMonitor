@@ -19,7 +19,6 @@ namespace WebMonitor.factories
             c.battlegroup = "Falta pegar";
             c.classe = player.Class.ToString();
             c.race = player.Race.ToString();
-            c.idGuild = 0;
             c.guild = GuildFactory.GetInstance(player);
             return c;
 

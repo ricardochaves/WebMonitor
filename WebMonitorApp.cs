@@ -19,10 +19,13 @@ namespace WebMonitor
         public Guild guild;
         public Character character;
         public Session session = new Session();
+        private List<ItemUnit> itensChar = new List<ItemUnit>();
+        private List<ItemUnit> itensGuild = new List<ItemUnit>();
         private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send());
+        
 
         private DateTime lastchecksession = DateTime.Now;
 
@@ -90,7 +93,7 @@ namespace WebMonitor
             try
             {
                 Logging.Write("Inicio");
-                guild.guildTabs = ItemFactory.GetInstanceGuild(guildName);
+                itensGuild = ItemFactory.GetInstanceGuild(guildName);
                 Logging.Write("pegouitens");
                 sGuild.SendGuildItens(conv.ConvertTOJson(guild));
             }
@@ -115,7 +118,7 @@ namespace WebMonitor
         {
             try
             {
-                character.listItensBag = l;
+                itensChar = l;
                 sPlayer.SendItensPlayer(conv.ConvertTOJson(character));
             }
             catch (AggregateException aex)
@@ -219,7 +222,7 @@ namespace WebMonitor
 
         #region "Session"
 
-        public void startSession(string botBase)
+        public void startSession()
         {
 
             try
@@ -231,9 +234,10 @@ namespace WebMonitor
                 string retorno;
 
                 session.character = character;
-                session.botBase = botBase;
                 session.botDebug = "";
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
+
+                Util.WriteLog("RETORNO: " + retorno);
 
                 session = (Session)conv.ConvertJSON<Session>(retorno);
                 character = session.character;
@@ -262,7 +266,7 @@ namespace WebMonitor
         {
             try
             {
-                session.indEncerra = "S";
+                session.isEnd = 1;
                 sSession.closeSession(conv.ConvertTOJson(session),session.id);
                 sSession = null;
             }

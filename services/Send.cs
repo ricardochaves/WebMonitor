@@ -11,15 +11,16 @@ namespace WebMonitor.services
     public class Send : ISend
     {
 
+
         // Define other methods and classes here
-        public Task<string> MakeAsyncRequest(string url, string data, string method) 
+        public Task<string> MakeAsyncRequest(string url, string data, method method) 
         {
             try
             {
 
-                Util.WriteLog(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                Util.WriteLog("MakeAsyncRequest: " + Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString());
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
-                request.Method = method;
+                request.Method = method.ToString();
                 request.Proxy = null;
                 request.ContentType = "application/json";
 
@@ -64,14 +65,14 @@ namespace WebMonitor.services
 
         }
 
-        public string MakeRequest(string url, string data, string method)
+        public string MakeRequest(string url, string data, method method)
         {
             try
             {
 
-                Util.WriteLog(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                Util.WriteLog("MakeRequest: " +  Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString());
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
-                request.Method = method;
+                request.Method = method.ToString();
                 request.Proxy = null;
                 request.ContentType = "application/json";
 

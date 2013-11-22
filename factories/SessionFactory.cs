@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using WebMonitor.modelo;
 using Styx.WoWInternals.WoWObjects;
+using Styx.CommonBot;
 
 namespace WebMonitor.factories
 {
     class SessionFactory
     {
-        public static Session GetInstance(LocalPlayer player)
+        public static Session GetInstance(LocalPlayer player, BotBase bot )
         {
             Session s = new Session();
-            s.botBase = "";
+            s.botBase = bot.Name;
             s.botDebug = "";
-            s.mapa = player.MapName;
+            s.map = player.CurrentMap.Name;
             s.id = "0";
-            s.indEncerra = "N";
+            s.isEnd = 0;
             return s;
         }    
     }

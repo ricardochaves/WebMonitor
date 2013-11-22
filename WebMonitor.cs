@@ -212,7 +212,7 @@ namespace WebMonitor
             try
             {
                 StartApp();
-                app.startSession(Styx.CommonBot.BotManager.Current.Name);
+                app.startSession();
 
             }
             catch (Exception ex)
@@ -317,10 +317,12 @@ namespace WebMonitor
         {
             try
             {
-                app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me));
-                Logging.WriteDiagnostic("[DEBUG]Vai chamar agora");
-                app.startSession(Styx.CommonBot.BotManager.Current.Name);
-                Logging.WriteDiagnostic("[DEBUG]Chamou");
+
+                
+
+                app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me, Styx.CommonBot.BotManager.Current));
+                app.startSession();
+                Logging.WriteDiagnostic("[WebMonitor]: Sessão id: " + app.session.id);
             }
             catch (Exception ex)
             {

@@ -18,7 +18,7 @@ namespace WebMonitor.services
         {
             try
             {
-                return s.MakeRequest(Strings.URLSTARTNEWSESSION, Json, "POST");
+                return s.MakeRequest(Strings.URLSTARTNEWSESSION, Json, method.Post);
             }
             catch (Exception ex)
             {
@@ -29,7 +29,7 @@ namespace WebMonitor.services
         {
             try
             {
-                s.MakeRequest(Strings.URLCLOSESESSION + SessionID, Json, "PUT");
+                s.MakeRequest(Strings.URLCLOSESESSION + SessionID, Json, method.Put);
             }
             catch (Exception ex)
             {
@@ -41,8 +41,7 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog("Atualizando a Session com id: " + SessionID);
-                s.MakeAsyncRequest(Strings.URLCHECKSESSION + SessionID, Json, "PUT");
+                s.MakeAsyncRequest(Strings.URLCHECKSESSION + SessionID, Json, method.Put);
             }
             catch (Exception ex)
             {
