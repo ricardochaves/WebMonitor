@@ -24,20 +24,20 @@ namespace WebMonitor.factories
 
         }
 
-        public static List<ItemUnit> GetItensChar(LocalPlayer player)
+        public static List<ItemUnitChar> GetItensChar(LocalPlayer player, Int64 idChar)
         {
             List<WoWItem> l = player.BagItems;
-            List<ItemUnit> li = new List<ItemUnit>();
+            List<ItemUnitChar> li = new List<ItemUnitChar>();
 
             foreach (WoWItem item in l)
             {
-                ItemUnit i = new ItemUnit();
+                ItemUnitChar i = new ItemUnitChar();
 
-                i.idBlizzard = (int)item.ItemInfo.Id;
+                i.idItem = (int)item.ItemInfo.Id;
                 i.stackCount = item.StackCount;
                 i.bagSlot = item.BagSlot;
                 i.bagIndex = item.BagIndex;
-
+                i.idChar = idChar;
                 li.Add(i);
 
             }

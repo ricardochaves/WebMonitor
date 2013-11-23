@@ -7,10 +7,10 @@ namespace WebMonitor.modelo
 {
     public class ItemUnitChar
     {
-        Int64 idChar;
-        Int64 idItem;
-        Int64 bagIndex;
-        Int64 bagSlot;
-        Int64 stackCount;
+        public Int64 idChar;
+        public Int64 idItem;
+        public Int64 bagIndex;
+        public Int64 bagSlot;
+        public Int64 stackCount;
     }
 }

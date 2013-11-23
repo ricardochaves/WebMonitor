@@ -46,7 +46,7 @@ namespace WebMonitor.services
         {
             try
             {
-                //s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, "key=" + WMGlobalSettings.Instance.Key + "&data=" + jChar);
+                s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, jChar, method.Post);
             }
             catch (Exception ex)
             {

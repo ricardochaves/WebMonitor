@@ -17,6 +17,23 @@ namespace WebMonitor.factories
             g.gold = Convert.ToInt64(Util.GetGuildMoney());
             //g.guildTabs = new List<ItemUnit>();
             return g;
-        }     
+        }
+
+
+        public static List<ItemUnitGuild> GetInstanceGuild(string guildName, Int64 idGuild)
+        {
+            try
+            {
+                return Util.GetItensGuild(guildName, idGuild);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
+
     }
 }

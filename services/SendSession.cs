@@ -25,7 +25,7 @@ namespace WebMonitor.services
                 throw ex;
             }
         }
-        public void closeSession(string Json, string SessionID)
+        public void closeSession(string Json, Int64 SessionID)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace WebMonitor.services
             }
             
         }
-        public void checkSession(string Json, string SessionID)
+        public void checkSession(string Json, Int64 SessionID)
         {
             try
             {

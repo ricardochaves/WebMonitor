@@ -7,7 +7,7 @@ namespace WebMonitor.modelo
 {
     public class Session
     {
-        public string id;
+        public Int64 id;
         public Character character;
         public String botBase;
         public String botDebug;

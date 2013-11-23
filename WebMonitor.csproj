@@ -99,7 +99,6 @@
     <Compile Include="ConverterJson.cs" />
     <Compile Include="factories\CharacterFactory.cs" />
     <Compile Include="factories\GuildFactory.cs" />
-    <Compile Include="factories\ItemFactory.cs" />
     <Compile Include="factories\SessionFactory.cs" />
     <Compile Include="FormSettings.cs">
       <SubType>Form</SubType>
@@ -112,7 +111,8 @@
     <Compile Include="Method.cs" />
     <Compile Include="modelo\Character.cs" />
     <Compile Include="modelo\Guild.cs" />
-    <Compile Include="modelo\ItemUnit.cs" />
+    <Compile Include="modelo\ItemUnitChar.cs" />
+    <Compile Include="modelo\ItemUnitGuild.cs" />
     <Compile Include="modelo\Realm.cs" />
     <Compile Include="modelo\Session.cs" />
     <Compile Include="Program.cs" />

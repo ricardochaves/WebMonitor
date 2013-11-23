@@ -7,10 +7,10 @@ namespace WebMonitor.modelo
 {
     public class ItemUnitGuild
     {
-        Int64 idGuild;
-        Int64 idItem;
-        Int64 tabIndex;
-        Int64 tabSlot;
-        Int64 stackCount;
+        public Int64 idGuild;
+        public Int64 idItem;
+        public Int64 tabIndex;
+        public Int64 tabSlot;
+        public Int64 stackCount;
     }
 }

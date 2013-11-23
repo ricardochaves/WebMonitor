@@ -72,13 +72,13 @@ namespace WebMonitor
             return retVal.ToString();
         }
 
-        public static List<ItemUnit> GetItensGuild(string guildName)
+        public static List<ItemUnitGuild> GetItensGuild(string guildName, Int64 idGUild)
         {
 
             try
             {
-                ItemUnit itU;
-                List<ItemUnit> litU = new List<ItemUnit>();
+                ItemUnitGuild itU;
+                List<ItemUnitGuild> litU = new List<ItemUnitGuild>();
 
                 string itens = @"
                                 local itemCount = 0  
@@ -107,11 +107,12 @@ namespace WebMonitor
                 {
                     string[] it = item.Split(c);
 
-                    itU = new ItemUnit();
-                    itU.bagSlot = Convert.ToInt32(it[0]);
-                    itU.bagIndex = Convert.ToInt32(it[1]);
-                    itU.idBlizzard = Convert.ToInt32(it[2]);
+                    itU = new ItemUnitGuild();
+                    itU.tabSlot = Convert.ToInt32(it[0]);
+                    itU.tabIndex = Convert.ToInt32(it[1]);
+                    itU.idItem = Convert.ToInt32(it[2]);
                     itU.stackCount = Convert.ToUInt32(it[3]);
+                    itU.idGuild = idGUild;
 
                     litU.Add(itU);
 

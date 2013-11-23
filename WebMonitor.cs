@@ -131,9 +131,9 @@ namespace WebMonitor
 
                 StartApp();
 
-                app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me));
-
-
+                Util.WriteLog("DEPOIS DO START: IDSESSION: " + app.session.id);
+                Util.WriteLog("DEPOIS DO START: IDCHAR: " + app.character.id);
+                if (app.guild != null) { Util.WriteLog("DEPOIS DO START: Guild: " + app.guild.id); }
 
                 enviarDadosIniciais();
 
@@ -196,7 +196,7 @@ namespace WebMonitor
         {
             try
             {
-                app.updateGuildItens(Util.GetGuildProfileName());
+                app.updateGuildItens(Util.GetGuildProfileName(), app.guild.id);
             }
             catch (Exception ex)
             {
@@ -302,6 +302,7 @@ namespace WebMonitor
         {
             try
             {
+                app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
                 app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
             }
             catch (Exception ex)
@@ -317,9 +318,6 @@ namespace WebMonitor
         {
             try
             {
-
-                
-
                 app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me, Styx.CommonBot.BotManager.Current));
                 app.startSession();
                 Logging.WriteDiagnostic("[WebMonitor]: Sessão id: " + app.session.id);

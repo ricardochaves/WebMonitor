@@ -19,8 +19,8 @@ namespace WebMonitor
         public Guild guild;
         public Character character;
         public Session session = new Session();
-        private List<ItemUnit> itensChar = new List<ItemUnit>();
-        private List<ItemUnit> itensGuild = new List<ItemUnit>();
+        private List<ItemUnitChar> itensChar = new List<ItemUnitChar>();
+        private List<ItemUnitGuild> itensGuild = new List<ItemUnitGuild>();
         private ConverterJson conv = new ConverterJson();
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
@@ -49,7 +49,15 @@ namespace WebMonitor
         {
             try
             {
-                checkSession();
+                if (session.id == 0)
+                {
+                    startSession();
+                }
+                else
+                {
+                    checkSession();
+                }
+                
             }
             catch (AggregateException aex)
             {
@@ -88,14 +96,12 @@ namespace WebMonitor
             }
             
         }
-        public void updateGuildItens(string guildName)
+        public void updateGuildItens(string guildName, Int64 idGuild)
         {
             try
             {
-                Logging.Write("Inicio");
-                itensGuild = ItemFactory.GetInstanceGuild(guildName);
-                Logging.Write("pegouitens");
-                sGuild.SendGuildItens(conv.ConvertTOJson(guild));
+                itensGuild = GuildFactory.GetInstanceGuild(guildName, idGuild);
+                sGuild.SendGuildItens(conv.ConvertTOJson(itensGuild));
             }
             catch (AggregateException aex)
             {
@@ -114,12 +120,12 @@ namespace WebMonitor
         #endregion
 
         #region "Player"
-        public void updateCharItens(List<ItemUnit> l)
+        public void updateCharItens(List<ItemUnitChar> l)
         {
             try
             {
                 itensChar = l;
-                sPlayer.SendItensPlayer(conv.ConvertTOJson(character));
+                sPlayer.SendItensPlayer(conv.ConvertTOJson(itensChar));
             }
             catch (AggregateException aex)
             {
@@ -228,7 +234,6 @@ namespace WebMonitor
             try
             {
 
-
                 Util.WriteLog("[DEBUG]sSession.getNewSession");
 
                 string retorno;
@@ -237,12 +242,9 @@ namespace WebMonitor
                 session.botDebug = "";
                 retorno = sSession.getNewSession(conv.ConvertTOJson(session));
 
-                Util.WriteLog("RETORNO: " + retorno);
-
                 session = (Session)conv.ConvertJSON<Session>(retorno);
                 character = session.character;
-
-                Util.WriteLog("Session.id: " + session.id);
+                if (character.guild != null) { guild = character.guild; }
 
             }
             catch (AggregateException aex)
@@ -313,7 +315,7 @@ namespace WebMonitor
             
             try
             {
-                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0 && session.id != "0")
+                if (DateTime.Compare(lastchecksession.AddMinutes(2), DateTime.Now) < 0 && session.id != 0)
                 {
                     sSession.checkSession(conv.ConvertTOJson(session),session.id);
                     lastchecksession = DateTime.Now;

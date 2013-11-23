@@ -16,7 +16,7 @@ namespace WebMonitor.factories
             s.botBase = bot.Name;
             s.botDebug = "";
             s.map = player.CurrentMap.Name;
-            s.id = "0";
+            s.id = 0;
             s.isEnd = 0;
             return s;
         }    
