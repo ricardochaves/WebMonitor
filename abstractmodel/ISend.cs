@@ -10,7 +10,7 @@ namespace WebMonitor
     public interface ISend
     {
 
-        Task<string> MakeAsyncRequest(string url, string data, method method);
+        void MakeAsyncRequest(string url, string data, method method);
         string MakeRequest(string url, string data, method method);
 
 

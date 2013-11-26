@@ -13,28 +13,33 @@ namespace WebMonitor.services
 
 
         // Define other methods and classes here
-        public Task<string> MakeAsyncRequest(string url, string data, method method) 
+        public void MakeAsyncRequest(string url, string data, method method) 
         {
             try
             {
 
-                Util.WriteLog("MakeAsyncRequest: " + Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString());
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
-                request.Method = method.ToString();
-                request.Proxy = null;
-                request.ContentType = "application/json";
+                var awr = new AsyncWebRequest();
 
-                byte[] dataStream = Encoding.UTF8.GetBytes(data);
-                Stream newStream = request.GetRequestStream();
-                newStream.Write(dataStream, 0, dataStream.Length);
-                newStream.Close();
+                awr.MakeWebRequestAsync(url,data,method);
 
-                Task<WebResponse> task = Task.Factory.FromAsync(
-                    request.BeginGetResponse,
-                    asyncResult => request.EndGetResponse(asyncResult),
-                    (object)null);
 
-                return task.ContinueWith(t => ReadStreamFromResponse(t.Result));
+                //Util.WriteLog("MakeAsyncRequest: " + Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString());
+                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
+                //request.Method = method.ToString();
+                //request.Proxy = null;
+                //request.ContentType = "application/json";
+
+                //byte[] dataStream = Encoding.UTF8.GetBytes(data);
+                //Stream newStream = request.GetRequestStream();
+                //newStream.Write(dataStream, 0, dataStream.Length);
+                //newStream.Close();
+
+                //Task<WebResponse> task = Task.Factory.FromAsync(
+                //    request.BeginGetResponse,
+                //    asyncResult => request.EndGetResponse(asyncResult),
+                //    (object)null);
+
+                //return task.ContinueWith(t => ReadStreamFromResponse(t.Result));
             }
             catch (Exception ex)
             {
@@ -49,13 +54,16 @@ namespace WebMonitor.services
         {
             try
             {
-                using (Stream responseStream = response.GetResponseStream())
-                using (StreamReader sr = new StreamReader(responseStream))
-                {
-                    //Need to return this response 
-                    string strContent = sr.ReadToEnd();
-                    return strContent;
-                }
+
+                return "";
+
+                //using (Stream responseStream = response.GetResponseStream())
+                //using (StreamReader sr = new StreamReader(responseStream))
+                //{
+                //    //Need to return this response 
+                //    string strContent = sr.ReadToEnd();
+                //    return strContent;
+                //}
             }
             catch (Exception)
             {

@@ -28,7 +28,7 @@ namespace WebMonitor
         
 
         private DateTime lastchecksession = DateTime.Now;
-
+        private DateTime lastupdateitensplayer = DateTime.Now;
         public WebMonitorApp(Guild g, Character c, Session s)
         {
             guild = g;
@@ -124,8 +124,13 @@ namespace WebMonitor
         {
             try
             {
-                itensChar = l;
-                sPlayer.SendItensPlayer(conv.ConvertTOJson(itensChar));
+                if (DateTime.Compare(lastupdateitensplayer.AddMinutes(3), DateTime.Now) < 0 && session.id != 0)
+                {
+                    itensChar = l;
+                    sPlayer.SendItensPlayer(conv.ConvertTOJson(itensChar));
+                    lastupdateitensplayer = DateTime.Now;
+                }
+
             }
             catch (AggregateException aex)
             {

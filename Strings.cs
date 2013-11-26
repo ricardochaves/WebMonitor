@@ -10,7 +10,8 @@ namespace WebMonitor
         public const string NOMESISTEMA = "WebMonitor";
         public const string AUTOR = "Ricardo Baltazar Chaves";
         public const string CAPTIONBUTTONCONFIG = "Settings";
-        public const string HOST = "http://localhost:33087/";
+        //public const string HOST = "http://localhost:33087/";
+        public const string HOST = "http://bot.nerdsa.com.br/";
 
         public const string URLINCLUIRGUILDMONEY = @"";
         public const string URLINCLUIRGUILDTOTAL = @"";
