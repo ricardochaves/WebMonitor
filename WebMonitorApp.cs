@@ -342,5 +342,21 @@ namespace WebMonitor
 
         #endregion
 
+        #region "Chat"
+
+        public void sendLoot(Int64 idItem, Int64 qtd)
+        {
+            Loot l = new Loot();
+            l.idItem = idItem;
+            l.qtd = qtd;
+            l.idChar = character.id;
+            l.idSession = session.id;
+
+            sPlayer.SendPlayerLoot(conv.ConvertTOJson(l));
+
+        }
+
+        #endregion
+
     }
 }

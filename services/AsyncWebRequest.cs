@@ -33,7 +33,7 @@ namespace WebMonitor.services
             }
             catch (Exception ex)
             {
-                // Error handling
+                throw ex;
             }
         }
 
@@ -53,7 +53,7 @@ namespace WebMonitor.services
                 IAsyncResult readResult = responseStream.BeginRead(state.BufferRead,
                         0, state.BufferSize, new System.AsyncCallback(ReadCallback), state);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Error handling
                 RequestState state = (RequestState)result.AsyncState;
@@ -92,7 +92,7 @@ namespace WebMonitor.services
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Error handling
                 RequestState state = (RequestState)result.AsyncState;

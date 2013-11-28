@@ -94,6 +94,9 @@ namespace WebMonitor.services
             }
         }
 
-
+        public void SendPlayerLoot(string jData)
+        {
+            s.MakeAsyncRequest(Strings.URLSENDPLAYERLOOT, jData, method.Post);
+        }
     }
 }

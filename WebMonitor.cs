@@ -75,13 +75,27 @@ namespace WebMonitor
                 }
 
                 //VINCULANDO ENVENTOS DO BOT
-                Styx.CommonBot.BotEvents.OnBotStarted += onStart;
-                Styx.CommonBot.BotEvents.OnBotStopped += onStop;
+                Styx.CommonBot.BotEvents.OnBotStart += onStart;
+                Styx.CommonBot.BotEvents.OnBotStop += onStop;
+                Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
+                Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
+                //Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
+                //Styx.CommonBot.BotEvents.Player.OnMobKilled += onLevel;
+
+                Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+                Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
+                Lua.Events.AttachEvent("GUILDBANKFRAME_CLOSED", onGuildBankClosed);
+                Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
+                Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
+                Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
+                Lua.Events.AttachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
 
                 Util.WriteLog("WebMonitor initialized.");
 
                 WebMonitor.isInit = true;
-            
+
+                base.Initialize();
+
             }
             catch (Exception ex)
             {
@@ -95,8 +109,21 @@ namespace WebMonitor
         {
             base.Dispose();
 
+            Styx.CommonBot.BotEvents.OnBotStart -= onStart;
+            Styx.CommonBot.BotEvents.OnBotStop -= onStop;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
+
+
+            Lua.Events.DetachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
+            Lua.Events.DetachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
+            Lua.Events.DetachEvent("GUILDBANKFRAME_CLOSED", onGuildBankClosed);
+            Lua.Events.DetachEvent("PLAYER_LOGIN", onPlayerLogin);
+            Lua.Events.DetachEvent("PLAYER_LOGOUT", onPlayerLogout);
+            Lua.Events.DetachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
+            Lua.Events.DetachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
+
+            base.Dispose();
 
             Util.WriteLog("WebMonitor disposed.");
 
@@ -114,28 +141,13 @@ namespace WebMonitor
             {
                 Logging.WriteDiagnostic("[DEBUG]Inicio do onStart");
 
-                //Util.WriteLog("Sessão iniciada: " + session);
-
                 startTime = DateTime.Now;
-                Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
-                Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
-                //Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
-                //Styx.CommonBot.BotEvents.Player.OnMobKilled += onLevel;
-
-                Lua.Events.AttachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
-                Lua.Events.AttachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
-                Lua.Events.AttachEvent("GUILDBANKFRAME_CLOSED", onGuildBankClosed);
-                Lua.Events.AttachEvent("PLAYER_LOGIN", onPlayerLogin);
-                Lua.Events.AttachEvent("PLAYER_LOGOUT", onPlayerLogout);
-                Lua.Events.AttachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
 
                 StartApp();
 
                 Util.WriteLog("DEPOIS DO START: IDSESSION: " + app.session.id);
                 Util.WriteLog("DEPOIS DO START: IDCHAR: " + app.character.id);
                 if (app.guild != null) { Util.WriteLog("DEPOIS DO START: Guild: " + app.guild.id); }
-
-                enviarDadosIniciais();
 
                 Util.WriteLog("WebMonitor started.");
 
@@ -152,8 +164,7 @@ namespace WebMonitor
         {
             try
             {
-                Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
-                Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
+
                 app.closeSession();
            
                 Util.WriteLog("WebMonitor stoped");
@@ -312,6 +323,41 @@ namespace WebMonitor
         }
         #endregion
 
+        #endregion
+
+        #region Chat
+        
+        private void CHATMSGLOOT(object sender, LuaEventArgs args)
+        {
+
+
+           
+            //PEGANDO ITEM ID
+            string itemID;
+            itemID = args.Args[0].ToString();
+            itemID = itemID.Substring(itemID.IndexOf("item:") + 5, itemID.Length - (itemID.IndexOf("item:") + 5));
+            itemID = itemID.Substring(0, itemID.IndexOf(":"));
+
+            
+
+            //PEGANDO QUANTIDADE DO LOOT
+            string qtd;
+            string tempQTD;
+
+            qtd = args.Args[0].ToString();
+            tempQTD = qtd.Substring(qtd.IndexOf("|h|r") + 4, qtd.Length - (qtd.IndexOf("|h|r") + 4));
+            if (tempQTD.Substring(0, 1) == "x")
+            {
+                qtd = tempQTD.Substring(1, tempQTD.IndexOf(".") - 1);
+            }
+            else
+            {
+                qtd = "1";
+            }
+
+            app.sendLoot(Convert.ToInt64(itemID), Convert.ToInt64(qtd));
+        
+        }
         #endregion
 
         private void StartApp()

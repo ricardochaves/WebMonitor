@@ -23,6 +23,7 @@ namespace WebMonitor
         public const string URLCLOSESESSION = @"api/Session/";
 
         public const string URLSENDPLAYERITENS = @"api/ItemUnitChar";
+        public const string URLSENDPLAYERLOOT = @"api/Loot";
 
         public const string URLSENDPLAYERINFO = @"";
         public const string URLSENDPLAYERLOGOUT = @"";
