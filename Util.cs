@@ -126,9 +126,9 @@ namespace WebMonitor
             }
         }
 
-        public static void ItensVendidos()
+        public static List<Sale> ItensVendidos()
         {
-            string a = @"local MS_DB = MS_DB
+            string itens = @"local MS_DB = MS_DB
                         local keys = {}
 
 
@@ -158,6 +158,38 @@ namespace WebMonitor
                            --~end
    
                         end";
+
+            Sale sl;
+            List<Sale> litsl = new List<Sale>();
+
+            itens = String.Format(itens, ""); //Colocar a data como parametro
+            List<string> luaRet = Lua.GetReturnValues(itens);
+
+            Char c = new Char();
+            c = Convert.ToChar("|");
+
+            foreach (var item in luaRet)
+            {
+                string[] it = item.Split(c);
+
+                sl = new Sale();
+
+                //itU.tabSlot = Convert.ToInt32(it[0]);
+                //itU.tabIndex = Convert.ToInt32(it[1]);
+                //itU.idItem = Convert.ToInt32(it[2]);
+                //itU.stackCount = Convert.ToUInt32(it[3]);
+                //itU.idGuild = idGUild;
+
+                litsl.Add(sl);
+
+            }
+
+
+            return litsl;
+            //DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            //origin = origin.AddSeconds(1381876532); // convert from milliseconds to seconds
+
+
 
         }
 

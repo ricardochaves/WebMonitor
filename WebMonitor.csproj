@@ -115,6 +115,7 @@
     <Compile Include="modelo\ItemUnitGuild.cs" />
     <Compile Include="modelo\Loot.cs" />
     <Compile Include="modelo\Realm.cs" />
+    <Compile Include="modelo\Sale.cs" />
     <Compile Include="modelo\Session.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

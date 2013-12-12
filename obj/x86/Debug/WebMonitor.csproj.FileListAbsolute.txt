@@ -37,3 +37,4 @@ E:\PluginWebMonitor\WebMonitor\bin\Debug\Honorbuddy.xml
 E:\PluginWebMonitor\WebMonitor\bin\Debug\System.Data.SQLite.xml
 E:\PluginWebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.exe
 E:\PluginWebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.pdb
+E:\PluginWebMonitor\WebMonitor\obj\x86\Debug\WebMonitor.csprojResolveAssemblyReference.cache
