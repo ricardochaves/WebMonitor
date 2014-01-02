@@ -78,7 +78,7 @@ namespace WebMonitor.services
             try
             {
 
-                Util.WriteLog("MakeRequest: " +  Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString());
+                if (WMGlobalSettings.Instance.ImpJson == "S") { Util.WriteLog("MakeRequest: " + Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key + " - " + method.ToString()); };
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
                 request.Method = method.ToString();
                 request.Proxy = null;

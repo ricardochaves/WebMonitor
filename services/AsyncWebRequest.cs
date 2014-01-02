@@ -14,7 +14,7 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog("Entrou no MakeWebRequestAsync: " + DateTime.Now.ToString());
+                if (WMGlobalSettings.Instance.ImpJson == "S") { Util.WriteLog("Entrou no MakeWebRequestAsync: " + DateTime.Now.ToString()); };
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Strings.HOST + url + "?apiKey=" + WMGlobalSettings.Instance.Key);
                 request.Method = method.ToString();
                 request.Proxy = null;

@@ -25,6 +25,7 @@ namespace WebMonitor
         private SendPlayer sPlayer = new SendPlayer(new Send());
         private SendSession sSession = new SendSession(new Send());
         private SendGuild sGuild = new SendGuild(new Send());
+        private SendSale sSale = new SendSale(new Send());
         
 
         private DateTime lastchecksession = DateTime.Now;
@@ -354,6 +355,17 @@ namespace WebMonitor
 
             sPlayer.SendPlayerLoot(conv.ConvertTOJson(l));
 
+        }
+
+        #endregion
+
+        #region "AH"
+
+        public void sendSale(string nome)
+        {
+            DateTime origin = new DateTime(2013, 1, 1, 0, 0, 0, 0);
+            List<Sale> l = Util.GetSales(nome, origin);
+            sSale.SendSales(conv.ConvertTOJson(l));
         }
 
         #endregion

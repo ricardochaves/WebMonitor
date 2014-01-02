@@ -124,6 +124,7 @@
     <Compile Include="services\Send.cs" />
     <Compile Include="services\SendGuild.cs" />
     <Compile Include="services\SendPlayer.cs" />
+    <Compile Include="services\SendSale.cs" />
     <Compile Include="services\SendSession.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Util.cs" />

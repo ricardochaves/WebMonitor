@@ -126,69 +126,98 @@ namespace WebMonitor
             }
         }
 
-        public static List<Sale> ItensVendidos()
+        public static List<Sale> GetSales(string CharName, DateTime Day)
         {
-            string itens = @"local MS_DB = MS_DB
-                        local keys = {}
 
+            string itens = @"local TSM = select(2, ...)
+                            TSM = LibStub('AceAddon-3.0'):GetAddon('TSM_Accounting')
+                            local L = LibStub('AceLocale-3.0'):GetLocale('TradeSkillMaster_Accounting') 
 
-                        for factionrealm, data in pairs(MS_DB.factionrealm) do 
+                            local mt = {{}}
+                            local item
+
+                            local NOME_CHAR = '{0}'
+                            local dataagora = time({1}year={2}, month={3}, day={4}{5})
+
+                            for itemString, data in pairs(TSM.items) do 
    
-                           if data.sales  then
-                              keys[factionrealm] = data.sales
+                                for _, record in pairs(data['sales']) do
       
-                              print(factionrealm, data)
-                           end
-   
-                        end
+                                    if (NOME_CHAR ==  record.player) then
+         
+                                        if (dataagora < record.time) then
+            
+                                            item = record.time  .. '*'
+            
+                                            item = item .. string.sub(itemString,6, strfind(itemString,':',6)-1) .. '*'
+            
+                                            if (record.key == 'Auction') then
+                                                item = item .. '1*' 
+                                            else
+                                                item = item .. '0*' 
+                                            end
+            
+                                            item = item .. record.stackSize .. '*' 
+                                            item = item .. floor(record.quantity / record.stackSize) .. '*' 
+                                            item = item .. record.copper .. '*' 
+                                            if (record.otherPlayer == 'Merchant') then
+                                               item = item .. '' .. '*' 
+                                            else
+                                               item = item .. record.otherPlayer .. '*' 
+                                            end
+            
+                                            table.insert(mt,item)
+            
+                                        end
+                                    end
+                                end      
+                            end
 
-                        sales = keys['Alliance - Nemesis']
+                            return unpack(mt)
+                            ";
 
-                        for key, data in pairs(sales) do 
-                           print('key', '||', key, data)
-                        end
-
-
-                        for i=1, table.getn(sales) do
-   
-                           --~success, item, money, buyer, when = core:Deserialize(sales[200])
-   
-                           --~if success then
-                           --~   print(buyer)   
-                           --~end
-   
-                        end";
-
+            
+            //item = item .. record.copper*record.quantity
             Sale sl;
             List<Sale> litsl = new List<Sale>();
 
-            itens = String.Format(itens, ""); //Colocar a data como parametro
+            itens = String.Format(itens, CharName, "{", Day.Year.ToString(), Day.Month.ToString(), Day.Day.ToString(), "}");
             List<string> luaRet = Lua.GetReturnValues(itens);
+            
+            Util.WriteLog(itens);
+            
+            if (luaRet == null) {
+                Util.WriteLog("nulo");
+                return null;
+            }
 
             Char c = new Char();
-            c = Convert.ToChar("|");
-
+            c = Convert.ToChar("*");
+            Util.WriteLog("aqui");
             foreach (var item in luaRet)
             {
                 string[] it = item.Split(c);
 
                 sl = new Sale();
 
-                //itU.tabSlot = Convert.ToInt32(it[0]);
-                //itU.tabIndex = Convert.ToInt32(it[1]);
-                //itU.idItem = Convert.ToInt32(it[2]);
-                //itU.stackCount = Convert.ToUInt32(it[3]);
-                //itU.idGuild = idGUild;
+                DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                origin = origin.AddSeconds(Convert.ToInt64(it[0])); // convert from milliseconds to seconds
+
+                sl.dtSale = origin;
+                sl.idItem = Convert.ToInt32(it[1]);
+                sl.localSale = Convert.ToInt32(it[2]);
+                sl.qtd = Convert.ToInt32(it[3]);
+                sl.moneyUnit = Convert.ToInt64(it[4]);
+                sl.Buyer = Convert.ToString(it[5]);
 
                 litsl.Add(sl);
 
+
+                Util.WriteLog(sl.dtSale.ToString() + sl.idItem.ToString() + sl.localSale.ToString() + sl.qtd.ToString() + sl.moneyUnit.ToString() + sl.Buyer);
+
             }
 
-
             return litsl;
-            //DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            //origin = origin.AddSeconds(1381876532); // convert from milliseconds to seconds
-
 
 
         }
@@ -205,6 +234,7 @@ namespace WebMonitor
             }
             
         }
+    
     }
     static class Exts
     {
@@ -254,6 +284,9 @@ namespace WebMonitor
         {
             return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2}", text.X, text.Y, text.Z);
         }
-    }
+
+
+
+}
 
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Styx;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WebMonitor.factories;
 
 namespace WebMonitor
 {
@@ -29,6 +31,15 @@ namespace WebMonitor
             WMGlobalSettings.Instance.ImpJson = txtImpJson.Text;
             WMGlobalSettings.Instance.Save();
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WebMonitorApp app;
+            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me, Styx.CommonBot.BotManager.Current));
+
+            app.sendSale("Odin");
+
         }
 
 

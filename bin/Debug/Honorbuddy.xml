@@ -22,16 +22,16 @@
             <summary>Pulses this object.</summary>
         </member>
         <member name="M:Styx.CommonBot.BotBase.Initialize">
-            <summary>Initializes this object.</summary>
+            <summary>Initializes this bot base.</summary>
         </member>
         <member name="M:Styx.CommonBot.BotBase.DoInitialize">
             <summary>Executes the initialize operation.</summary>
         </member>
         <member name="M:Styx.CommonBot.BotBase.Start">
-            <summary>Starts this object.</summary>
+            <summary>Starts this bot. This is guaranteed to be called from the bot thread.</summary>
         </member>
         <member name="M:Styx.CommonBot.BotBase.Stop">
-            <summary>Stops this object.</summary>
+            <summary>Stops this object. This is guaranteed to be called from the bot thread.</summary>
         </member>
         <member name="M:Styx.CommonBot.BotBase.ToString">
             <summary>Returns a <see cref="T:System.String" /> that represents the current
@@ -134,8 +134,16 @@
         </member>
         <member name="M:Styx.CommonBot.StyxCoroutine.Tick(Buddy.Coroutines.Coroutine)">
             <summary>Ticks the passed in coroutine until an <see cref="P:Styx.CommonBot.StyxCoroutine.EndTick"/> value is yielded.</summary>
-            <exception cref="T:System.ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-            <param name="coroutine">.</param>
+            <param name="coroutine">The coroutine to be ticked.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="coroutine"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the coroutine passed in is already finished.</exception>
+        </member>
+        <member name="M:Styx.CommonBot.StyxCoroutine.Tick(Buddy.Coroutines.Coroutine,System.Object@)">
+            <summary>Ticks the passed in coroutine until an <see cref="P:Styx.CommonBot.StyxCoroutine.EndTick"/> value is yielded.</summary>
+            <param name="coroutine">The coroutine to be ticked.</param>
+            <param name="lastValue">The last value yielded from the coroutine, before <see cref="P:Styx.CommonBot.StyxCoroutine.EndTick"/> was yielded, or before the coroutine finished. If no value value was yielded, this will be <c>null</c>.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="coroutine"/> is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the coroutine passed in is already finished.</exception>
         </member>
         <member name="M:Styx.CommonBot.StyxCoroutine.Sleep(System.Int32)">
             <summary>Gets an iterator that when yielded will sleep for the specified amount of
@@ -147,12 +155,12 @@
         </member>
         <member name="M:Styx.CommonBot.StyxCoroutine.Wait(System.Int32,System.Func{System.Boolean})">
             <summary>Get an iterator that when yielded will wait for the specified condition for a max
-            time. Leaves a bool that indicates whether the condition was met or not.</summary>
-            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when one or more arguments are outside the
-            required range.</exception>
-            <param name="maxTimeoutMs">.</param>
-            <param name="condition">   .</param>
-            <returns>An IEnumerator.</returns>
+            time. Yields a bool that indicates whether the condition was met or not, as its last result.</summary>
+            <param name="maxTimeoutMs">The max timeout, in milliseconds, or <c>-1</c> for an infinite timeout.</param>
+            <param name="condition">The condition.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="condition"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when <paramref name="maxTimeoutMs"/> is negative and not equal to <c>-1</c>.</exception>
+            <returns>An IEnumerator, that waits until the timeout period passes, or until the condition is true.</returns>
         </member>
         <member name="M:Styx.CommonBot.StyxCoroutine.CompositeExecutor(Styx.TreeSharp.Composite)">
             <summary>
@@ -380,19 +388,19 @@
             <summary>Gets all batch auctions in the specified list. For the 'browse' tab, this is the
             auctions on the current page of the current search.</summary>
             <param name="list">.</param>
-            <returns>An array of wo w auction.</returns>
+            <returns>An array of wow auction.</returns>
         </member>
         <member name="M:Styx.CommonBot.Frames.AuctionFrame.GetOwnedAuctions">
             <summary>Get's all auctions owned by the player.</summary>
-            <returns>An array of wo w auction.</returns>
+            <returns>An array of wow auction.</returns>
         </member>
         <member name="M:Styx.CommonBot.Frames.AuctionFrame.GetBidderAuctions">
             <summary>Get's all bidder auctions.</summary>
-            <returns>An array of wo w auction.</returns>
+            <returns>An array of wow auction.</returns>
         </member>
         <member name="M:Styx.CommonBot.Frames.AuctionFrame.GetListAuctions">
             <summary>Get's all auctions listed on the current page in the 'browse' tab.</summary>
-            <returns>An array of wo w auction.</returns>
+            <returns>An array of wow auction.</returns>
         </member>
         <member name="M:Styx.CommonBot.Frames.AuctionFrame.PerformSearch(System.String)">
             <summary>Performs the search action.</summary>
@@ -488,7 +496,7 @@
             <summary>A heal targeting.</summary>
         </member>
         <member name="T:Styx.CommonBot.Targeting">
-            <summary>A targeting.</summary>
+            <summary>The targeting manager class.</summary>
         </member>
         <member name="M:Styx.CommonBot.Targeting.#ctor">
             <summary>Default constructor.</summary>
@@ -1998,7 +2006,7 @@
         <member name="F:Styx.UnitNPCFlags.FoodVendor">
             <summary>A binary constant representing the food vendor flag.</summary>
         </member>
-        <member name="F:Styx.UnitNPCFlags.PoisionVendor">
+        <member name="F:Styx.UnitNPCFlags.PoisonVendor">
             <summary>A binary constant representing the poision vendor flag.</summary>
         </member>
         <member name="F:Styx.UnitNPCFlags.ReagentVendor">
@@ -2045,9 +2053,6 @@
         </member>
         <member name="F:Styx.UnitNPCFlags.SpellClick">
             <summary>A binary constant representing the spell click flag.</summary>
-        </member>
-        <member name="F:Styx.UnitNPCFlags.Guard">
-            <summary>A binary constant representing the guard flag.</summary>
         </member>
         <member name="F:Styx.UnitNPCFlags.PetBattle">
             <summary>A binary constant representing the pet battle flag.</summary>
@@ -3717,13 +3722,13 @@
             <summary>An enum constant representing the thrallmar option.</summary>
         </member>
         <member name="F:Styx.FactionId.ToWoWFlag">
-            <summary>An enum constant representing to wo w flag option.</summary>
+            <summary>An enum constant representing to WoW flag option.</summary>
         </member>
         <member name="F:Styx.FactionId.ToWoWFlagTriggerAllianceDND">
-            <summary>An enum constant representing to wo w flag trigger alliance dnd option.</summary>
+            <summary>An enum constant representing to WoW flag trigger alliance dnd option.</summary>
         </member>
         <member name="F:Styx.FactionId.ToWoWFlagTriggerHordeDND">
-            <summary>An enum constant representing to wo w flag trigger horde dnd option.</summary>
+            <summary>An enum constant representing to WoW flag trigger horde dnd option.</summary>
         </member>
         <member name="F:Styx.FactionId.Broken">
             <summary>An enum constant representing the broken option.</summary>
@@ -5411,6 +5416,36 @@
         <member name="F:Styx.WoWItemQuality.Heirloom">
             <summary>An enum constant representing the heirloom option.</summary>
         </member>
+        <member name="F:Styx.WoWItemConsumableClass.None">
+            <summary>An enum constant representing the none option.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Normal">
+            <summary>A normal consumable.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Potion">
+            <summary>Potions.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Elixir">
+            <summary>Elixirs.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Flask">
+            <summary>Flasks.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Scroll">
+            <summary>Scrolls.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.FoodAndDrink">
+            <summary>Food and drinks.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.ItemEnhancement">
+            <summary>Item enhancements, such as enchants.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Bandage">
+            <summary>Bandages.</summary>
+        </member>
+        <member name="F:Styx.WoWItemConsumableClass.Other">
+            <summary>Other consumables.</summary>
+        </member>
         <member name="T:Styx.WoWItemGlyphClass">
             <summary>Values that represent WoWItemGlyphClass.</summary>
         </member>
@@ -5585,7 +5620,7 @@
         <member name="F:Styx.WoWItemTradeGoodsClass.Enchanting">
             <summary>An enum constant representing the enchanting option.</summary>
         </member>
-        <member name="F:Styx.WoWItemTradeGoodsClass.Materla">
+        <member name="F:Styx.WoWItemTradeGoodsClass.Material">
             <summary>An enum constant representing the materla option.</summary>
         </member>
         <member name="F:Styx.WoWItemTradeGoodsClass.ArmorEnchantment">
@@ -5785,54 +5820,6 @@
         </member>
         <member name="F:Styx.WoWItemContainerClass.Other">
             <summary>An enum constant representing the other option.</summary>
-        </member>
-        <member name="T:Styx.WoWItemBagFamily">
-            <summary>Values that represent WoWItemBagFamily.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.None">
-            <summary>An enum constant representing the none option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.Arrows">
-            <summary>An enum constant representing the arrows option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.Bullets">
-            <summary>An enum constant representing the bullets option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.SoulShards">
-            <summary>An enum constant representing the soul shards option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.LeatherworkingSupplies">
-            <summary>An enum constant representing the leatherworking supplies option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.InscriptionSupplies">
-            <summary>An enum constant representing the inscription supplies option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.Herbs">
-            <summary>An enum constant representing the herbs option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.EnchantingSupplies">
-            <summary>An enum constant representing the enchanting supplies option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.EngineeringSupplies">
-            <summary>An enum constant representing the engineering supplies option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.Keys">
-            <summary>An enum constant representing the keys option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.Gems">
-            <summary>An enum constant representing the gems option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.MiningSupplies">
-            <summary>An enum constant representing the mining supplies option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.SoulboundEquipment">
-            <summary>An enum constant representing the soulbound equipment option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.VanityPets">
-            <summary>An enum constant representing the vanity pets option.</summary>
-        </member>
-        <member name="F:Styx.WoWItemBagFamily.CurrencyTokens">
-            <summary>An enum constant representing the currency tokens option.</summary>
         </member>
         <member name="T:Styx.WoWSocketColor">
             <summary>Bitfield of flags for specifying WoWSocketColor.</summary>
@@ -9881,38 +9868,6 @@
             <summary>Gets or sets the rotation.</summary>
             <value>The rotation.</value>
         </member>
-        <member name="T:Styx.Plugins.IHBPlugin">
-            <summary>Interface for ihb plugin.</summary>
-        </member>
-        <member name="M:Styx.Plugins.IHBPlugin.Pulse">
-            <summary>Pulses this object.</summary>
-        </member>
-        <member name="M:Styx.Plugins.IHBPlugin.OnButtonPress">
-            <summary>Executes the button press action.</summary>
-        </member>
-        <member name="M:Styx.Plugins.IHBPlugin.Initialize">
-            <summary>Initializes this object.</summary>
-        </member>
-        <member name="P:Styx.Plugins.IHBPlugin.WantButton">
-            <summary>Gets a value indicating whether the want button.</summary>
-            <value>true if want button, false if not.</value>
-        </member>
-        <member name="P:Styx.Plugins.IHBPlugin.ButtonText">
-            <summary>Gets the button text.</summary>
-            <value>The button text.</value>
-        </member>
-        <member name="P:Styx.Plugins.IHBPlugin.Name">
-            <summary>Gets the name.</summary>
-            <value>The name.</value>
-        </member>
-        <member name="P:Styx.Plugins.IHBPlugin.Author">
-            <summary>Gets the author.</summary>
-            <value>The author.</value>
-        </member>
-        <member name="P:Styx.Plugins.IHBPlugin.Version">
-            <summary>Gets the version.</summary>
-            <value>The version.</value>
-        </member>
         <member name="T:Styx.Plugins.HBPlugin">
             <summary>Represents a plugin for HB.</summary>
         </member>
@@ -9929,36 +9884,14 @@
         <member name="M:Styx.Plugins.HBPlugin.Dispose">
             <summary>Dispose of this plugin, cleaning up any resources it uses.</summary>
         </member>
-        <member name="M:Styx.Plugins.HBPlugin.GetHashCode">
-            <summary>Gets the hashcode of this plugin.</summary>
-            <returns>A hash code for this object.</returns>
+        <member name="M:Styx.Plugins.HBPlugin.OnEnable">
+            <summary>Called when this plugin is enabled.</summary>
         </member>
-        <member name="M:Styx.Plugins.HBPlugin.Equals(Styx.Plugins.IHBPlugin)">
-            <summary>Checks if this plugin equals a specified object.</summary>
-            <param name="obj">.</param>
-            <returns>true if the objects are considered equal, false if they are not.</returns>
-        </member>
-        <member name="M:Styx.Plugins.HBPlugin.Equals(System.Object)">
-            <summary>Checks if this plugin equals a specified object.</summary>
-            <param name="obj">.</param>
-            <returns>true if the objects are considered equal, false if they are not.</returns>
-        </member>
-        <member name="M:Styx.Plugins.HBPlugin.Equals(Styx.Plugins.HBPlugin)">
-            <summary>Tests if this HBPlugin is considered equal to another.</summary>
-            <param name="other">The hb plugin to compare to this object.</param>
-            <returns>true if the objects are considered equal, false if they are not.</returns>
-        </member>
-        <member name="M:Styx.Plugins.HBPlugin.op_Equality(Styx.Plugins.HBPlugin,Styx.Plugins.HBPlugin)">
-            <summary>Equality operator.</summary>
-            <param name="left"> The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operation.</returns>
-        </member>
-        <member name="M:Styx.Plugins.HBPlugin.op_Inequality(Styx.Plugins.HBPlugin,Styx.Plugins.HBPlugin)">
-            <summary>Inequality operator.</summary>
-            <param name="left"> The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operation.</returns>
+        <member name="M:Styx.Plugins.HBPlugin.OnDisable">
+            <summary>
+            Called when this plugin is disabled, and also on shut down of the bot.
+            <para>It is not a guarantee that WoW is running when this function is called. See <see cref="P:Styx.StyxWoW.WowExited"/>.</para>
+            </summary>
         </member>
         <member name="P:Styx.Plugins.HBPlugin.WantButton">
             <summary>Does this plugin want a button? If set to true, the button in the plugin manager will
@@ -10131,70 +10064,6 @@
             <param name="maxValue">The maximum value.</param>
             <param name="value">   [out] The value of the attribute.</param>
             <returns>true if it succeeds, false if it fails.</returns>
-        </member>
-        <member name="M:Styx.Loaders.CodeCompiler.DeleteOldAssemblies">
-            <summary>Deletes the old assemblies.</summary>
-        </member>
-        <member name="M:Styx.Loaders.CodeCompiler.#ctor(System.String)">
-            <summary>Creates a new instance of the <see cref="T:Styx.Loaders.CodeCompiler"/> class.</summary>
-            <param name="path">.</param>
-        </member>
-        <member name="M:Styx.Loaders.CodeCompiler.AddReference(System.String)">
-            <summary>Adds a reference.</summary>
-            <param name="assembly">The assembly.</param>
-        </member>
-        <member name="M:Styx.Loaders.CodeCompiler.ParseFilesForCompilerOptions">
-            <summary>Parse files for compiler options.</summary>
-        </member>
-        <member name="M:Styx.Loaders.CodeCompiler.Compile">
-            <summary>Gets the compile.</summary>
-            <returns>The CompilerResults.</returns>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.CompiledAssembliesFolder">
-            <summary>Gets the pathname of the compiled assemblies folder.</summary>
-            <value>The pathname of the compiled assemblies folder.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.CompiledAssembly">
-            <summary>The final, compiled assembly.</summary>
-            <value>The compiled assembly.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.SourcePath">
-            <summary>The path to the source files. This can be a directory, or a single file. See
-            <see cref="P:Styx.Loaders.CodeCompiler.FileStructure"/> for the current type.</summary>
-            <value>The full pathname of the source file.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.FileStructure">
-            <summary>The type of source structure this compiler uses. File, folder, etc.</summary>
-            <value>The file structure.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.Options">
-            <summary>Retrieves the current compiler options.</summary>
-            <value>The options.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.CompilerVersion">
-            <summary>The compiler version. [Default: 3.5].</summary>
-            <value>The compiler version.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.AssemblyName">
-            <summary>The name of the assembly on disk.</summary>
-            <value>The name of the assembly.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.CompiledToLocation">
-            <summary>Gets the compiled to location.</summary>
-            <value>The compiled to location.</value>
-        </member>
-        <member name="P:Styx.Loaders.CodeCompiler.SourceFilePaths">
-            <summary>Gets source file paths.</summary>
-            <value>The source file paths.</value>
-        </member>
-        <member name="T:Styx.Loaders.CodeCompiler.FileStructureType">
-            <summary>Values that represent FileStructureType.</summary>
-        </member>
-        <member name="F:Styx.Loaders.CodeCompiler.FileStructureType.SingleFile">
-            <summary>An enum constant representing the single file option.</summary>
-        </member>
-        <member name="F:Styx.Loaders.CodeCompiler.FileStructureType.Folder">
-            <summary>An enum constant representing the folder option.</summary>
         </member>
         <member name="T:Styx.Loaders.DllLoader`1">
             <summary>A simple class to handle loading only DLLs. If the DLL is not within the valid
@@ -10939,7 +10808,7 @@
             <summary>An enum constant representing the button 5 option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWMissile">
-            <summary>A wo w missile.</summary>
+            <summary>A WoW missile.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWMissile.BaseAddress">
             <summary>Gets the base address.</summary>
@@ -12473,7 +12342,7 @@
             <value>The world map.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWGroupInfo">
-            <summary>Information about the wo w group.</summary>
+            <summary>Information about the WoW group.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWGroupInfo.IsInCurrentRaid(System.UInt64)">
             <summary>Query if 'guid' is in current RAID.</summary>
@@ -12569,8 +12438,8 @@
             <value>The RAID members.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWGroupInfo.PartyMembers">
-            <summary>Gets the party members.</summary>
-            <value>The party members.</value>
+            <summary>Gets the RAID members.</summary>
+            <value>The RAID members.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWGroupInfo.WorldMarker">
             <summary>Values that represent WorldMarker.</summary>
@@ -12763,11 +12632,10 @@
             <summary>A binary constant representing the lfg flag.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWAreaTrigger">
-            <summary>A wo w area trigger.</summary>
+            <summary>A WoW area trigger.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWObject">
-            <summary>A wo w object.</summary>
-            <summary>A wo w object.</summary>
+            <summary>A WoW object.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWObject.GetWorldMatrix">
             <summary>Returns the WorldMatrix of this <see cref="T:Styx.WoWInternals.WoWObjects.WoWObject"/></summary>
@@ -13915,7 +13783,7 @@
             <summary>   An enum constant representing the assist option. </summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWSpell">
-            <summary>A wo w spell.</summary>
+            <summary>A WoW spell.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWSpell.FromId(System.Int32)">
             <summary>Converts Id to WoWSpell.</summary>
@@ -14009,7 +13877,7 @@
         </member>
         <member name="M:Styx.WoWInternals.WoWSpell.Equals(Styx.WoWInternals.WoWSpell)">
             <summary>Tests if this WoWSpell is considered equal to another.</summary>
-            <param name="other">The wo w spell to compare to this object.</param>
+            <param name="other">The WoW spell to compare to this object.</param>
             <returns>true if the objects are considered equal, false if they are not.</returns>
         </member>
         <member name="P:Styx.WoWInternals.WoWSpell.IsValid">
@@ -16213,9 +16081,7 @@
             <summary>Resets this object. Called when the navigation provider reaches its end location.</summary>
         </member>
         <member name="T:Styx.Pathing.Flightor">
-            <summary>A flightor.</summary>
-            <summary>A flightor.</summary>
-            <summary>A flightor.</summary>
+            <summary>The flightor class.</summary>
         </member>
         <member name="M:Styx.Pathing.Flightor.MoveTo(Styx.WoWPoint,System.Boolean)">
             <summary>Move to.</summary>
@@ -16896,10 +16762,8 @@
             <value>The body.</value>
         </member>
         <member name="T:Styx.CommonBot.Profiles.CustomForcedBehavior">
-            <summary>A custom forced behavior.</summary>
             <summary>Custom forced behavior.</summary>
             <remarks>Created 12/8/2010.</remarks>
-            <summary>A custom forced behavior.</summary>
         </member>
         <member name="M:Styx.CommonBot.Profiles.CustomForcedBehavior.GetAttributeAs``1(System.String,System.Boolean,Styx.CommonBot.Profiles.CustomForcedBehavior.IConstraintChecker{``0},System.String[])">
             <summary><para>This class is for use only with reference-types (e.g., string).
@@ -17329,7 +17193,7 @@
             <returns>A string.</returns>
         </member>
         <member name="T:Styx.CommonBot.Profiles.CustomForcedBehavior.ConstrainTo.NonEmptyWoWPoint`1">
-            <summary>A non empty wo w point.</summary>
+            <summary>A non empty wow point.</summary>
             <typeparam name="T">Generic type parameter.</typeparam>
         </member>
         <member name="M:Styx.CommonBot.Profiles.CustomForcedBehavior.ConstrainTo.NonEmptyWoWPoint`1.Check(System.String,Styx.WoWPoint)">
@@ -17836,13 +17700,10 @@
         <member name="T:Styx.Plugins.PluginContainer">
             <summary>A plugin container.</summary>
         </member>
-        <member name="M:Styx.Plugins.PluginContainer.#ctor">
-            <summary>Default constructor.</summary>
-        </member>
-        <member name="M:Styx.Plugins.PluginContainer.#ctor(Styx.Plugins.HBPlugin,System.Boolean)">
+        <member name="M:Styx.Plugins.PluginContainer.#ctor(Styx.Plugins.HBPlugin)">
             <summary>Constructor.</summary>
-            <param name="plugin"> The plugin.</param>
-            <param name="enabled">true to enable, false to disable.</param>
+            <param name="plugin">The plugin.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="plugin"/> is null.</exception>
         </member>
         <member name="M:Styx.Plugins.PluginContainer.CompareTo(Styx.Plugins.PluginContainer)">
             <summary>Compares this PluginContainer object to another to determine their relative
@@ -17904,9 +17765,6 @@
         <member name="M:Styx.Plugins.PluginWrapper.Dispose">
             <summary>Performs application-defined tasks associated with freeing, releasing, or resetting
             unmanaged resources.</summary>
-        </member>
-        <member name="M:Styx.Plugins.PluginWrapper.Finalize">
-            <summary>Finaliser.</summary>
         </member>
         <member name="P:Styx.Plugins.PluginWrapper.Name">
             <summary>Gets the name.</summary>
@@ -19681,9 +19539,6 @@
         <member name="T:Styx.WoWInternals.LuaEvents">
             <summary>A lua events.</summary>
         </member>
-        <member name="M:Styx.WoWInternals.LuaEvents.Finalize">
-            <summary>Finaliser.</summary>
-        </member>
         <member name="M:Styx.WoWInternals.LuaEvents.AddFilter(System.String,System.String)">
             <summary>Adds a filter to a specified (hooked) Lua event. If a filter cannot be applied
             (because one is already applied) this function will return false.</summary>
@@ -19701,11 +19556,15 @@
             <summary>Attaches to a Lua event.</summary>
             <param name="eventName">The name of the event to attach to.</param>
             <param name="handler">  The handler to attach.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="handler"/> is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="eventName"/> is null or white space.</exception>
         </member>
         <member name="M:Styx.WoWInternals.LuaEvents.DetachEvent(System.String,Styx.WoWInternals.LuaEventHandlerDelegate)">
             <summary>Detaches from a Lua event.</summary>
             <param name="eventName">The name of the event to detach from.</param>
             <param name="handler">  The handler to detach.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="handler"/> is null.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="eventName"/> is null or white space.</exception>
         </member>
         <member name="P:Styx.WoWInternals.LuaEvents.IsInitialized">
             <summary>Gets a value indicating whether this object is initialized.</summary>
@@ -19714,42 +19573,6 @@
         <member name="P:Styx.WoWInternals.LuaEvents.PrintAllEvents">
             <summary>Gets or sets a value indicating whether the print all events.</summary>
             <value>true if print all events, false if not.</value>
-        </member>
-        <member name="T:Styx.WoWInternals.LuaEventWait">
-            <summary>A lua event wait.</summary>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.#ctor(System.String)">
-            <summary>Constructor.</summary>
-            <param name="eventName">The name of the event.</param>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.Dispose">
-            <summary>Performs application-defined tasks associated with freeing, releasing, or resetting
-            unmanaged resources.</summary>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.Finalize">
-            <summary>Finaliser.</summary>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.Wait">
-            <summary>Waits until the event is fired.</summary>
-            <returns>true if it succeeds, false if it fails.</returns>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.Wait(System.Int32)">
-            <summary>Waits for a specified time, and returns after the time has elapsed or the event was
-            fired. The return value indicates whether the wait returned because of the event firing, or
-            because of timeout.</summary>
-            <param name="millisecondsTimeout">.</param>
-            <returns>true if it succeeds, false if it fails.</returns>
-        </member>
-        <member name="M:Styx.WoWInternals.LuaEventWait.Wait(System.TimeSpan)">
-            <summary>Waits for a specified time, and returns after the time has elapsed or the event was
-            fired. The return value indicates whether the wait returned because of the event firing, or
-            because of timeout.</summary>
-            <param name="timeout">.</param>
-            <returns>true if it succeeds, false if it fails.</returns>
-        </member>
-        <member name="P:Styx.WoWInternals.LuaEventWait.EventName">
-            <summary>Gets the name of the event.</summary>
-            <value>The name of the event.</value>
         </member>
         <member name="T:Styx.WoWInternals.LuaType">
             <summary>Values that represent LuaType.</summary>
@@ -20284,7 +20107,7 @@
             <summary>Name of the pet.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWCamera">
-            <summary>A wo w camera.</summary>
+            <summary>A WoW camera.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWCamera.Position">
             <summary>Gets the position.</summary>
@@ -20701,7 +20524,7 @@
             <summary>The weekly maximum.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWCurrency.WoWCurrencyInfo">
-            <summary>Information about the wo w currency.</summary>
+            <summary>Information about the WoW currency.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWCurrency.WoWCurrencyInfo.Entry">
             <summary>The entry.</summary>
@@ -20849,10 +20672,7 @@
             </summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWMovement">
-            <summary>A wo w movement.</summary>
-            <summary>A wo w movement.</summary>
-            <summary>A wo w movement.</summary>
-            <summary>A wo w movement.</summary>
+            <summary>Provides functions for moving in WoW.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWMovement.Pulse">
             <summary>Pulses this instance.</summary>
@@ -21277,8 +21097,7 @@
             <remarks>Created by Nesox 2012-02-04</remarks>
         </member>
         <member name="T:Styx.WoWInternals.Battlegrounds">
-            <summary>A battlegrounds.</summary>
-            <summary>A battlegrounds.</summary>
+            <summary>The battlegrounds manager.</summary>
         </member>
         <member name="M:Styx.WoWInternals.Battlegrounds.GetProfileName(Styx.WoWInternals.BattlegroundType)">
             <summary>Returns the profile name for <para>type</para></summary>
@@ -21543,7 +21362,7 @@
             <summary>An enum constant representing the five vs five option.</summary>
         </member>
         <member name="T:Styx.CommonBot.Blacklist">
-            <summary>List of blacks.</summary>
+            <summary>Contains objects the bot should ignore in certain situations..</summary>
         </member>
         <member name="M:Styx.CommonBot.Blacklist.Flush">
             <summary>Flushes this instance.</summary>
@@ -22585,7 +22404,7 @@
         </member>
         <member name="M:Styx.CommonBot.Inventory.InventoryManager.GetItemsToMail">
             <summary>Gets items to mail.</summary>
-            <returns>An array of wo w item.</returns>
+            <returns>An array of WoW item.</returns>
         </member>
         <member name="P:Styx.CommonBot.Inventory.InventoryManager.HaveItemsToMail">
             <summary>Gets a value indicating whether the have items to mail.</summary>
@@ -22673,9 +22492,7 @@
             <summary>An enum constant representing the end option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.World.GameWorld">
-            <summary>A game world.</summary>
-            <summary>A game world.</summary>
-            <summary>A game world.</summary>
+            <summary>Provides functions for interacting and checking the game world.</summary>
         </member>
         <member name="M:Styx.WoWInternals.World.GameWorld.IsInLineOfSight(Styx.WoWPoint,Styx.WoWPoint)">
             <summary>Used to check visual sight between two points.</summary>
@@ -23337,7 +23154,7 @@
             <value>The settings window state.</value>
         </member>
         <member name="T:Styx.Helpers.WoWMathHelper">
-            <summary>A wo w mathematics helper.</summary>
+            <summary>A wow mathematics helper.</summary>
         </member>
         <member name="M:Styx.Helpers.WoWMathHelper.DegreesToRadians(System.Single)">
             <summary>Degrees to radians.</summary>
@@ -23525,7 +23342,7 @@
             <value>The leader.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWAuraCollection">
-            <summary>Collection of wo w auras.</summary>
+            <summary>Collection of WoW auras.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWAuraCollection.#ctor">
             <summary>Default constructor.</summary>
@@ -26864,7 +26681,7 @@
             <summary>A binary constant representing the heirloom flag.</summary>
         </member>
         <member name="T:Styx.WoWPoint">
-            <summary>A wo w point.</summary>
+            <summary>A WoW point.</summary>
         </member>
         <member name="F:Styx.WoWPoint.X">
             <summary>The X coordinate.</summary>
@@ -26893,22 +26710,22 @@
         </member>
         <member name="M:Styx.WoWPoint.Distance(Styx.WoWPoint)">
             <summary>Distances the given other.</summary>
-            <param name="other">The wo w point to compare to this object.</param>
+            <param name="other">The WoW point to compare to this object.</param>
             <returns>A float.</returns>
         </member>
         <member name="M:Styx.WoWPoint.DistanceSqr(Styx.WoWPoint)">
             <summary>Distance sqr.</summary>
-            <param name="other">The wo w point to compare to this object.</param>
+            <param name="other">The WoW point to compare to this object.</param>
             <returns>A float.</returns>
         </member>
         <member name="M:Styx.WoWPoint.Distance2D(Styx.WoWPoint)">
             <summary>Distance 2 d.</summary>
-            <param name="other">The wo w point to compare to this object.</param>
+            <param name="other">The WoW point to compare to this object.</param>
             <returns>A float.</returns>
         </member>
         <member name="M:Styx.WoWPoint.Distance2DSqr(Styx.WoWPoint)">
             <summary>Distance 2 d sqr.</summary>
-            <param name="other">The wo w point to compare to this object.</param>
+            <param name="other">The WoW point to compare to this object.</param>
             <returns>A float.</returns>
         </member>
         <member name="M:Styx.WoWPoint.Normalize">
@@ -27076,7 +26893,7 @@
         </member>
         <member name="M:Styx.WoWPoint.Equals(Styx.WoWPoint)">
             <summary>Tests if this WoWPoint is considered equal to another.</summary>
-            <param name="other">The wo w point to compare to this object.</param>
+            <param name="other">The WoW point to compare to this object.</param>
             <returns>true if the objects are considered equal, false if they are not.</returns>
         </member>
         <member name="M:Styx.WoWPoint.ToString(System.String)">
@@ -27137,18 +26954,17 @@
             <param name="attribute">      The attribute.</param>
             <param name="validAttributes">A variable-length parameters list containing valid attributes.</param>
         </member>
-        <member name="T:Styx.CommonBot.Profiles.ProfileTagExpectedException`1">
+        <member name="T:Styx.CommonBot.Profiles.ProfileTagExpectedException">
             <summary>Exception for signalling profile tag expected errors.</summary>
-            <typeparam name="T">Generic type parameter.</typeparam>
         </member>
-        <member name="M:Styx.CommonBot.Profiles.ProfileTagExpectedException`1.#ctor(System.Xml.Linq.XElement)">
-            <summary>Constructor.</summary>
-            <param name="tag">The tag.</param>
-        </member>
-        <member name="M:Styx.CommonBot.Profiles.ProfileTagExpectedException`1.#ctor(System.Xml.Linq.XElement,System.String[])">
-            <summary>Constructor.</summary>
-            <param name="tag">        The tag.</param>
-            <param name="validValues">A variable-length parameters list containing valid values.</param>
+        <member name="M:Styx.CommonBot.Profiles.ProfileTagExpectedException.Create``1(System.Xml.Linq.XElement,System.String[])">
+            <summary>
+            Creates a <see cref="T:Styx.CommonBot.Profiles.ProfileTagExpectedException"/> for the specified basic type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="tag"></param>
+            <param name="validValues"></param>
+            <returns></returns>
         </member>
         <member name="T:Styx.CommonBot.Profiles.ProfileAttributeExpectedException`1">
             <summary>Exception for signalling profile attribute expected errors.</summary>
@@ -27366,7 +27182,7 @@
         </member>
         <member name="M:Styx.CommonBot.Profiles.Profile.#ctor(System.Xml.Linq.XElement,Styx.CommonBot.Profiles.Profile)">
             <summary>Constructor.</summary>
-            <exception cref="T:Styx.CommonBot.Profiles.ProfileTagExpectedException`1">Thrown when a profile tag
+            <exception cref="T:Styx.CommonBot.Profiles.ProfileTagExpectedException">Thrown when a profile tag
             expected exception error condition occurs.</exception>
             <exception cref="T:Styx.CommonBot.Profiles.ProfileAttributeExpectedException">Thrown when a profile attribute
             expected exception error condition occurs.</exception>
@@ -27383,6 +27199,17 @@
             <summary>Constructor.</summary>
             <param name="path">  Full pathname of the file.</param>
             <param name="parent">The parent.</param>
+        </member>
+        <member name="M:Styx.CommonBot.Profiles.Profile.HasChanged">
+            <summary>
+            Checks if this profile has changed on disk since it was loaded.
+            </summary>
+            <returns>True if this profile has changed; otherwise false.</returns>
+            <remarks>
+            This function returns false if the file referred to by <see cref="P:Styx.CommonBot.Profiles.Profile.Path"/> does not exist, or if <see cref="P:Styx.CommonBot.Profiles.Profile.Path"/> is null.
+            <para>This function should only be used for profiles constructed with the <see cref="M:Styx.CommonBot.Profiles.Profile.#ctor(System.String,Styx.CommonBot.Profiles.Profile)"/> constructor.</para>
+            <para>This function opens the file referred to by the <see cref="P:Styx.CommonBot.Profiles.Profile.Path"/> property; exceptions from opening the file are not caught. For exceptions thrown, see <see cref="M:System.IO.File.Open(System.String,System.IO.FileMode,System.IO.FileAccess)"/>.</para>
+            </remarks>
         </member>
         <member name="M:Styx.CommonBot.Profiles.Profile.Equals(Styx.CommonBot.Profiles.Profile)">
             <summary>Tests if this Profile is considered equal to another.</summary>
@@ -27426,6 +27253,11 @@
             <summary>Gets all children profiles and children of children profiles, returning a list where
             the most inner profiles are first.</summary>
             <returns>The scope sorted profiles.</returns>
+        </member>
+        <member name="P:Styx.CommonBot.Profiles.Profile.Path">
+            <summary>
+            Gets the path that was used to create the profile, or null, if not created from a path.
+            </summary>
         </member>
         <member name="P:Styx.CommonBot.Profiles.Profile.XmlElement">
             <summary>Gets the XElement that actually represents this Profile.</summary>
@@ -27852,7 +27684,7 @@
             <param name="units">.</param>
         </member>
         <member name="T:Styx.WoWInternals.WoWSkill">
-            <summary>A wo w skill.</summary>
+            <summary>A WoW skill.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWSkill.ToString">
             <summary>Returns a <see cref="T:System.String" /> that represents the current
@@ -27915,10 +27747,10 @@
             <summary>The bonus.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWAnimatedSubObject">
-            <summary>A wo w animated sub object.</summary>
+            <summary>A WoW animated sub object.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWSubObject">
-            <summary>A wo w sub object.</summary>
+            <summary>A WoW sub object.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWSubObject.CanUse">
             <summary>Returns a boolean indicating whether this game object can be used. This checks for
@@ -27979,7 +27811,7 @@
             <value>The animation state.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWChair">
-            <summary>A wo w chair.</summary>
+            <summary>A WoW chair.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWChair.SlotPositions">
             <summary>Gets the positions where a unit can sit in this chair.</summary>
@@ -27990,7 +27822,7 @@
             <value>The chair slots.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWDoor">
-            <summary>A wo w door.</summary>
+            <summary>A WoW door.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWDoor.CanOpenNow">
             <summary>Determines whether this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> [can be opened now].</summary>
@@ -28020,14 +27852,14 @@
             <value><c>true</c> if this <see cref="T:Styx.WoWInternals.WoWObjects.WoWDoor"/> is open; otherwise, <c>false</c>.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWFishingBobber">
-            <summary>A wo w fishing bobber.</summary>
+            <summary>A WoW fishing bobber.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWFishingBobber.IsBobbing">
             <summary>8; } }</summary>
             <value>true if this object is bobbing, false if not.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWPartyMember">
-            <summary>A wo w party member.</summary>
+            <summary>A WoW party member.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWPartyMember.HasRole(Styx.WoWInternals.WoWObjects.WoWPartyMember.GroupRole)">
             <summary>Whether or not the party member has the role.</summary>
@@ -28036,7 +27868,7 @@
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWPartyMember.Equals(Styx.WoWInternals.WoWObjects.WoWPartyMember)">
             <summary>Tests if this WoWPartyMember is considered equal to another.</summary>
-            <param name="other">The wo w party member to compare to this object.</param>
+            <param name="other">The WoW party member to compare to this object.</param>
             <returns>true if the objects are considered equal, false if they are not.</returns>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWPartyMember.Equals(System.Object)">
@@ -28551,7 +28383,7 @@
             <summary>An enum constant representing the dummy air option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWTotemInfo">
-            <summary>Information about the wo w totem.</summary>
+            <summary>Information about the WoW totem.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWTotemInfo.Guid">
             <summary>Gets a unique identifier for the totem (Only valid if the totem is actually out!).</summary>
@@ -28583,7 +28415,7 @@
         </member>
         <member name="P:Styx.WoWInternals.WoWTotemInfo.WoWTotem">
             <summary>Gets the totem this represents. (Strength of Earth, Healing Stream, etc)</summary>
-            <value>The wo w totem.</value>
+            <value>The WoW totem.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWTotemInfo.Spell">
             <summary>Gets the spell that creates this totem.</summary>
@@ -28603,7 +28435,7 @@
             <value>The type.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWTotemExtensions">
-            <summary>A wo w totem extensions.</summary>
+            <summary>A WoW totem extensions.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWTotemExtensions.GetTotemSpellId(Styx.WoWInternals.WoWTotem)">
             <summary>A WoWTotem extension method that gets totem spell identifier.</summary>
@@ -28922,27 +28754,100 @@
         <member name="M:Styx.CommonBot.BotEvents.PulseEvents">
             <summary>Pulse events.</summary>
         </member>
+        <member name="M:Styx.CommonBot.BotEvents.InvokeStartOrStopEvent(Styx.CommonBot.BotEvents.OnBotStartStopRequestedDelegate,System.String)">
+            <summary>
+            Invokes the start or stop event. Returns true if the start/stop should be completed, and false if it was canceled.
+            </summary>
+            <param name="del"></param>
+            <param name="eventName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Styx.CommonBot.BotEvents.FireBotStartRequested">
+            <summary>
+            Fires the <see cref="E:Styx.CommonBot.BotEvents.OnBotStartRequested"/> event.
+            </summary>
+            <returns>True if the bot should proceed with starting; otherwise false.</returns>
+        </member>
+        <member name="M:Styx.CommonBot.BotEvents.FireBotStopRequested">
+            <summary>
+            Fires the <see cref="E:Styx.CommonBot.BotEvents.OnBotStopRequested"/> event.
+            </summary>
+            <returns>True if the bot should proceed with stopping; otherwise false.</returns>
+        </member>
+        <member name="E:Styx.CommonBot.BotEvents.OnBotStartRequested">
+            <summary>
+            Fired right before the bot is started.
+            <para>Only use this event to signal that a 'Start' should be canceled. In general, use the <see cref="E:Styx.CommonBot.BotEvents.OnBotStarted"/> event.</para>
+            </summary>
+            <remarks>
+            <para>This is fired from the thread that invoked the <see cref="M:Styx.CommonBot.TreeRoot.Start"/> call.</para>
+            <para>To cancel the start, set the <see cref="P:Styx.CommonBot.BotEvents.BotStartStopRequestEventArgs.Cancel"/> property to true.</para>
+            <para>No initialization should be done from subscribers to this event, as it is impossible to know if the bot will be started, because another subscriber might cancel the start.</para>
+            <para>For initialization, see <see cref="E:Styx.CommonBot.BotEvents.OnBotStarted"/>.</para>
+            </remarks>
+        </member>
         <member name="E:Styx.CommonBot.BotEvents.OnBotStart">
-            <summary>Fired right before the bot is started.</summary>
+             <summary>
+             Fired right before the bot is started.
+             <para>Only use this event to signal that a 'Start' should be canceled. In general, use the <see cref="E:Styx.CommonBot.BotEvents.OnBotStarted"/> event.</para>
+             </summary>
+             <remarks>
+             <para>This is fired from the thread that invoked the <see cref="M:Styx.CommonBot.TreeRoot.Start"/> call.</para>
+             <para>To cancel the start, throw a <see cref="T:Styx.HonorbuddyUnableToStartException"/>.</para>
+             <para>No initialization should be done from subscribers to this event, as it is impossible to know if the bot will be started, because another subscriber might cancel the start.</para>
+             <para>For initialization, see <see cref="E:Styx.CommonBot.BotEvents.OnBotStarted"/>.</para>
+            </remarks>
         </member>
         <member name="E:Styx.CommonBot.BotEvents.OnBotStarted">
-            <summary>Fired right after the bot is started.</summary>
+            <summary>Fired right after the bot has started.
+            <para>This is fired from the bot thread, before any logic starts executing.</para></summary>
+        </member>
+        <member name="E:Styx.CommonBot.BotEvents.OnBotStopRequested">
+            <summary>
+            Fired when a bot stop is requested.
+            <para>Only use this event to signal that a 'Stop' should be canceled. In general use the <see cref="E:Styx.CommonBot.BotEvents.OnBotStopped"/> event.</para>
+            </summary>
+            <remarks>
+            <para>This is fired from the thread that invoked the <see cref="M:Styx.CommonBot.TreeRoot.Stop(System.String)"/> call.</para>
+            <para>To cancel the stop, a subscriber can set <see cref="P:Styx.CommonBot.BotEvents.BotStartStopRequestEventArgs.Cancel"/> to false.</para>
+            <para>No cleanup should be done in this event, as it is impossible to know whether the stop will go through, because a following subscriber might cancel the stop.</para>
+            </remarks>
         </member>
         <member name="E:Styx.CommonBot.BotEvents.OnBotStop">
-            <summary>Fired right before the bot has been stopped.</summary>
+            <summary>
+            The same as the <see cref="E:Styx.CommonBot.BotEvents.OnBotStopped"/> event.
+            </summary>
         </member>
         <member name="E:Styx.CommonBot.BotEvents.OnBotStopped">
-            <summary>Fired right after the bot has been stopped.</summary>
+            <summary>
+            Fired right after the bot has been stopped.
+            <para>This is fired from the bot thread, before the thread exits.</para>
+            </summary>
         </member>
         <member name="E:Styx.CommonBot.BotEvents.OnBotChanged">
             <summary>Fired when the current bot is changed with the usage of TreeRoot.SetCurrent.</summary>
         </member>
+        <member name="T:Styx.CommonBot.BotEvents.BotStartStopRequestEventArgs">
+            <summary>
+            Represents event args for the <see cref="E:Styx.CommonBot.BotEvents.OnBotStartRequested"/> and <see cref="E:Styx.CommonBot.BotEvents.OnBotStopRequested"/> events.
+            </summary>
+        </member>
+        <member name="P:Styx.CommonBot.BotEvents.BotStartStopRequestEventArgs.Cancel">
+            <summary>
+            Gets or sets a bool that indicates whether this stop should be canceled.
+            </summary>
+        </member>
         <member name="T:Styx.CommonBot.BotEvents.OnBotStartDelegate">
-            <summary>Raises the bottom start delegate event.</summary>
+            <summary>The bot start delegate event.</summary>
             <param name="args">Event information to send to registered event handlers.</param>
         </member>
+        <member name="T:Styx.CommonBot.BotEvents.OnBotStartForwarder">
+            <summary>
+            This class is used to forward OnBotStart to OnBotStartRequested.
+            </summary>
+        </member>
         <member name="T:Styx.CommonBot.BotEvents.OnBotStopDelegate">
-            <summary>Raises the bottom stop delegate event.</summary>
+            <summary>The bot stop delegate event.</summary>
             <param name="args">Event information to send to registered event handlers.</param>
         </member>
         <member name="T:Styx.CommonBot.BotEvents.BotChangedEventArgs">
@@ -29097,29 +29002,16 @@
             <summary>Question accepted delegate.</summary>
             <param name="quest">The question.</param>
         </member>
-        <member name="T:Styx.Helpers.ClassCollection`1">
-            <summary>Collection of class.</summary>
-            <typeparam name="T">Generic type parameter.</typeparam>
-        </member>
-        <member name="M:Styx.Helpers.ClassCollection`1.Dispose">
-            <summary>Performs application-defined tasks associated with freeing, releasing, or resetting
-            unmanaged resources.</summary>
-        </member>
-        <member name="M:Styx.Helpers.ClassCollection`1.Finalize">
-            <summary>Finaliser.</summary>
-        </member>
-        <member name="M:Styx.Helpers.ClassCollection`1.CompileAndLoadFrom(System.String,System.CodeDom.Compiler.CompilerResults@)">
-            <summary>Compiles an assembly and loads all classes of type <typeparamref name="T"/> from that
-            assembly. <paramref name="path"/> can be a directory or .cs file.</summary>
-            <param name="path">   Full pathname of the file.</param>
-            <param name="results">[out] The results.</param>
-            <returns>An int.</returns>
-        </member>
         <member name="T:Styx.CommonBot.TreeRoot">
             <summary>Class that will tick/initialize/start/dispose the behavior tree.</summary>
         </member>
         <member name="M:Styx.CommonBot.TreeRoot.ResetTicksPerSecond">
             <summary>Resets the ticks per second.</summary>
+        </member>
+        <member name="M:Styx.CommonBot.TreeRoot.Initialize">
+            <summary>
+            Called after StyxWoW has been inited with a proper WoW instance.
+            </summary>
         </member>
         <member name="M:Styx.CommonBot.TreeRoot.Tick">
              <summary>   Executes the user code of the function, as expressed in execute. </summary>
@@ -29127,21 +29019,19 @@
              <remarks>   Created by Nesox 2012-02-04. </remarks>
         </member>
         <member name="M:Styx.CommonBot.TreeRoot.Start">
-             <summary>   Initializes and starts the current bot. </summary>
-            
-             <remarks>   Created by Nesox 2012-02-04. </remarks>
+            <summary>
+            Initializes and starts the current bot.
+            </summary>
+            <remarks>
+            <para>To check if the bot was started successfully, check the <see cref="P:Styx.CommonBot.TreeRoot.IsRunning"/> property after this call.</para>
+            </remarks>
         </member>
         <member name="M:Styx.CommonBot.TreeRoot.Stop(System.String)">
-             <summary>   Attempts to stop the current running bot. </summary>
-            
-             <remarks>   Created by Nesox 2012-02-04. </remarks>
-            
-             <param name="reason">   (Optional) the reason. </param>
+            <summary>Attempts to stop the current running bot.</summary>
+            <param name="reason">(Optional) the reason.</param>
         </member>
         <member name="M:Styx.CommonBot.TreeRoot.Run">
-             <summary>   Function used by the thread to tick the current bot. </summary>
-            
-             <remarks>   Created by Nesox 2012-02-04. </remarks>
+            <summary> Function used by the thread to tick the current bot.</summary>
         </member>
         <member name="P:Styx.CommonBot.TreeRoot.TicksPerSecond">
             <summary>
@@ -29740,7 +29630,18 @@
             <summary> .  </summary>
         </member>
         <member name="T:Styx.StyxWoW">
-            <summary>A styx wo w.</summary>
+            <summary>Represents the "entrance" to Honorbuddy's WoW API.</summary>
+        </member>
+        <member name="M:Styx.StyxWoW.Call``1(System.IntPtr,System.Runtime.InteropServices.CallingConvention,System.Object[])">
+            <summary>
+            Calls an address using RASM if outside a frame lock or injection if inside a framelock.
+            <para>If the function called writes memory, the caller should use <c>Memory.RemoteAsm.Memory.Read</c> to read this memory.</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="address"></param>
+            <param name="callingConvention"></param>
+            <param name="args"></param>
+            <returns></returns>
         </member>
         <member name="M:Styx.StyxWoW.SleepForLagDuration">
             <summary>Causes the current thread to sleep, for the amount of time it takes a packet to be
@@ -29788,8 +29689,13 @@
             <value>me.</value>
         </member>
         <member name="P:Styx.StyxWoW.WoWClient">
-            <summary>Gets the wo w client.</summary>
-            <value>The wo w client.</value>
+            <summary>Gets the WoW client.</summary>
+            <value>The WoW client.</value>
+        </member>
+        <member name="P:Styx.StyxWoW.WowExited">
+            <summary>
+            Gets a value that indicates whether the WoW instance this HB is attached to has exited.
+            </summary>
         </member>
         <member name="P:Styx.StyxWoW.IsInGame">
             <summary>Gets a value indicating whether this object is in game.</summary>
@@ -29899,7 +29805,7 @@
             <value>A List of objects.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWCache.WoWCache">
-            <summary>A wo w cache.</summary>
+            <summary>A wow cache.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWCache.WoWCache.QuestObjectiveInfo.dword0">
             DWORD->unsigned int
@@ -30281,11 +30187,10 @@
             <summary>The main local player (me)</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWPlayer">
-            <summary>A wo w player.</summary>
+            <summary>A WoW player.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWUnit">
-            <summary><see cref="T:Styx.WoWInternals.WoWObjects.WoWUnit"/> a wrapper for wow's CGUnit_C class.</summary>
-            <summary>A wo w unit.</summary>
+            <summary>A WoW unit.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.ILootableObject">
             <summary>Interface provided for lootable objets.</summary>
@@ -31208,6 +31113,10 @@
             <summary>Gets the npc flags.</summary>
             <value>The npc flags.</value>
         </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.NpcFlags2">
+            <summary>Gets the secondary NPC flags.</summary>
+            <value>The secondary NPC flags.</value>
+        </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.AuraState">
             <summary>Gets the state of the aura.</summary>
             <value>The aura state.</value>
@@ -31337,104 +31246,120 @@
             <value>true if we can gossip, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsQuestGiver">
-            <summary>Gets a value indicating whether this object is question giver.</summary>
-            <value>true if this object is question giver, false if not.</value>
+            <summary>Gets a value indicating whether this unit is question giver.</summary>
+            <value>true if this unit is question giver, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsTrainer">
-            <summary>Gets a value indicating whether this object is trainer.</summary>
-            <value>true if this object is trainer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is trainer.</summary>
+            <value>true if this unit is trainer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsClassTrainer">
-            <summary>Gets a value indicating whether this object is class trainer.</summary>
-            <value>true if this object is class trainer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is class trainer.</summary>
+            <value>true if this unit is class trainer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsProfessionTrainer">
-            <summary>Gets a value indicating whether this object is profession trainer.</summary>
-            <value>true if this object is profession trainer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is profession trainer.</summary>
+            <value>true if this unit is profession trainer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsAnyTrainer">
-            <summary>Gets a value indicating whether this object is any trainer.</summary>
-            <value>true if this object is any trainer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is any trainer.</summary>
+            <value>true if this unit is any trainer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsAnyVendor">
-            <summary>Gets a value indicating whether this object is any vendor.</summary>
-            <value>true if this object is any vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is any vendor.</summary>
+            <value>true if this unit is any vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsVendor">
-            <summary>Gets a value indicating whether this object is vendor.</summary>
-            <value>true if this object is vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is vendor.</summary>
+            <value>true if this unit is vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsAmmoVendor">
-            <summary>Gets a value indicating whether this object is ammo vendor.</summary>
-            <value>true if this object is ammo vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is ammo vendor.</summary>
+            <value>true if this unit is ammo vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsFoodVendor">
-            <summary>Gets a value indicating whether this object is food vendor.</summary>
-            <value>true if this object is food vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is food vendor.</summary>
+            <value>true if this unit is food vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsPoisonVendor">
-            <summary>Gets a value indicating whether this object is poison vendor.</summary>
-            <value>true if this object is poison vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is poison vendor.</summary>
+            <value>true if this unit is poison vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsPetitioner">
-            <summary>Gets a value indicating whether this object is petitioner.</summary>
-            <value>true if this object is petitioner, false if not.</value>
+            <summary>Gets a value indicating whether this unit is petitioner.</summary>
+            <value>true if this unit is petitioner, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsReagentVendor">
-            <summary>Gets a value indicating whether this object is reagent vendor.</summary>
-            <value>true if this object is reagent vendor, false if not.</value>
+            <summary>Gets a value indicating whether this unit is reagent vendor.</summary>
+            <value>true if this unit is reagent vendor, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsRepairMerchant">
-            <summary>Gets a value indicating whether this object is repair merchant.</summary>
-            <value>true if this object is repair merchant, false if not.</value>
+            <summary>Gets a value indicating whether this unit is repair merchant.</summary>
+            <value>true if this unit is repair merchant, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsFlightMaster">
-            <summary>Gets a value indicating whether this object is flight master.</summary>
-            <value>true if this object is flight master, false if not.</value>
+            <summary>Gets a value indicating whether this unit is flight master.</summary>
+            <value>true if this unit is flight master, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsSpiritHealer">
-            <summary>Gets a value indicating whether this object is spirit healer.</summary>
-            <value>true if this object is spirit healer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is spirit healer.</summary>
+            <value>true if this unit is spirit healer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsSpiritGuide">
-            <summary>Gets a value indicating whether this object is spirit guide.</summary>
-            <value>true if this object is spirit guide, false if not.</value>
+            <summary>Gets a value indicating whether this unit is spirit guide.</summary>
+            <value>true if this unit is spirit guide, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsInnkeeper">
-            <summary>Gets a value indicating whether this object is innkeeper.</summary>
-            <value>true if this object is innkeeper, false if not.</value>
+            <summary>Gets a value indicating whether this unit is innkeeper.</summary>
+            <value>true if this unit is innkeeper, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsBanker">
-            <summary>Gets a value indicating whether this object is banker.</summary>
-            <value>true if this object is banker, false if not.</value>
+            <summary>Gets a value indicating whether this unit is banker.</summary>
+            <value>true if this unit is banker, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsTabardDesigner">
-            <summary>Gets a value indicating whether this object is tabard designer.</summary>
-            <value>true if this object is tabard designer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is tabard designer.</summary>
+            <value>true if this unit is tabard designer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsBattleMaster">
-            <summary>Gets a value indicating whether this object is battle master.</summary>
-            <value>true if this object is battle master, false if not.</value>
+            <summary>Gets a value indicating whether this unit is battle master.</summary>
+            <value>true if this unit is battle master, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsAuctioneer">
-            <summary>Gets a value indicating whether this object is auctioneer.</summary>
-            <value>true if this object is auctioneer, false if not.</value>
+            <summary>Gets a value indicating whether this unit is auctioneer.</summary>
+            <value>true if this unit is auctioneer, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsStableMaster">
-            <summary>Gets a value indicating whether this object is stable master.</summary>
-            <value>true if this object is stable master, false if not.</value>
+            <summary>Gets a value indicating whether this unit is stable master.</summary>
+            <value>true if this unit is stable master, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsGuard">
-            <summary>Gets a value indicating whether this object is guard.</summary>
-            <value>true if this object is guard, false if not.</value>
+            <summary>Gets a value indicating whether this unit is guard.</summary>
+            <value>true if this unit is guard, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsGuildBanker">
-            <summary>Gets a value indicating whether this object is guild banker.</summary>
-            <value>true if this object is guild banker, false if not.</value>
+            <summary>Gets a value indicating whether this unit is guild banker.</summary>
+            <value>true if this unit is guild banker, false if not.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsMailCourier">
+            <summary>Gets a value indicating whether this unit is guild banker.</summary>
+            <value>true if this unit is mail courier, false if not.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsReforger">
+            <summary>Gets a value indicating whether this unit is a reforger.</summary>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsTransmogrifier">
+            <summary>Gets a value indicating whether this unit is a transmogrifier. </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsVaultKeeper">
+            <summary>Gets a value indicating whether this unit is a vault keeper, thus providing void storage.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsPetBattleCritter">
-            <summary>Gets a value indicating whether this object is a valid pet battle critter.</summary>
-            <value>true if this object is pet battle critter, false if not.</value>
+            <summary>Gets a value indicating whether this unit is a valid pet battle critter.</summary>
+            <value>true if this unit is pet battle critter, false if not.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.IsBlackMarketAuctioneer">
+            <summary>Gets a value indicating whether this unit is a black market auctioneer.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.WoWUnit.CreatureFamilyInfo">
             <summary>Returns detailed information about this CreatureFamily (If any) null otherwise.</summary>
@@ -32446,20 +32371,29 @@
             <value>true if normal bags full, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.BagItemGuids">
-            <summary>Gets all item GUID's in the players 5 bags.</summary>
+            <summary>Gets all item GUIDs in the players 5 bags.</summary>
             <value>The bag item guids.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.BagItems">
             <summary>Gets all items in the players 5 bags.</summary>
             <value>The bag items.</value>
         </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.BankItemGuids">
+            <summary>
+            Gets all item GUIDs in the players bank.
+            </summary>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.BankItems">
+            <summary>
+            Gets all items in the players banks.
+            </summary>
+        </member>
         <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.BagsFull">
             <summary>Gets a value determining if all slots in your bags are filled with items.</summary>
             <value>true if bags full, false if not.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.CarriedItemGuids">
-            <summary>Gets all carried item GUIDs; which is the players 5 bags, equipped items, currency
-            and key ring.</summary>
+            <summary>Gets all carried item GUIDs; which is the players 5 bags and equipped items.</summary>
             <value>The carried item guids.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.LocalPlayer.CarriedItems">
@@ -32863,11 +32797,10 @@
             <summary>An enum constant representing the tackle box option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWContainer">
-            <summary>A wo w container.</summary>
+            <summary>A WoW container.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWItem">
-            <summary>A wo w item.</summary>
-            <summary>A wo w item.</summary>
+            <summary>A WoW item.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWItem.#ctor(System.IntPtr)">
             <summary>Initializes a new instance of the <see cref="T:Styx.WoWInternals.WoWObjects.WoWItem"/> class.</summary>
@@ -33218,7 +33151,7 @@
             <value><c>true</c> if usable; otherwise, <c>false</c>.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemEnchantment">
-            <summary>A wo w item enchantment.</summary>
+            <summary>A WoW item enchantment.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemEnchantment.GetStat(System.Int32)">
             <summary>Gets a stat.</summary>
@@ -33244,7 +33177,7 @@
             <value>The charges left.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemSpell">
-            <summary>A wo w item spell.</summary>
+            <summary>A WoW item spell.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemSpell.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>Initializes a new instance of the <see cref="T:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemSpell"/> class.</summary>
@@ -33302,7 +33235,7 @@
             <value>The actual spell.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemStat">
-            <summary>A wo w item stat.</summary>
+            <summary>A WoW item stat.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemStat.#ctor(Styx.WoWItemStatType,System.Int32)">
             <summary>Initializes a new instance of the <see cref="T:Styx.WoWInternals.WoWObjects.WoWItem.WoWItemStat"/> class.</summary>
@@ -33543,7 +33476,7 @@
             <summary>An enum constant representing the open from vehicle option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWGameObject">
-            <summary>A wo w game object.</summary>
+            <summary>A WoW game object.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWObjects.WoWGameObject.#ctor(System.IntPtr)">
             <summary>Constructor.</summary>
@@ -33618,7 +33551,7 @@
             <summary>Compares two objects and returns a value indicating whether one is less than, equal
             to, or greater than the other.</summary>
             <param name="x">The first object to compare.</param>
-            <param name="y">Wo w unit to be compared.</param>
+            <param name="y">Wow unit to be compared.</param>
             <returns>Value Condition Less than zero<paramref name="x"/> is less than
             <paramref name="y"/>.Zero<paramref name="x"/> equals <paramref name="y"/>.Greater than
             zero<paramref name="x"/> is greater than <paramref name="y"/>.</returns>
@@ -33627,7 +33560,7 @@
             <summary>Compares two objects and returns a value indicating whether one is less than, equal
             to, or greater than the other.</summary>
             <param name="x">The first object to compare.</param>
-            <param name="y">Wo w game object to be compared.</param>
+            <param name="y">Wow game object to be compared.</param>
             <returns>Value Condition Less than zero<paramref name="x"/> is less than
             <paramref name="y"/>.Zero<paramref name="x"/> equals <paramref name="y"/>.Greater than
             zero<paramref name="x"/> is greater than <paramref name="y"/>.</returns>
@@ -34063,6 +33996,9 @@
             <summary>The itemclass of this item. eg; 'Weapon', 'Gem', 'Armor', 'Consumable'.</summary>
             <remarks>Created by Nesox 2012-02-04.</remarks>
             <value>The item class.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWObjects.ItemInfo.ConsumableClass">
+            <summary>The consumable class of this item.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWObjects.ItemInfo.WeaponClass">
             <summary>The WeaponClass of this item. eg; 'Bow', 'Gun', 'Mace' etc...</summary>
@@ -34520,7 +34456,7 @@
             <summary>The yellow socket.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWMovementInfo">
-            <summary>Information about the wo w movement.</summary>
+            <summary>Information about the WoW movement.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWMovementInfo.#ctor(System.IntPtr)">
             <summary>Constructor.</summary>
@@ -35174,7 +35110,7 @@
             <summary>An enum constant representing the pv p power option.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWArenaTeamInfo">
-            <summary>Information about the wo w arena team.</summary>
+            <summary>Information about the WoW arena team.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWObjects.WoWArenaTeamInfo.Id">
             <summary>The identifier.</summary>
@@ -35208,7 +35144,7 @@
             <param name="personalRating"> The personal rating.</param>
         </member>
         <member name="T:Styx.WoWInternals.WoWObjects.WoWGlyphInfo">
-            <summary>Information about the wo w glyph.</summary>
+            <summary>Information about the WoW glyph.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWObjects.WoWGlyphInfo.Slot">
             <summary>The slot.</summary>
@@ -35700,6 +35636,9 @@
             <summary>Gets or sets the position.</summary>
             <value>The position.</value>
         </member>
+        <member name="P:Styx.CommonBot.AreaManagement.Hotspot.Name">
+            <summary>Gets or sets the name.</summary>
+        </member>
         <member name="T:Styx.CommonBot.AreaManagement.HotspotExtensions">
             <summary>A hotspot extensions.</summary>
         </member>
@@ -35753,7 +35692,6 @@
             <param name="path">      The path of the profile.</param>
             <param name="rememberMe">(Optional) True if the path should be saved in the settings file, as
             the last used path.</param>
-            ### <exception cref="T:Styx.HonorbuddyUnableToStartException"><c>HonorbuddyUnableToStartException</c>.</exception>
         </member>
         <member name="M:Styx.CommonBot.Profiles.ProfileManager.LoadEmpty">
             <summary>Loads an 'empty' profile. The empty profile will be valid for all level ranges, and
@@ -36008,7 +35946,7 @@
             <summary>A binary constant representing the failed flag.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWDescriptorQuest">
-            <summary>A wo w descriptor question.</summary>
+            <summary>A WoW descriptor question.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWDescriptorQuest.Id">
             <summary>The identifier.</summary>
@@ -36023,7 +35961,7 @@
             <summary>The seconds before failed.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWQuestPOIInfo">
-            <summary>Information about the wo w question poi.</summary>
+            <summary>Information about the WoW question poi.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWQuestPOIInfo.QuestID">
             <summary>Force the memor lib to use the marshaler!</summary>
@@ -36144,7 +36082,7 @@
             <returns>A <see cref="T:System.String" /> containing a fully qualified type name.</returns>
         </member>
         <member name="T:Styx.WoWInternals.WoWQuestCurrentStep">
-            <summary>A wo w question current step.</summary>
+            <summary>A WoW question current step.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWQuestCurrentStep.MapID">
             <summary>Identifier for the map.</summary>
@@ -36163,7 +36101,7 @@
             <returns>A <see cref="T:System.String" /> containing a fully qualified type name.</returns>
         </member>
         <member name="T:Styx.WoWInternals.WoWQuestStepsCollection">
-            <summary>Collection of wo w question steps.</summary>
+            <summary>Collection of WoW question steps.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWQuestStepsCollection.StepsCount">
             <summary>Number of steps.</summary>
@@ -36177,7 +36115,7 @@
             <value>The steps.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWQuestStep">
-            <summary>A wo w question step.</summary>
+            <summary>A WoW question step.</summary>
         </member>
         <member name="F:Styx.WoWInternals.WoWQuestStep.AreaPointsCount">
             <summary>Number of area points.</summary>
@@ -36497,7 +36435,7 @@
             <summary>An area poi landmark.</summary>
         </member>
         <member name="T:Styx.WoWInternals.WoWLandMark">
-            <summary>A wo w land mark.</summary>
+            <summary>A WoW land mark.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWLandMark.ToArathiBasinLandmark">
             <summary>Converts this object to an arathi basin landmark.</summary>
@@ -36853,7 +36791,7 @@
             <value>true if show in zone, false if not.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWDb">
-            <summary>A wo w database.</summary>
+            <summary>A WoW database.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWDb.Item(Styx.Patchables.ClientDb)">
             <summary>Returns a DBC table based on the <see cref="T:Styx.Patchables.ClientDb"/> member passed.</summary>
@@ -37063,13 +37001,15 @@
         <member name="T:Styx.CommonBot.SpellFindResults">
             <summary>A spell find results.</summary>
         </member>
-        <member name="F:Styx.CommonBot.SpellFindResults.Original">
-            <summary>Gets the override.</summary>
-            <value>The override.</value>
+        <member name="P:Styx.CommonBot.SpellFindResults.Original">
+            <summary>
+            The original spell.
+            </summary>
         </member>
-        <member name="F:Styx.CommonBot.SpellFindResults.Override">
-            <summary>Gets the override.</summary>
-            <value>The override.</value>
+        <member name="P:Styx.CommonBot.SpellFindResults.Override">
+            <summary>
+            The override spell.
+            </summary>
         </member>
         <member name="M:Styx.CommonBot.SpellHelpers.GetSpellOverrides">
             <summary>Gets spell overrides.</summary>
@@ -37216,23 +37156,6 @@
             <remarks>Created by Nesox 2012-02-04.</remarks>
             <param name="spell">     The spell.</param>
             <param name="checkRange">if set to <c>true</c> [check range].</param>
-            <returns><c>true</c> if we can cast the specified spell; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="M:Styx.CommonBot.SpellManager.CanCast(Styx.WoWInternals.WoWSpell,Styx.WoWInternals.WoWObjects.WoWUnit,System.Boolean)">
-            <summary>Determines whether we can cast the specified spell.</summary>
-            <remarks>Created by Nesox 2012-02-04.</remarks>
-            <param name="spell">     The spell.</param>
-            <param name="target">    The target.</param>
-            <param name="checkRange">if set to <c>true</c> [check range].</param>
-            <returns><c>true</c> if we can cast the specified spell; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="M:Styx.CommonBot.SpellManager.CanCast(Styx.WoWInternals.WoWSpell,Styx.WoWInternals.WoWObjects.WoWUnit,System.Boolean,System.Boolean)">
-            <summary>Determines whether we can cast the specified spell.</summary>
-            <remarks>Created by Nesox 2012-02-04.</remarks>
-            <param name="spell">      The spell.</param>
-            <param name="target">     The target.</param>
-            <param name="checkRange"> if set to <c>true</c> [check range].</param>
-            <param name="checkMoving">if set to <c>true</c> [check moving].</param>
             <returns><c>true</c> if we can cast the specified spell; otherwise, <c>false</c>.</returns>
         </member>
         <member name="M:Styx.CommonBot.SpellManager.CanCast(Styx.WoWInternals.WoWSpell,Styx.WoWInternals.WoWObjects.WoWUnit,System.Boolean,System.Boolean,System.Boolean)">
@@ -38870,18 +38793,14 @@
             <param name="val">[out] The value.</param>
             <returns>true if it succeeds, false if it fails.</returns>
         </member>
-        <member name="M:Styx.CommonBot.Profiles.ProfileHelper.ExtractLocationFromElement(System.Xml.Linq.XElement)">
+        <member name="M:Styx.CommonBot.Profiles.ProfileHelper.ExtractLocationFromElement(System.Xml.Linq.XElement,System.Boolean)">
             <summary>Extracts the location from element described by element.</summary>
-            <exception cref="T:Styx.CommonBot.Profiles.ProfileMissingAttributeException"> Thrown when a profile missing
-            attribute exception error condition occurs.</exception>
-            <exception cref="T:Styx.CommonBot.Profiles.ProfileAttributeExpectedException">Thrown when a profile attribute
-            expected exception error condition occurs.</exception>
-            <exception cref="T:Styx.CommonBot.Profiles.ProfileAttributeExpectedException">Thrown when a profile attribute
-            expected exception error condition occurs.</exception>
             <exception cref="T:Styx.CommonBot.Profiles.ProfileAttributeExpectedException">Thrown when a profile attribute
             expected exception error condition occurs.</exception>
             <param name="element">The element.</param>
-            <returns>The extracted location from element.</returns>
+            <param name="throwOnMissing">Indicates whether this method should throw a <see cref="T:Styx.CommonBot.Profiles.ProfileMissingAttributeException`1"/> if the element doesn't contain X, Y and Z attributes.</param>
+            <exception cref="T:Styx.CommonBot.Profiles.ProfileMissingAttributeException`1">Thrown if <paramref name="throwOnMissing"/> is true and the elements doesn't contain X, Y and Z attributes.</exception>
+            <returns>The extracted location from element. Returns <see cref="F:Styx.WoWPoint.Zero"/> if x, y or z is missing and <paramref name="throwOnMissing"/> is false.</returns>
         </member>
         <member name="M:Styx.CommonBot.Profiles.ProfileHelper.Extract``1(System.Xml.Linq.XAttribute,``0@)">
             <summary>Extracts this object.</summary>
@@ -39139,7 +39058,7 @@
             <summary>The start time.</summary>
         </member>
         <member name="T:Styx.WoWInternals.Misc.WoWClient">
-            <summary>A wo w client.</summary>
+            <summary>A wow client.</summary>
         </member>
         <member name="M:Styx.WoWInternals.Misc.WoWClient.PerformanceCounter">
             <summary>Performance counter.</summary>
@@ -39187,7 +39106,7 @@
             <param name="end">  The end.</param>
         </member>
         <member name="T:Styx.WoWInternals.WoWBag">
-            <summary>A wo w bag.</summary>
+            <summary>A WoW bag.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWBag.GetItemGuidBySlot(System.UInt32)">
             <summary>Returns an items GUID by slot. The max slot is Slots - 1. If the returned value is 0,
@@ -39271,7 +39190,7 @@
             <value>The used slots.</value>
         </member>
         <member name="T:Styx.WoWInternals.WoWPlayerInventory">
-            <summary>A wo w player inventory.</summary>
+            <summary>A WoW player inventory.</summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWPlayerInventory.Equipped">
             <summary>Gets a bag representing all equipped items. The last 4 slots are the equipped bags.</summary>
@@ -39282,19 +39201,20 @@
             <value>The backpack.</value>
         </member>
         <member name="P:Styx.WoWInternals.WoWPlayerInventory.Bank">
-            <summary>Gets a bag representing the bank. The last 7 slots are the bank bags.</summary>
+            <summary>Gets a bag representing the bank. </summary>
             <value>The bank.</value>
+        </member>
+        <member name="P:Styx.WoWInternals.WoWPlayerInventory.BankBags">
+            <summary>
+            Gets a bag representing the 7 bank bag slots.
+            </summary>
         </member>
         <member name="P:Styx.WoWInternals.WoWPlayerInventory.Buyback">
             <summary>Gets a bag representing the buyback frame.</summary>
             <value>The buyback.</value>
         </member>
-        <member name="P:Styx.WoWInternals.WoWPlayerInventory.Keyring">
-            <summary>Gets a bag representing the keyring.</summary>
-            <value>The keyring.</value>
-        </member>
         <member name="T:Styx.WoWInternals.WoWPaperDoll">
-            <summary>A wo w paper doll.</summary>
+            <summary>A wow paper doll.</summary>
         </member>
         <member name="M:Styx.WoWInternals.WoWPaperDoll.GetEquippedItem(Styx.WoWInventorySlot)">
             <summary>Gets equipped item.</summary>

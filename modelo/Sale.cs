@@ -10,7 +10,8 @@ namespace WebMonitor.modelo
         public long idItem;
         public DateTime dtSale;
         public String Buyer;
-        public long money;
+        public long moneyUnit;
+        public long qtd;
         public int localSale;
     }
 }
