@@ -7,7 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
 using WebMonitor.factories;
+using WebMonitor.modelo;
 
 namespace WebMonitor
 {
@@ -35,11 +37,19 @@ namespace WebMonitor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            WebMonitorApp app;
-            app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me, Styx.CommonBot.BotManager.Current));
+            //WebMonitorApp app;
+            //app = new WebMonitorApp(GuildFactory.GetInstance(StyxWoW.Me), CharacterFactory.GetInstance(StyxWoW.Me), SessionFactory.GetInstance(StyxWoW.Me, Styx.CommonBot.BotManager.Current));
 
-            app.sendSale("Odin");
+            //app.sendSale("Odin");
 
+            List<ItemUnitChar> x = CharacterFactory.GetItensChar(StyxWoW.Me, 8);
+            Util.WriteLog(x.Count.ToString());
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
         }
 
 

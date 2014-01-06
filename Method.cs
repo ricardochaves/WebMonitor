@@ -9,6 +9,7 @@ namespace WebMonitor
     {
         None,
         Put = 1,
-        Post = 2
+        Post = 2,
+        Get = 3
     };
 }

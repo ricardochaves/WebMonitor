@@ -67,9 +67,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Imprimi Jsons";
+            this.label1.Text = "Imprimir Jsons";
             // 
             // txtImpJson
             // 
@@ -92,7 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(270, 151);
+            this.ClientSize = new System.Drawing.Size(270, 198);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtImpJson);
             this.Controls.Add(this.label1);

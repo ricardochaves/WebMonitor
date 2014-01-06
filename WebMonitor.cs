@@ -64,8 +64,8 @@ namespace WebMonitor
             }
             
         }
-        
-        public override void Initialize()
+
+        public override void OnEnable()
         {
             try
             {
@@ -75,8 +75,8 @@ namespace WebMonitor
                 }
 
                 //VINCULANDO ENVENTOS DO BOT
-                Styx.CommonBot.BotEvents.OnBotStart += onStart;
-                Styx.CommonBot.BotEvents.OnBotStop += onStop;
+                Styx.CommonBot.BotEvents.OnBotStartRequested += onStart;
+                Styx.CommonBot.BotEvents.OnBotStopRequested += onStop;
                 Styx.CommonBot.BotEvents.Player.OnPlayerDied += onDead;
                 Styx.CommonBot.BotEvents.Player.OnLevelUp += onLevel;
                 //Styx.CommonBot.BotEvents.Player.OnMobLooted += onLevel;
@@ -94,8 +94,6 @@ namespace WebMonitor
 
                 WebMonitor.isInit = true;
 
-                base.Initialize();
-
             }
             catch (Exception ex)
             {
@@ -105,15 +103,13 @@ namespace WebMonitor
             }
 
         }
-        public override void Dispose()
+        public override void OnDisable()
         {
-            base.Dispose();
 
-            Styx.CommonBot.BotEvents.OnBotStart -= onStart;
-            Styx.CommonBot.BotEvents.OnBotStop -= onStop;
+            Styx.CommonBot.BotEvents.OnBotStartRequested -= onStart;
+            Styx.CommonBot.BotEvents.OnBotStopRequested -= onStop;
             Styx.CommonBot.BotEvents.Player.OnPlayerDied -= onDead;
             Styx.CommonBot.BotEvents.Player.OnLevelUp -= onLevel;
-
 
             Lua.Events.DetachEvent("GUILDBANKFRAME_OPENED", onGuildBankOpened);
             Lua.Events.DetachEvent("GUILDBANK_UPDATE_MONEY", onGuildBankUpdateMoney);
@@ -123,10 +119,8 @@ namespace WebMonitor
             Lua.Events.DetachEvent("CLOSE_INBOX_ITEM", onCloseInboxItem);
             Lua.Events.DetachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
 
-            base.Dispose();
-
             Util.WriteLog("WebMonitor disposed.");
-
+            
         }
 
         #endregion
@@ -313,6 +307,7 @@ namespace WebMonitor
         {
             try
             {
+                Util.WriteLog("Fechou");
                 app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
                 app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
             }
