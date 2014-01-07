@@ -397,43 +397,6 @@ namespace WebMonitor
 
         }
 
-        public void enviarDadosIniciais()
-        {
-
-            
-            //Nome personagem
-            //StyxWoW.Me.Name;
-            //StyxWoW.Me.BagItems 
-            //StyxWoW.Me.BagsFull
-            //StyxWoW.Me.Class
-            //StyxWoW.Me.Copper
-            //StyxWoW.Me.CurrentMap //OBJ
-            //StyxWoW.Me.Faction //OBJ, Olhar outros Faction
-            //StyxWoW.Me.FreeBagSlots
-            //StyxWoW.Me.FreeNormalBagSlots   
-            //StyxWoW.Me.Gold
-            //StyxWoW.Me.Guid; //OBJ
-            //StyxWoW.Me.GuildLevel
-            //StyxWoW.Me.GuildRank
-            //StyxWoW.Me.IsAFKFlagged
-            //StyxWoW.Me.Location
-            //StyxWoW.Me.MapId
-            //StyxWoW.Me.MapName
-            //StyxWoW.Me.Mounted
-            //StyxWoW.Me.QuestLog
-            //StyxWoW.Me.Race
-            //StyxWoW.Me.RealmName
-            //StyxWoW.Me.RealZoneText
-            //StyxWoW.Me.Specialization
-            //StyxWoW.Me.SubZoneText
-            
-
-
-
-
-
-            //StyxWoW.Me.Silver
-        }
 
         #region API
 
@@ -467,19 +430,7 @@ namespace WebMonitor
 
             return "";
         }
-        //public static void AtualizaEstoque(WebMonitorApp app)
-        //{
-        //    try
-        //    {
-        //        Logging.Write("Rodando AtualizaEstoque2!");
-        //        app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
-        //        app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logging.WriteException(ex);
-        //    }
-        //}
+   
     }
 
 
