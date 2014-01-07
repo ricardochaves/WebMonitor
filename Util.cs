@@ -114,8 +114,6 @@ namespace WebMonitor
                     itU.stackCount = Convert.ToUInt32(it[3]);
                     itU.idGuild = idGUild;
 
-                    Util.WriteLog(item);
-
                     litU.Add(itU);
 
                 }

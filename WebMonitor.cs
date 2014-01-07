@@ -17,8 +17,31 @@ using WebMonitor.factories;
 using WebMonitor.modelo;
 using WebMonitor.services;
 
+
+using System;
+using System.Diagnostics;
+using System.ServiceModel;
+using System.Windows;
+
+
+namespace WebMonitor.Remoting
+{
+    [ServiceContract]
+    interface IRemotingApi
+    {
+        [OperationContract(IsOneWay = true)]
+        void AtualizaEstoque(long IdChar);
+
+        [OperationContract]
+        string GetIdChar(string name, string realm);
+    
+    }
+}
+
+
 namespace WebMonitor
 {
+
     public class WebMonitor : HBPlugin
     {
 
@@ -29,7 +52,10 @@ namespace WebMonitor
        
 
         #region Construtor
-        public WebMonitor() { }
+        public WebMonitor() 
+        { 
+           
+        }
         #endregion
 
         #region Overrides
@@ -307,9 +333,10 @@ namespace WebMonitor
         {
             try
             {
-                Util.WriteLog("Fechou");
+                
                 app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
                 app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
+
             }
             catch (Exception ex)
             {
@@ -408,5 +435,55 @@ namespace WebMonitor
             //StyxWoW.Me.Silver
         }
 
+        #region API
+
+
+
+        #endregion
+
     }
+
+
+
+
+
+    static public class WebMonitorAPI
+    {
+   
+        public static void AtualizaEstoque(string IdChar)
+        {
+            List<ItemUnitChar> l = CharacterFactory.GetItensChar(StyxWoW.Me, Convert.ToInt64(IdChar));
+            SendPlayer s = new SendPlayer(new Send());
+            ConverterJson conv = new ConverterJson();
+            string jSon = conv.ConvertTOJson(l);
+            s.SendItensPlayer(jSon);
+
+        }
+
+        public string GetIdChar(string name, string realm)
+        {
+            GET.executeRequest("");
+            ConverterJson conv = new ConverterJson();
+
+            return "";
+        }
+        //public static void AtualizaEstoque(WebMonitorApp app)
+        //{
+        //    try
+        //    {
+        //        Logging.Write("Rodando AtualizaEstoque2!");
+        //        app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
+        //        app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logging.WriteException(ex);
+        //    }
+        //}
+    }
+
+
+
+
 }
+

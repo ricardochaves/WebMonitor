@@ -46,7 +46,6 @@ namespace WebMonitor.services
         {
             try
             {
-                Util.WriteLog("SendItensPlayer");
                 s.MakeAsyncRequest(Strings.URLSENDPLAYERITENS, jChar, method.Post);
             }
             catch (Exception ex)
