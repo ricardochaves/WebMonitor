@@ -18,25 +18,21 @@ using WebMonitor.modelo;
 using WebMonitor.services;
 
 
-using System;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows;
 
+//using WebMonitor.Remoting;
 
-namespace WebMonitor.Remoting
-{
-    [ServiceContract]
-    interface IRemotingApi
-    {
-        [OperationContract(IsOneWay = true)]
-        void AtualizaEstoque(long IdChar);
-
-        [OperationContract]
-        string GetIdChar(string name, string realm);
-    
-    }
-}
+//namespace WebMonitor.Remoting
+//{
+//    [ServiceContract]
+//    interface IRemotingApi
+//    {
+//        [OperationContract(IsOneWay = true)]
+//        void AtualizaEstoque();
+            
+//    }
+//}
 
 
 namespace WebMonitor
@@ -225,15 +221,9 @@ namespace WebMonitor
         }
         private void onGuildBankClosed(object sender, LuaEventArgs args)
         {
-            try
-            {
-                app.updateGuildItens(Util.GetGuildProfileName(), app.guild.id);
-            }
-            catch (Exception ex)
-            {
-                
-                Logging.WriteException(ex);
-            }
+
+            AtualizaEstoqueGuildID(Util.GetGuildProfileName(), (int)app.guild.id);
+
         }
         #endregion
 
@@ -331,17 +321,7 @@ namespace WebMonitor
         #region MailBoxEvents
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
-            try
-            {
-                
-                app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
-                app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
-
-            }
-            catch (Exception ex)
-            {
-                Logging.WriteException(ex);
-            }
+            AtualizaEstoqueID((int)app.character.id);
         }
         #endregion
 
@@ -400,41 +380,101 @@ namespace WebMonitor
 
         #region API
 
-
-
-        #endregion
-
-    }
-
-
-
-
-
-    static public class WebMonitorAPI
-    {
-   
-        public static void AtualizaEstoque(string IdChar)
+        public static void AtualizaEstoqueID(int IdChar)
         {
+            Util.WriteLog ("Inicio da Atualização de Estoque");
             List<ItemUnitChar> l = CharacterFactory.GetItensChar(StyxWoW.Me, Convert.ToInt64(IdChar));
             SendPlayer s = new SendPlayer(new Send());
             ConverterJson conv = new ConverterJson();
             string jSon = conv.ConvertTOJson(l);
             s.SendItensPlayer(jSon);
-
+            Util.WriteLog("Final da Atualização de Estoque");
         }
 
-        public string GetIdChar(string name, string realm)
+        public static void AtualizaEstoque(string name, string realm)
         {
-            GET.executeRequest("");
-            ConverterJson conv = new ConverterJson();
 
-            return "";
+            int IdChar = 0;
+
+            if (name == "Goldmaker")
+            {
+                IdChar = 11;
+            }
+
+            if (name == "Supervendor")
+            {
+                IdChar = 29;
+            }
+
+            if (name == "Goldaqui")
+            {
+                IdChar = 2;
+            }
+
+            if (name == "Progold")
+            {
+                IdChar = 13;
+            }
+
+            if (name == "Bankninja")
+            {
+                IdChar = 7;
+            }
+
+            AtualizaEstoqueID(IdChar);
+
         }
+
+        public static void AtualizaEstoqueGuild(string nameGuild, string realmGuild)
+        {
+            int idGuild = 0;
+
+            if (nameGuild == "Primes" && realmGuild =="Nemesis")
+            {
+                idGuild = 3;
+            }
+
+            if (nameGuild == "Primes" && realmGuild =="Goldrinn")
+            {
+                idGuild = 7;
+            }
+
+            Util.WriteLog(nameGuild + " : " + realmGuild);
+            AtualizaEstoqueGuildID(nameGuild, idGuild);
+        }
+<<<<<<< HEAD
    
     }
+=======
+>>>>>>> Estoque
 
+        public static void AtualizaEstoqueGuildID(string nameGuild,int idGuild)
+        {
+            try
+            {
+                SendGuild sGuild = new SendGuild(new Send());
+                ConverterJson conv = new ConverterJson();
+                List<ItemUnitGuild> itensGuild = GuildFactory.GetInstanceGuild(nameGuild, idGuild);
+                string itens = conv.ConvertTOJson(itensGuild);
+                sGuild.SendGuildItens(itens);
 
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
 
+                Util.WriteLog(ex.Message);
+            }
+        }
+        #endregion
 
+    }
+    
 }
 

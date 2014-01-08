@@ -43,7 +43,7 @@ namespace WebMonitor
             //app.sendSale("Odin");
 
             List<ItemUnitChar> x = CharacterFactory.GetItensChar(StyxWoW.Me, 8);
-            Util.WriteLog(x.Count.ToString());
+
 
         }
 

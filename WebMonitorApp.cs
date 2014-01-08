@@ -125,8 +125,9 @@ namespace WebMonitor
         {
             try
             {
-                if (DateTime.Compare(lastupdateitensplayer.AddMinutes(3), DateTime.Now) < 0 && session.id != 0)
+                if (DateTime.Compare(lastupdateitensplayer.AddMinutes(3), DateTime.Now) < 0 && session.id != 0 )
                 {
+                    Util.WriteLog("Entou aqui");
                     itensChar = l;
                     sPlayer.SendItensPlayer(conv.ConvertTOJson(itensChar));
                     lastupdateitensplayer = DateTime.Now;

@@ -10,13 +10,13 @@ namespace WebMonitor
         public const string NOMESISTEMA = "WebMonitor";
         public const string AUTOR = "Ricardo Baltazar Chaves";
         public const string CAPTIONBUTTONCONFIG = "Settings";
-        // const string HOST = "http://localhost:33087/";
+        // public const string HOST = "http://localhost:33087/";
         public const string HOST = "http://bot.nerdsa.com.br/";
 
         //GUILD
         public const string URLINCLUIRGUILDMONEY = @"";
         public const string URLINCLUIRGUILDTOTAL = @"";
-        public const string URLINCLUIRGUILDITENS = @"api/Guild";
+        public const string URLINCLUIRGUILDITENS = @"api/ItemUnitGuild";
 
         //SESSION
         public const string URLSTARTNEWSESSION = @"api/Session";
