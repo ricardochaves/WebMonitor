@@ -18,25 +18,21 @@ using WebMonitor.modelo;
 using WebMonitor.services;
 
 
-using System;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows;
 
+//using WebMonitor.Remoting;
 
-namespace WebMonitor.Remoting
-{
-    [ServiceContract]
-    interface IRemotingApi
-    {
-        [OperationContract(IsOneWay = true)]
-        void AtualizaEstoque(long IdChar);
+//namespace WebMonitor.Remoting
+//{
+//    [ServiceContract]
+//    interface IRemotingApi
+//    {
+//        [OperationContract(IsOneWay = true)]
+//        void AtualizaEstoque();
 
-        [OperationContract]
-        string GetIdChar(string name, string realm);
-    
-    }
-}
+//    }
+//}
 
 
 namespace WebMonitor
@@ -47,14 +43,14 @@ namespace WebMonitor
 
         private static Boolean isInit = false;
         private DateTime startTime; //Data que o Bot deu Start
-        
+
         WebMonitorApp app;
-       
+
 
         #region Construtor
-        public WebMonitor() 
-        { 
-           
+        public WebMonitor()
+        {
+
         }
         #endregion
 
@@ -73,7 +69,7 @@ namespace WebMonitor
         }
         public override bool WantButton { get { return true; } }
         public override string ButtonText { get { return Strings.CAPTIONBUTTONCONFIG; } }
-        
+
         public override void OnButtonPress()
         {
             new FormSettings().ShowDialog();
@@ -82,13 +78,13 @@ namespace WebMonitor
         {
             try
             {
-                app.pulse();            
+                app.pulse();
             }
             catch (Exception ex)
             {
                 Util.LogExceptions(ex);
             }
-            
+
         }
 
         public override void OnEnable()
@@ -124,8 +120,8 @@ namespace WebMonitor
             catch (Exception ex)
             {
 
-               Logging.WriteException( ex);
-                
+                Logging.WriteException(ex);
+
             }
 
         }
@@ -146,7 +142,7 @@ namespace WebMonitor
             Lua.Events.DetachEvent("CHAT_MSG_LOOT", CHATMSGLOOT);
 
             Util.WriteLog("WebMonitor disposed.");
-            
+
         }
 
         #endregion
@@ -166,6 +162,7 @@ namespace WebMonitor
                 StartApp();
 
                 Util.WriteLog("DEPOIS DO START: IDSESSION: " + app.session.id);
+
                 Util.WriteLog("DEPOIS DO START: IDCHAR: " + app.character.id);
                 if (app.guild != null) { Util.WriteLog("DEPOIS DO START: Guild: " + app.guild.id); }
 
@@ -176,7 +173,7 @@ namespace WebMonitor
             {
                 Logging.WriteException(ex);
             }
-            
+
 
 
         }
@@ -186,13 +183,13 @@ namespace WebMonitor
             {
 
                 app.closeSession();
-           
+
                 Util.WriteLog("WebMonitor stoped");
             }
             catch (Exception ex)
             {
-                
-                Logging.WriteException( ex);
+
+                Logging.WriteException(ex);
             }
 
         }
@@ -210,7 +207,7 @@ namespace WebMonitor
                 Logging.WriteException(ex);
             }
 
-            
+
         }
         private void onGuildBankUpdateMoney(object sender, LuaEventArgs args)
         {
@@ -225,15 +222,9 @@ namespace WebMonitor
         }
         private void onGuildBankClosed(object sender, LuaEventArgs args)
         {
-            try
-            {
-                app.updateGuildItens(Util.GetGuildProfileName(), app.guild.id);
-            }
-            catch (Exception ex)
-            {
-                
-                Logging.WriteException(ex);
-            }
+
+            AtualizaEstoqueGuildID(Util.GetGuildProfileName(), (int)app.guild.id);
+
         }
         #endregion
 
@@ -264,7 +255,7 @@ namespace WebMonitor
 
                 Logging.WriteException(ex);
             }
-            
+
         }
         private void onDead()
         {
@@ -277,7 +268,7 @@ namespace WebMonitor
 
                 Logging.WriteException(ex);
             }
-            
+
             //WSBot.estMorte m = new WSBot.estMorte();
 
             //using (Styx.StyxWoW.Memory.AcquireFrame())
@@ -331,36 +322,26 @@ namespace WebMonitor
         #region MailBoxEvents
         private void onCloseInboxItem(object sender, LuaEventArgs args)
         {
-            try
-            {
-                
-                app.updateCharItens(CharacterFactory.GetItensChar(StyxWoW.Me, app.character.id));
-                app.updatePlayerMoney(Convert.ToInt64((StyxWoW.Me.Copper) + (StyxWoW.Me.Silver * 100) + (StyxWoW.Me.Gold * 10000)));
-
-            }
-            catch (Exception ex)
-            {
-                Logging.WriteException(ex);
-            }
+            AtualizaEstoqueID((int)app.character.id);
         }
         #endregion
 
         #endregion
 
         #region Chat
-        
+
         private void CHATMSGLOOT(object sender, LuaEventArgs args)
         {
 
 
-           
+
             //PEGANDO ITEM ID
             string itemID;
             itemID = args.Args[0].ToString();
             itemID = itemID.Substring(itemID.IndexOf("item:") + 5, itemID.Length - (itemID.IndexOf("item:") + 5));
             itemID = itemID.Substring(0, itemID.IndexOf(":"));
 
-            
+
 
             //PEGANDO QUANTIDADE DO LOOT
             string qtd;
@@ -378,7 +359,7 @@ namespace WebMonitor
             }
 
             app.sendLoot(Convert.ToInt64(itemID), Convert.ToInt64(qtd));
-        
+
         }
         #endregion
 
@@ -400,41 +381,117 @@ namespace WebMonitor
 
         #region API
 
-
-
-        #endregion
-
-    }
-
-
-
-
-
-    static public class WebMonitorAPI
-    {
-   
-        public static void AtualizaEstoque(string IdChar)
+        public static void AtualizaEstoqueID(long IdChar)
         {
+            Util.WriteLog("Inicio da Atualização de Estoque");
             List<ItemUnitChar> l = CharacterFactory.GetItensChar(StyxWoW.Me, Convert.ToInt64(IdChar));
             SendPlayer s = new SendPlayer(new Send());
             ConverterJson conv = new ConverterJson();
             string jSon = conv.ConvertTOJson(l);
             s.SendItensPlayer(jSon);
-
+            Util.WriteLog("Final da Atualização de Estoque");
         }
 
-        public string GetIdChar(string name, string realm)
+        public static void AtualizaEstoque(string name, string realm)
         {
-            GET.executeRequest("");
-            ConverterJson conv = new ConverterJson();
 
-            return "";
+            //int IdChar = 0;
+
+            //if (name == "Goldmaker")
+            //{
+            //    IdChar = 11;
+            //}
+
+            //if (name == "Supervendor")
+            //{
+            //    IdChar = 29;
+            //}
+
+            //if (name == "Goldaqui")
+            //{
+            //    IdChar = 2;
+            //}
+
+            //if (name == "Progold")
+            //{
+            //    IdChar = 13;
+            //}
+
+            //if (name == "Bankninja")
+            //{
+            //    IdChar = 7;
+            //}
+
+            Character c = GetPalyer.GetObjectCharacter(name, realm);
+            Util.WriteLog("CharacterID: " + c.id.ToString());
+            AtualizaEstoqueID(c.id);
+
         }
-   
+
+        public static void AtualizaEstoqueGuild(string nameGuild, string realmGuild)
+        {
+
+            if (nameGuild != null)
+            {
+
+                //int idGuild = 0;
+
+                //if (nameGuild == "Primes" && realmGuild =="Nemesis")
+                //{
+                //    idGuild = 3;
+                //}
+
+                //if (nameGuild == "Primes" && realmGuild =="Goldrinn")
+                //{
+                //    idGuild = 7;
+                //}
+
+                Guild g = GetGuild.GetObjetoGuild(nameGuild, realmGuild);
+                Util.WriteLog("GuildID: " + g.id.ToString());
+
+
+                AtualizaEstoqueGuildID(nameGuild, g.id);
+            }
+
+        }
+
+        public static void AtualizaEstoqueGuildID(string nameGuild, long idGuild)
+        {
+            try
+            {
+                SendGuild sGuild = new SendGuild(new Send());
+                ConverterJson conv = new ConverterJson();
+                List<ItemUnitGuild> itensGuild = GuildFactory.GetInstanceGuild(nameGuild, idGuild);
+                string itens = conv.ConvertTOJson(itensGuild);
+                sGuild.SendGuildItens(itens);
+
+            }
+            catch (AggregateException aex)
+            {
+                aex.Handle((ex) =>
+                {
+                    return true;
+                });
+            }
+            catch (Exception ex)
+            {
+
+                Util.WriteLog(ex.Message);
+            }
+        }
+
+
+        public static void SendNewItemVendor(ItemVendor item)
+        {
+            SendPlayer s = new SendPlayer(new Send());
+            ConverterJson conv = new ConverterJson();
+            string jSon = conv.ConvertTOJson(item);
+            s.SendPlayerNewItemVendor(jSon);
+        }
+
+        #endregion
+
     }
-
-
-
 
 }
 
